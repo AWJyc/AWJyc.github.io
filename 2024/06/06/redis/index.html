@@ -4,8 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, 涡虫人">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="Redis八股, 涡虫人">
+    <meta name="description" content="Redisredis缓存击穿查询一个不存在的数据，mysql查询不到就一直写入不进缓存，所以导致每次都查询数据库
+解决方案：1.布隆过滤器   2.可以缓存空数据，查询返回结果为空也一样进行缓存
+redis缓存穿透当一个key过期时大量的请">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +19,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | 涡虫人</title>
+    <title>Redis八股 | 涡虫人</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -288,12 +290,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">Redis八股</h1>
                 </div>
             </div>
         </div>
@@ -315,9 +317,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                <span class="chip bg-color">八股</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -329,7 +335,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-08-06
+                    2024-06-06
                 </div>
                 
 
@@ -350,19 +356,73 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="redis缓存击穿"><a href="#redis缓存击穿" class="headerlink" title="redis缓存击穿"></a>redis缓存击穿</h2><p>查询一个不存在的数据，mysql查询不到就一直写入不进缓存，所以导致每次都查询数据库</p>
+<p>解决方案：1.布隆过滤器   2.可以缓存空数据，查询返回结果为空也一样进行缓存</p>
+<h2 id="redis缓存穿透"><a href="#redis缓存穿透" class="headerlink" title="redis缓存穿透"></a>redis缓存穿透</h2><p>当一个key过期时大量的请求查询，这些瞬间大量的请求可能会压垮数据库</p>
+<p>解决方案：1.使用互斥锁：当缓存失效时，不立即去load数据库，而是使用redis的setnx设置一个互斥锁，当操作成功返回时再进行load数据库操作并且回设缓存，否则重试get缓存的方法。</p>
+<p>​					特点：一致性强，性能差	</p>
+<p>2.逻辑过期：a.设置key的时候，设置一个过期时间字段一块存入缓存中，不给当前key设置过期时间</p>
+<p>​					b.当查询时判断是否过期</p>
+<p>​					c.过期就开通另一个线程进行数据同步，当前线程正常返回数据，这个数据不是最新</p>
+<p>​						特点：高可用，一致性差，性能强</p>
+<h2 id="redis缓存雪崩"><a href="#redis缓存雪崩" class="headerlink" title="redis缓存雪崩"></a>redis缓存雪崩</h2><p>同一时间段内大量的key过期或者redis服务宕机，导致大量的请求到达数据库，带来巨大压力</p>
+<p>解决方案：1.给不同的key的过期时间添加随机值</p>
+<p>​					2.利用redis集群提高服务的可用性</p>
+<p>​					3.缓存降级</p>
+<p>​					4.给业务添加多级缓存</p>
+<h2 id="redis双写一致性"><a href="#redis双写一致性" class="headerlink" title="redis双写一致性"></a>redis双写一致性</h2><p>当修改了数据库的数据时也要修改缓存的数据，缓存与数据库的数据要保存一致</p>
+<p>两种方案：</p>
+<p>1.允许延时一致的业务：使用异步通知</p>
+<p>​										a.使用MQ中间件，当更新数据后，通知缓存删除</p>
+<p>​										b.使用canal中间件，不需要修改业务代码，伪装成mysql的一个从节点，											canal通过读取binlog数据更新缓存</p>
+<p>2.要求强一致的业务：使用redisson提供的读写锁</p>
+<p>​										a.共享锁：读锁readlock，加锁之后，其他线程可以共享读操作</p>
+<p>​										b.排他锁：独占writelock，加锁之后，阻塞其他线程读写操作</p>
+<h2 id="redis持久化"><a href="#redis持久化" class="headerlink" title="redis持久化"></a>redis持久化</h2><p>当redis实例故障重启后还能获得数据</p>
+<p>两种方式：</p>
+<p>1.RDB:一个快照文件，把redis内存存储的数据写至磁盘上，当redis实例宕机恢复时，从磁盘的rdb快照文件中恢复数据</p>
+<p>2.AOF:是追加文件，当redis操作写命令时，都会存储在这个文件中，当redis实例宕机恢复时，会从这个文件中再次执行一遍命令来恢复数据</p>
+<p>这两种方式哪个快？</p>
+<p>RDB是二进制文件，体积较小，恢复的比较快，但是它可能会丢失数据，故也会用AOF来恢复数据，虽然AOF回复慢，但是丢数据的风险会小一些，AOF中设置不同的刷盘策略。</p>
+<h2 id="redis数据过期策略"><a href="#redis数据过期策略" class="headerlink" title="redis数据过期策略"></a>redis数据过期策略</h2><p>有两种需要配合使用：</p>
+<p>1.惰性删除：在设置key的过期时间后，就不去管它，当需要该key时，再检查是否过期，如果过期就删除</p>
+<p>2.定期删除：每隔一段时间就对一些key进行检查，删除里面过期的key</p>
+<p>​					两种模式：slow模式：10hz</p>
+<p>​									    fast模式：频率不固定</p>
+<h2 id="redis数据淘汰策略"><a href="#redis数据淘汰策略" class="headerlink" title="redis数据淘汰策略"></a>redis数据淘汰策略</h2><p>当redis中的内存不够用时，此时在redis中添加新的key，那么redis会按照某种规则将内存中的数据删除，这种数据删除规则被称为内存的淘汰策略</p>
+<p>默认的策略是noeviction即不删除任何数据，内存不足直接报错</p>
+<p>LRU:最少最近使用，用当前时间捡起最后一次访问时间，值越大则淘汰优先级越高</p>
+<p>LFU:最少频率使用，统计每个key的使用频率，值越小淘汰优先级越高</p>
+<h2 id="redis分布式锁"><a href="#redis分布式锁" class="headerlink" title="redis分布式锁"></a>redis分布式锁</h2><p>redis中提供了一个命令setnx，由于redis是单线程的，用了命令之后只能由一个客户端对一个key设置值，在没有过期或删除key的时候其他客户端是不允许设置这个key的。</p>
+<p>如何控制redis实现分布式锁的有效时长：使用redis的框架redisson实现。											在redisson中需要手动加锁，并且可以控制锁的失效时间与等待时间，当锁住的业务还没有执行完成时，在redisson中引入看门狗机制，每隔一段时间就检查当前业务是否还持有锁，若持有锁就增加锁持续时间，没有就释放锁。</p>
+<p>redisson实现的分布式锁可以重入吗：可以																							                     这样做是为了避免死锁的产生。重入其实在内部就是判断是否是当前线程持有的锁，若是就会计数加1，如果释放就会减1，在存储数据时用的是hash结构</p>
+<p>redisson实现的分布式锁不能解决主从一致的问题。</p>
+<h2 id="redis的集群方案"><a href="#redis的集群方案" class="headerlink" title="redis的集群方案"></a>redis的集群方案</h2><p>有三种：主从复制、哨兵模式与redis分片集群</p>
+<p>1.主从复制：单节点的redis的并发能力是有上限的，要进一步提高redis的并发能力可以搭建主从集群，实现读写分离。一般是一主多从，主节点负责写操作，从节点负责读操作。主节点写入数据后需要把数据同步到从节点中。</p>
+<p>​				主从同步的流程：分为两个阶段，全量同步与增量同步。</p>
+<p>​				全量同步是指从节点第一次与主节点建立连接时使用全量同步</p>
+<p>​				a.从节点请求主节点同步数据，其中从节点会携带自己的replication与offset</p>
+<p>​				b.主节点判断是否是第一次请求,主要判断的依据是主节点与从节点是否是同一个replication,如果不是就说明是第一次同步,主节点会把自己的replication id 与offset发送给从节点,让从节点与主节点的信息保持一致	</p>
+<p>​				c.同时主节点会执行bgsave,生成rdb文件后,发送给从节点去执行,从节点先把自己的数据清空,然后执行主节点发送过来的rdb文件,这样就保持了一致.</p>
+<p>​				注意:在rdb文件生成执行期间,依然有请求到了主节点,而主节点会以命令的方式记录到缓冲区,缓冲区是一个日志文件,最后把这个日志文件发送给从节点,这样就能保证主从节点完全一致,后期再同步数据时都是以来这个日志文件</p>
+<p>​				增量同步是指从节点服务重启之后数据就不一致了,所以这时,从节点会请求主节点同步数据,主节点还是判断是否为第一次请求,不是第一次就获取从节点的offset值,然后主节点从命令日志中获取offset值之后的数据发送给从节点进行数据同步</p>
+<h2 id="redis的底层数据结构"><a href="#redis的底层数据结构" class="headerlink" title="redis的底层数据结构"></a>redis的底层数据结构</h2><p>有五种:String、List、Hash、Sorted Set与Set</p>
+<h2 id="redis多路IO服用底层-NIO-即相关IO"><a href="#redis多路IO服用底层-NIO-即相关IO" class="headerlink" title="redis多路IO服用底层(NIO)即相关IO"></a>redis多路IO服用底层(NIO)即相关IO</h2><p>同步、异步、阻塞与非阻塞IO的区别</p>
+<p>1.同步 IO 是用户线程发起 IO 请求后，需要等待或轮询内核 IO 操作完成后才能继续执行。</p>
+<p>2.异步IO是用户发起IO请求后可以继续执行,当内核IO操作完成后会通知用户线程或调用用户线程注册的回调函数</p>
+<p>3.阻塞IO指当一个线程调用read（）或write（）时，该线程被阻塞，直到有一些数据被读取或写入，该线程在此期间不能执行其他任务。因此，在完成网络通信进行IO操作时，由于线程会阻塞，所以服务器端必须为每个客户端都提供一个独立的线程进行处理，当服务器端需要处理大量客户端时，性能急剧下降。 </p>
+<p>4.非阻塞IO指当线程从某通道进行读写数据时，若没有数据可用时，该线程可以进行其他任务。线程通常将非阻塞IO的空闲时间用于在其他通道上执行IO操作，所以单独的线程可以管理多个输入和输出通道。</p>
+<p>redis使用I&#x2F;O多路复用结合事件的处理器来应对多个Socket请求</p>
+<p>（1）连接应答处理器</p>
+<p>（2）命令回复处理器，在Redis6.0之后，为了提升更好的性能，使用了多线程来处理回复事件</p>
+<p>（3）命令请求处理器，在Redis6.0之后，将命令的转换使用了多线程，增加命令转换速度，在命令执行的时候，依然是单线程</p>
+<p><img src="C:\Users\m1539\AppData\Roaming\Typora\typora-user-images\image-20240807154902387.png" alt="image-20240807154902387"></p>
+<p>​     </p>
+<p>经典例子</p>
+<p>有一个经典的举例：烧开水，假设有这么一个场景，有一排水壶（客户）在烧水。</p>
+<p>AIO的做法是，每个水壶上装一个开关，当水开了以后会提醒对应的线程去处理。 NIO的做法是，叫一个线程不停的循环观察每一个水壶，根据每个水壶当前的状态去处理。</p>
+<p>BIO的做法是，叫一个线程停留在一个水壶那，直到这个水壶烧开，才去处理下一个水壶。</p>
+<p>可以看出AIO是最聪明省力，NIO相对省力，叫一个人就能看所有的壶，BIO最愚蠢，劳动力低下。简单的描述一下BIO的服务端通信模型：采用BIO通信模型的服务端，通常由一个独立的Acceptor线程负责监听客户端的连接，它接收到客户端连接请求之后为每个客户端创建一个新的线程进行链路处理 处理完成后，通过输出流返回应答给客户端，线程销毁。即典型的一请求一应答通信模型。</p>
 
                 
             </div>
@@ -389,7 +449,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://awjyc.github.io/2024/08/06/hello-world/">https://awjyc.github.io/2024/08/06/hello-world/</a>
+                    <a href="https://awjyc.github.io/2024/06/06/redis/">https://awjyc.github.io/2024/06/06/redis/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -426,7 +486,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                    <span class="chip bg-color">八股</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -474,13 +538,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/08/06/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/">
+                <a href="/2024/08/06/hello-world/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="我的第一个博客">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
                         
-                        <span class="card-title">我的第一个博客</span>
+                        <span class="card-title">Hello World</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -508,7 +572,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
                 <a href="/2024/06/06/redis/">
@@ -538,6 +602,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
