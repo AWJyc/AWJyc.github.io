@@ -4,10 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis八股, 涡虫人">
-    <meta name="description" content="Redisredis缓存击穿查询一个不存在的数据，mysql查询不到就一直写入不进缓存，所以导致每次都查询数据库
-解决方案：1.布隆过滤器   2.可以缓存空数据，查询返回结果为空也一样进行缓存
-redis缓存穿透当一个key过期时大量的请">
+    <meta name="keywords" content="计算机网络相关, 涡虫人">
+    <meta name="description" content="计算机网络网络结构最常用的网络分层协议是分为5层的TCP&amp;#x2F;IP网络模型
+应用层：应用层是我们接触的应用软件，负责把数据传给传输层
+传输层：有两个传输协议TCP与UDP，应用层数据过大时，会分块成TCP段；且传输层报文中会携带端  ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@ redis缓存穿透当一个key过期时大量的请">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Redis八股 | 涡虫人</title>
+    <title>计算机网络相关 | 涡虫人</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -290,12 +290,12 @@ redis缓存穿透当一个key过期时大量的请">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis八股</h1>
+                    <h1 class="description center-align post-title">计算机网络相关</h1>
                 </div>
             </div>
         </div>
@@ -319,8 +319,8 @@ redis缓存穿透当一个key过期时大量的请">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%85%AB%E8%82%A1/">
-                                <span class="chip bg-color">八股</span>
+                            <a href="/tags/%E5%85%AB%E8%82%A1%E6%96%87/">
+                                <span class="chip bg-color">八股文</span>
                             </a>
                         
                     </div>
@@ -335,7 +335,7 @@ redis缓存穿透当一个key过期时大量的请">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-06-06
+                    2024-06-12
                 </div>
                 
 
@@ -356,72 +356,96 @@ redis缓存穿透当一个key过期时大量的请">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="redis缓存击穿"><a href="#redis缓存击穿" class="headerlink" title="redis缓存击穿"></a>redis缓存击穿</h2><p>查询一个不存在的数据，mysql查询不到就一直写入不进缓存，所以导致每次都查询数据库</p>
-<p>解决方案：1.布隆过滤器   2.可以缓存空数据，查询返回结果为空也一样进行缓存</p>
-<h2 id="redis缓存穿透"><a href="#redis缓存穿透" class="headerlink" title="redis缓存穿透"></a>redis缓存穿透</h2><p>当一个key过期时大量的请求查询，这些瞬间大量的请求可能会压垮数据库</p>
-<p>解决方案：1.使用互斥锁：当缓存失效时，不立即去load数据库，而是使用redis的setnx设置一个互斥锁，当操作成功返回时再进行load数据库操作并且回设缓存，否则重试get缓存的方法。</p>
-<p>​					特点：一致性强，性能差	</p>
-<p>2.逻辑过期：a.设置key的时候，设置一个过期时间字段一块存入缓存中，不给当前key设置过期时间</p>
-<p>​					b.当查询时判断是否过期</p>
-<p>​					c.过期就开通另一个线程进行数据同步，当前线程正常返回数据，这个数据不是最新</p>
-<p>​						特点：高可用，一致性差，性能强</p>
-<h2 id="redis缓存雪崩"><a href="#redis缓存雪崩" class="headerlink" title="redis缓存雪崩"></a>redis缓存雪崩</h2><p>同一时间段内大量的key过期或者redis服务宕机，导致大量的请求到达数据库，带来巨大压力</p>
-<p>解决方案：1.给不同的key的过期时间添加随机值</p>
-<p>​					2.利用redis集群提高服务的可用性</p>
-<p>​					3.缓存降级</p>
-<p>​					4.给业务添加多级缓存</p>
-<h2 id="redis双写一致性"><a href="#redis双写一致性" class="headerlink" title="redis双写一致性"></a>redis双写一致性</h2><p>当修改了数据库的数据时也要修改缓存的数据，缓存与数据库的数据要保存一致</p>
-<p>两种方案：</p>
-<p>1.允许延时一致的业务：使用异步通知</p>
-<p>​										a.使用MQ中间件，当更新数据后，通知缓存删除</p>
-<p>​										b.使用canal中间件，不需要修改业务代码，伪装成mysql的一个从节点，											canal通过读取binlog数据更新缓存</p>
-<p>2.要求强一致的业务：使用redisson提供的读写锁</p>
-<p>​										a.共享锁：读锁readlock，加锁之后，其他线程可以共享读操作</p>
-<p>​										b.排他锁：独占writelock，加锁之后，阻塞其他线程读写操作</p>
-<h2 id="redis持久化"><a href="#redis持久化" class="headerlink" title="redis持久化"></a>redis持久化</h2><p>当redis实例故障重启后还能获得数据</p>
-<p>两种方式：</p>
-<p>1.RDB:一个快照文件，把redis内存存储的数据写至磁盘上，当redis实例宕机恢复时，从磁盘的rdb快照文件中恢复数据</p>
-<p>2.AOF:是追加文件，当redis操作写命令时，都会存储在这个文件中，当redis实例宕机恢复时，会从这个文件中再次执行一遍命令来恢复数据</p>
-<p>这两种方式哪个快？</p>
-<p>RDB是二进制文件，体积较小，恢复的比较快，但是它可能会丢失数据，故也会用AOF来恢复数据，虽然AOF回复慢，但是丢数据的风险会小一些，AOF中设置不同的刷盘策略。</p>
-<h2 id="redis数据过期策略"><a href="#redis数据过期策略" class="headerlink" title="redis数据过期策略"></a>redis数据过期策略</h2><p>有两种需要配合使用：</p>
-<p>1.惰性删除：在设置key的过期时间后，就不去管它，当需要该key时，再检查是否过期，如果过期就删除</p>
-<p>2.定期删除：每隔一段时间就对一些key进行检查，删除里面过期的key</p>
-<p>​					两种模式：slow模式：10hz</p>
-<p>​									    fast模式：频率不固定</p>
-<h2 id="redis数据淘汰策略"><a href="#redis数据淘汰策略" class="headerlink" title="redis数据淘汰策略"></a>redis数据淘汰策略</h2><p>当redis中的内存不够用时，此时在redis中添加新的key，那么redis会按照某种规则将内存中的数据删除，这种数据删除规则被称为内存的淘汰策略</p>
-<p>默认的策略是noeviction即不删除任何数据，内存不足直接报错</p>
-<p>LRU:最少最近使用，用当前时间捡起最后一次访问时间，值越大则淘汰优先级越高</p>
-<p>LFU:最少频率使用，统计每个key的使用频率，值越小淘汰优先级越高</p>
-<h2 id="redis分布式锁"><a href="#redis分布式锁" class="headerlink" title="redis分布式锁"></a>redis分布式锁</h2><p>redis中提供了一个命令setnx，由于redis是单线程的，用了命令之后只能由一个客户端对一个key设置值，在没有过期或删除key的时候其他客户端是不允许设置这个key的。</p>
-<p>如何控制redis实现分布式锁的有效时长：使用redis的框架redisson实现。											在redisson中需要手动加锁，并且可以控制锁的失效时间与等待时间，当锁住的业务还没有执行完成时，在redisson中引入看门狗机制，每隔一段时间就检查当前业务是否还持有锁，若持有锁就增加锁持续时间，没有就释放锁。</p>
-<p>redisson实现的分布式锁可以重入吗：可以																							                     这样做是为了避免死锁的产生。重入其实在内部就是判断是否是当前线程持有的锁，若是就会计数加1，如果释放就会减1，在存储数据时用的是hash结构</p>
-<p>redisson实现的分布式锁不能解决主从一致的问题。</p>
-<h2 id="redis的集群方案"><a href="#redis的集群方案" class="headerlink" title="redis的集群方案"></a>redis的集群方案</h2><p>有三种：主从复制、哨兵模式与redis分片集群</p>
-<p>1.主从复制：单节点的redis的并发能力是有上限的，要进一步提高redis的并发能力可以搭建主从集群，实现读写分离。一般是一主多从，主节点负责写操作，从节点负责读操作。主节点写入数据后需要把数据同步到从节点中。</p>
-<p>​				主从同步的流程：分为两个阶段，全量同步与增量同步。</p>
-<p>​				全量同步是指从节点第一次与主节点建立连接时使用全量同步</p>
-<p>​				a.从节点请求主节点同步数据，其中从节点会携带自己的replication与offset</p>
-<p>​				b.主节点判断是否是第一次请求,主要判断的依据是主节点与从节点是否是同一个replication,如果不是就说明是第一次同步,主节点会把自己的replication id 与offset发送给从节点,让从节点与主节点的信息保持一致	</p>
-<p>​				c.同时主节点会执行bgsave,生成rdb文件后,发送给从节点去执行,从节点先把自己的数据清空,然后执行主节点发送过来的rdb文件,这样就保持了一致.</p>
-<p>​				注意:在rdb文件生成执行期间,依然有请求到了主节点,而主节点会以命令的方式记录到缓冲区,缓冲区是一个日志文件,最后把这个日志文件发送给从节点,这样就能保证主从节点完全一致,后期再同步数据时都是以来这个日志文件</p>
-<p>​				增量同步是指从节点服务重启之后数据就不一致了,所以这时,从节点会请求主节点同步数据,主节点还是判断是否为第一次请求,不是第一次就获取从节点的offset值,然后主节点从命令日志中获取offset值之后的数据发送给从节点进行数据同步</p>
-<h2 id="redis的底层数据结构"><a href="#redis的底层数据结构" class="headerlink" title="redis的底层数据结构"></a>redis的底层数据结构</h2><p>有五种:String、List、Hash、Sorted Set与Set</p>
-<h2 id="redis多路IO服用底层-NIO-即相关IO"><a href="#redis多路IO服用底层-NIO-即相关IO" class="headerlink" title="redis多路IO服用底层(NIO)即相关IO"></a>redis多路IO服用底层(NIO)即相关IO</h2><p>同步、异步、阻塞与非阻塞IO的区别</p>
-<p>1.同步 IO 是用户线程发起 IO 请求后，需要等待或轮询内核 IO 操作完成后才能继续执行。</p>
-<p>2.异步IO是用户发起IO请求后可以继续执行,当内核IO操作完成后会通知用户线程或调用用户线程注册的回调函数</p>
-<p>3.阻塞IO指当一个线程调用read（）或write（）时，该线程被阻塞，直到有一些数据被读取或写入，该线程在此期间不能执行其他任务。因此，在完成网络通信进行IO操作时，由于线程会阻塞，所以服务器端必须为每个客户端都提供一个独立的线程进行处理，当服务器端需要处理大量客户端时，性能急剧下降。 </p>
-<p>4.非阻塞IO指当线程从某通道进行读写数据时，若没有数据可用时，该线程可以进行其他任务。线程通常将非阻塞IO的空闲时间用于在其他通道上执行IO操作，所以单独的线程可以管理多个输入和输出通道。</p>
-<p>redis使用I&#x2F;O多路复用结合事件的处理器来应对多个Socket请求</p>
-<p>（1）连接应答处理器</p>
-<p>（2）命令回复处理器，在Redis6.0之后，为了提升更好的性能，使用了多线程来处理回复事件</p>
-<p>（3）命令请求处理器，在Redis6.0之后，将命令的转换使用了多线程，增加命令转换速度，在命令执行的时候，依然是单线程</p>
-<p>​     <img src="/../images/redis/image-20240807154902387.png" alt="image-20240807154902387" title="redis多路复用图片"></p>
-<p>经典例子</p>
-<p>有一个经典的举例：烧开水，假设有这么一个场景，有一排水壶（客户）在烧水。</p>
-<p>AIO的做法是，每个水壶上装一个开关，当水开了以后会提醒对应的线程去处理。 NIO的做法是，叫一个线程不停的循环观察每一个水壶，根据每个水壶当前的状态去处理。</p>
-<p>BIO的做法是，叫一个线程停留在一个水壶那，直到这个水壶烧开，才去处理下一个水壶。</p>
-<p>可以看出AIO是最聪明省力，NIO相对省力，叫一个人就能看所有的壶，BIO最愚蠢，劳动力低下。简单的描述一下BIO的服务端通信模型：采用BIO通信模型的服务端，通常由一个独立的Acceptor线程负责监听客户端的连接，它接收到客户端连接请求之后为每个客户端创建一个新的线程进行链路处理 处理完成后，通过输出流返回应答给客户端，线程销毁。即典型的一请求一应答通信模型。</p>
+                <h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h2><p>最常用的网络分层协议是分为5层的TCP&#x2F;IP网络模型</p>
+<p>应用层：应用层是我们接触的应用软件，负责把数据传给传输层</p>
+<p>传输层：有两个传输协议TCP与UDP，应用层数据过大时，会分块成TCP段；且传输层报文中会携带端   				口号</p>
+<p>网络层：网络层常用协议是IP协议，将上述报文加上ip地址，如果数据量过大还会进行分片</p>
+<p>数据链路层：专门用于标识网络中的设备即MAC地址，用于中间传输</p>
+<p>物理层：为数据链路层提供二进制传输的服务</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E7%BD%91%E7%BB%9C.png" alt="image-20240807193704019"></p>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>http是超文本传输协议，是一个在计算机世界里专门在两点之间传输文字图片等超文本数据的约定和规范。</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E4%BA%94%E5%A4%A7%E7%8A%B6%E6%80%81%E7%A0%81.png" alt="五大状态码"></p>
+<h1 id="HTTP与HTTPS的区别"><a href="#HTTP与HTTPS的区别" class="headerlink" title="HTTP与HTTPS的区别"></a>HTTP与HTTPS的区别</h1><ol>
+<li>HTTP是明文传输，存在安全风险问题。HTTPS则解决HTTP不安全的缺陷，再TCP和HTTP网络层之间加入了SSL&#x2F;TLS安全协议，使得报文能够加密传输。</li>
+<li>HTTP建立连接相对会简单，TCP三次握手之后便可以进行HTTP得报文传输。而HTTPS在TCP三次握手之后还需要进行SSL&#x2F;TLS的握手过程才可以加密报文传输</li>
+<li>HTTP端口号是80，HTTPS端口号是443</li>
+<li>HTTPS协议需要向证书权威机构申请数字证书来保证服务器的身份是可信的。需要收费。<img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/HTTP%E4%B8%8EHTTPS%E5%8C%BA%E5%88%AB.png" alt="HTTP与HTTPS区别"></li>
+</ol>
+<p>http由于明文传输存在安全风险。而HTTPS通过混合加密的方式实现了信息的机密性，解决了窃听的风险；通过摘要算法的方式实现了完整性，能够为数据生成独一无二的指纹，指纹用于校验数据的完整性，解决了篡改的风险。将服务器公匙放入到了数字证书中，解决了冒充的风险。</p>
+<h1 id="HTTP1-0、HTTP1-1、HTTP2-0和HTTP3-0的区别"><a href="#HTTP1-0、HTTP1-1、HTTP2-0和HTTP3-0的区别" class="headerlink" title="HTTP1.0、HTTP1.1、HTTP2.0和HTTP3.0的区别"></a>HTTP1.0、HTTP1.1、HTTP2.0和HTTP3.0的区别</h1><h3 id="a-http1-0："><a href="#a-http1-0：" class="headerlink" title="a.http1.0："></a>a.http1.0：</h3><p>i.特点：短连接，每次浏览器请求都需和服务器建立一个TCP连接，而且是串行请求，即等服务器恢复了再发送</p>
+<p>ii.缺点：增加了连接的建立和释放的开销</p>
+<p>iii.为什么要用短连接:因为以前上网只是浏览网页，用户无需发送太多请求，交互不频繁，如果长时间占用一个连接，高并发情况下资源容易被浪费</p>
+<h3 id="b-http1-1："><a href="#b-http1-1：" class="headerlink" title="b.http1.1："></a>b.http1.1：</h3><p>相比于1.0新增了哪些功能？</p>
+<p>1.提出了长连接的通信方式，只要任意一方没有明确提出断开连接则保持TCP连接状态</p>
+<p>2.长连接的方式使得管道网络传输成为了可能。在同一个TCP连接里面，客户端可以发起多个请求，只要第一个请求发出去了，不必等其回来，就可以发送第二个请求出去可以减少整体的响应时间</p>
+<p>3.增加了host字段。1.0认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名。而虚拟主机技术的发展，一台物理服务器上有多个虚拟主机共享一个IP于是增加了host字段区分</p>
+<p>存在的缺点：</p>
+<p>队头阻塞：长连接实现了管道网络传输，客户端可以发起多个请求，可是服务端还是按照顺序先回应A的请求，完成后在回应B的请求。要是前面的回应特别慢，后面就有许多请求排队等着。这成为队头阻塞。而且没有请求优先级控制，请求只能从客户端开始，服务端只能被动响应。</p>
+<h3 id="c-http2-0"><a href="#c-http2-0" class="headerlink" title="c.http2.0"></a>c.http2.0</h3><p>i.HTTP2.0协议是基于HTTPS的，所以HTTP2.0的安全性高</p>
+<p>ii.相比于1.1的性能改进：</p>
+<p>1.引入二进制分帧层。HTTP2.0不再像HTTP1.1里纯文本形式的报文，而是使用二进制格式，头信息和和数据体都是二进制，并且统称为帧<img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/1.1%E4%B8%8E2.0%E5%8C%BA%E5%88%AB.png" alt="1.1与2.0区别"></p>
+<p>（‌报文是‌计算机网络中用于交换信息的基本单位，它包含了站点一次性要发送的完整数据信息）</p>
+<p>2.头部压缩。HTTP2.0会压缩头（Header）如果你同时发出多个请求，他们的头是一样的或者是近似的，那么协议会帮你消除重复部分。</p>
+<p>3.使用了多路复用技术。HTTP2.0是可以在一个连接中并发多个请求或回应，而不用按照顺序一一对应。移除了HTTP1.1中的串行请求，不需要排队等待，也就不会再出现队头阻塞问题。</p>
+<p>4.HTTP2.0的数据包不是按顺序发送的，同一个连接里面连续的数据包可能属于不同的回应。因此，必须要对数据包做标记，指出它属于哪个回应。规定客户端发出的数据流编号为奇数，服务器发出的数据流编号为偶数。</p>
+<p>5.服务器可以主动向客户端发送消息。</p>
+<p>iii.缺点</p>
+<p>HTTP2.0多个HTTP请求复用一个TCP连接，一旦发生丢包就会阻塞住所有的HTTP请求</p>
+<h3 id="HTTP3-0"><a href="#HTTP3-0" class="headerlink" title="HTTP3.0"></a>HTTP3.0</h3><p>将TCP协议改为UDP协议，UDP无队头阻塞；UDP 是不可靠传输的，但基于 UDP 的 QUIC 协议（谷歌提出） 可以实现类似 TCP 的可靠性传输。</p>
+<h2 id="TCP和UDP的区别"><a href="#TCP和UDP的区别" class="headerlink" title="TCP和UDP的区别"></a>TCP和UDP的区别</h2><p>1.连接：TCP面向连接，UDP面向无连接</p>
+<p>2.服务对象：TCP一对一，UDP一对一、一对多与多对多</p>
+<p>3.可靠性：TCP可靠，UDP尽全力交付</p>
+<p>4.TCP拥有拥塞控制与流量控制</p>
+<p>5.TCP的头部开销比UDP大</p>
+<h2 id="TCP的三次握手"><a href="#TCP的三次握手" class="headerlink" title="TCP的三次握手"></a>TCP的三次握手</h2><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="TCP三次握手"></p>
+<p>为什么要三次握手，而不是二次、四次？</p>
+<ol>
+<li><strong>三次握⼿才可以阻⽌重复历史连接的初始化（主要原因）</strong></li>
+<li>三次握⼿才可以同步双⽅的初始序列号</li>
+<li>三次握⼿才可以避免资源浪费</li>
+</ol>
+<p>两次握手无法阻止上述问题，四次握手中的服务器端回复数据ACK+SYN可以合并发送，因可以算作三次握手</p>
+<p>为什么每次建立TCP连接初始序列号都不一样？<strong>防止接受历史报文</strong></p>
+<p>如果已经建立了连接但是客户端突然出现了故障怎么办？</p>
+<p>TCP有保活机制。定义一个时间段，在这个时间段内如果没有任何连接相关的活动，TCP保活机制开始作用，每隔一个时间段会发送一个探测报文，该探测报文包含的数据非常少，如果连续几个探测报文都没有得到响应就认为当前的TCP连接已经死亡。</p>
+<h2 id="TCP的四次挥手断开连接"><a href="#TCP的四次挥手断开连接" class="headerlink" title="TCP的四次挥手断开连接"></a>TCP的四次挥手断开连接</h2><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="TCP四次挥手"></p>
+<p>双方都可以主动断开连接。</p>
+<ol>
+<li>为什么需要四次挥手？<ol>
+<li>发起断开时，客户端向服务端发送 FIN 报文，客户端此时不发能收；</li>
+<li>服务器端收到 FIN，<strong>先返回 ACK应答报文</strong>，然后服务器可能<strong>要处理和发送数据</strong>，等服务器端呢不在发送时，才发送 FIN 报文给客户端表示同意现在关闭。</li>
+<li>由此可知，服务器端的回复ACK+FIN间隔可能要处理数据，要分开发送，所以要四次握手</li>
+</ol>
+</li>
+<li>为什么需要 TIME_WAIT 状态？<ol>
+<li><strong>防⽌具有相同「四元组」的「旧」数据包被收到</strong>；</li>
+<li>保证「被动关闭连接」的⼀⽅能被正确的关闭，即保证最后的 ACK 能让被动关闭⽅接收，从⽽帮助其正常关闭；</li>
+</ol>
+</li>
+<li>为什么 TIME_WAIT 等待的时间是 2MSL？<ol>
+<li>MSL 是 Maximum Segment Lifetime，<strong>报⽂最⼤⽣存时间</strong>，它是任何报⽂在⽹络上存在的最⻓时间，超过这个时间报⽂将被丢弃。</li>
+<li>TIME_WAIT是客户端收到服务器端的 FIN 报文后发送 ACK 开始计时的，如果服务器端没收到ACK，则会重发 FIN报文，客户端收到重发的报文，则2MSL会重新计时。服务器端FIN + 客户端ACK一来一回正好2个MSL。</li>
+</ol>
+</li>
+</ol>
+<h2 id="SYN泛洪攻击"><a href="#SYN泛洪攻击" class="headerlink" title="SYN泛洪攻击"></a>SYN泛洪攻击</h2><p>TCP 连接建立是需要三次握手,假设攻击者短时间伪造不同 IP 地址的 SYN 报文,服务端每接收到 一个 SYN 报文,就进入 SYN_RCVD 状态,但服务端发送出去的 ACK + SYN 报文,无法得到未知 IP 主机的ACK 应答,久而久之就会占满服务端的 SYN 接收队列(未连接队列),使得服务器不能为正常用户服务。<br>处理方法是通过防火墙，或者增大半连接队列，缩短超时时间。</p>
+<h2 id="流量控制与拥塞控制"><a href="#流量控制与拥塞控制" class="headerlink" title="流量控制与拥塞控制"></a>流量控制与拥塞控制</h2><ol>
+<li><p>流量控制</p>
+<ol>
+<li><p>问题：发送⽅不能⽆脑的发数据给接收⽅，要考虑接收⽅处理能⼒。</p>
+<p>为了解决这种现象发⽣，<strong>TCP 提供⼀种机制可以让「发送⽅」根据「接收⽅」的实际接收能⼒控制发送的数据量，即流量控制。</strong></p>
+</li>
+<li><p><strong>TCP中的流量控制主要基于滑动窗口机制来实现，也有助于避免网络拥塞。通过限制发送速率，流量控制可以防止发送方发送过多的数据，导致网络拥塞。</strong></p>
+</li>
+</ol>
+</li>
+<li><p>拥塞控制</p>
+<ol>
+<li>流量控制是避免「发送⽅」的数据填满「接收⽅」的缓存，但是并不知道⽹络的中发⽣了什么。<strong>在⽹络出现拥堵时，如果继续发送⼤量数据包，可能会导致数据包时延、丢失等，这时 TCP 就会重传数据，但是⼀重传就会导致⽹络的负担更重，于是会导致更⼤的延迟以及更多的丢包，这个情况就会进⼊恶性循环被不断地放⼤</strong></li>
+<li>于是引入<strong>拥塞控制</strong>，⽬的就是<strong>避免「发送⽅」的数据填满整个⽹络。</strong></li>
+</ol>
+</li>
+</ol>
 
                 
             </div>
@@ -448,7 +472,7 @@ redis缓存穿透当一个key过期时大量的请">
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://awjyc.github.io/2024/06/06/redis/">https://awjyc.github.io/2024/06/06/redis/</a>
+                    <a href="https://awjyc.github.io/2024/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/">https://awjyc.github.io/2024/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -486,8 +510,8 @@ redis缓存穿透当一个key过期时大量的请">
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%85%AB%E8%82%A1/">
-                                    <span class="chip bg-color">八股</span>
+                                <a href="/tags/%E5%85%AB%E8%82%A1%E6%96%87/">
+                                    <span class="chip bg-color">八股文</span>
                                 </a>
                             
                         </div>
@@ -537,13 +561,13 @@ redis缓存穿透当一个key过期时大量的请">
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/">
+                <a href="/2024/08/06/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="计算机网络相关">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="我的第一个博客">
                         
-                        <span class="card-title">计算机网络相关</span>
+                        <span class="card-title">我的第一个博客</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -554,7 +578,7 @@ redis缓存穿透当一个key过期时大量的请">
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-08-06
                         </span>
                         <span class="publish-author">
                             
@@ -565,21 +589,13 @@ redis缓存穿透当一个key过期时大量的请">
                     </div>
                 </div>
                 
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%85%AB%E8%82%A1%E6%96%87/">
-                        <span class="chip bg-color">八股文</span>
-                    </a>
-                    
-                </div>
-                
             </div>
         </div>
         
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2024/06/06/redis/">
@@ -609,7 +625,6 @@ redis缓存穿透当一个key过期时大量的请">
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
