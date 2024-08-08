@@ -362,14 +362,14 @@
 <p>网络层：网络层常用协议是IP协议，将上述报文加上ip地址，如果数据量过大还会进行分片</p>
 <p>数据链路层：专门用于标识网络中的设备即MAC地址，用于中间传输</p>
 <p>物理层：为数据链路层提供二进制传输的服务</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E7%BD%91%E7%BB%9C.png" alt="image-20240807193704019"></p>
+<p><img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E7%BD%91%E7%BB%9C.png" alt="image-20240807193704019"></p>
 <h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>http是超文本传输协议，是一个在计算机世界里专门在两点之间传输文字图片等超文本数据的约定和规范。</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E4%BA%94%E5%A4%A7%E7%8A%B6%E6%80%81%E7%A0%81.png" alt="五大状态码"></p>
+<p><img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E4%BA%94%E5%A4%A7%E7%8A%B6%E6%80%81%E7%A0%81.png" alt="五大状态码"></p>
 <h1 id="HTTP与HTTPS的区别"><a href="#HTTP与HTTPS的区别" class="headerlink" title="HTTP与HTTPS的区别"></a>HTTP与HTTPS的区别</h1><ol>
 <li>HTTP是明文传输，存在安全风险问题。HTTPS则解决HTTP不安全的缺陷，再TCP和HTTP网络层之间加入了SSL&#x2F;TLS安全协议，使得报文能够加密传输。</li>
 <li>HTTP建立连接相对会简单，TCP三次握手之后便可以进行HTTP得报文传输。而HTTPS在TCP三次握手之后还需要进行SSL&#x2F;TLS的握手过程才可以加密报文传输</li>
 <li>HTTP端口号是80，HTTPS端口号是443</li>
-<li>HTTPS协议需要向证书权威机构申请数字证书来保证服务器的身份是可信的。需要收费。<img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/HTTP%E4%B8%8EHTTPS%E5%8C%BA%E5%88%AB.png" alt="HTTP与HTTPS区别"></li>
+<li>HTTPS协议需要向证书权威机构申请数字证书来保证服务器的身份是可信的。需要收费。<img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/HTTP%E4%B8%8EHTTPS%E5%8C%BA%E5%88%AB.png" alt="HTTP与HTTPS区别"></li>
 </ol>
 <p>http由于明文传输存在安全风险。而HTTPS通过混合加密的方式实现了信息的机密性，解决了窃听的风险；通过摘要算法的方式实现了完整性，能够为数据生成独一无二的指纹，指纹用于校验数据的完整性，解决了篡改的风险。将服务器公匙放入到了数字证书中，解决了冒充的风险。</p>
 <h1 id="HTTP1-0、HTTP1-1、HTTP2-0和HTTP3-0的区别"><a href="#HTTP1-0、HTTP1-1、HTTP2-0和HTTP3-0的区别" class="headerlink" title="HTTP1.0、HTTP1.1、HTTP2.0和HTTP3.0的区别"></a>HTTP1.0、HTTP1.1、HTTP2.0和HTTP3.0的区别</h1><h3 id="a-http1-0："><a href="#a-http1-0：" class="headerlink" title="a.http1.0："></a>a.http1.0：</h3><p>i.特点：短连接，每次浏览器请求都需和服务器建立一个TCP连接，而且是串行请求，即等服务器恢复了再发送</p>
@@ -383,7 +383,7 @@
 <p>队头阻塞：长连接实现了管道网络传输，客户端可以发起多个请求，可是服务端还是按照顺序先回应A的请求，完成后在回应B的请求。要是前面的回应特别慢，后面就有许多请求排队等着。这成为队头阻塞。而且没有请求优先级控制，请求只能从客户端开始，服务端只能被动响应。</p>
 <h3 id="c-http2-0"><a href="#c-http2-0" class="headerlink" title="c.http2.0"></a>c.http2.0</h3><p>i.HTTP2.0协议是基于HTTPS的，所以HTTP2.0的安全性高</p>
 <p>ii.相比于1.1的性能改进：</p>
-<p>1.引入二进制分帧层。HTTP2.0不再像HTTP1.1里纯文本形式的报文，而是使用二进制格式，头信息和和数据体都是二进制，并且统称为帧<img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/1.1%E4%B8%8E2.0%E5%8C%BA%E5%88%AB.png" alt="1.1与2.0区别"></p>
+<p>1.引入二进制分帧层。HTTP2.0不再像HTTP1.1里纯文本形式的报文，而是使用二进制格式，头信息和和数据体都是二进制，并且统称为帧<img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/1.1%E4%B8%8E2.0%E5%8C%BA%E5%88%AB.png" alt="1.1与2.0区别"></p>
 <p>（‌报文是‌计算机网络中用于交换信息的基本单位，它包含了站点一次性要发送的完整数据信息）</p>
 <p>2.头部压缩。HTTP2.0会压缩头（Header）如果你同时发出多个请求，他们的头是一样的或者是近似的，那么协议会帮你消除重复部分。</p>
 <p>3.使用了多路复用技术。HTTP2.0是可以在一个连接中并发多个请求或回应，而不用按照顺序一一对应。移除了HTTP1.1中的串行请求，不需要排队等待，也就不会再出现队头阻塞问题。</p>
@@ -397,7 +397,7 @@
 <p>3.可靠性：TCP可靠，UDP尽全力交付</p>
 <p>4.TCP拥有拥塞控制与流量控制</p>
 <p>5.TCP的头部开销比UDP大</p>
-<h2 id="TCP的三次握手"><a href="#TCP的三次握手" class="headerlink" title="TCP的三次握手"></a>TCP的三次握手</h2><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="TCP三次握手"></p>
+<h2 id="TCP的三次握手"><a href="#TCP的三次握手" class="headerlink" title="TCP的三次握手"></a>TCP的三次握手</h2><p><img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="TCP三次握手"></p>
 <p>为什么要三次握手，而不是二次、四次？</p>
 <ol>
 <li><strong>三次握⼿才可以阻⽌重复历史连接的初始化（主要原因）</strong></li>
@@ -408,7 +408,7 @@
 <p>为什么每次建立TCP连接初始序列号都不一样？<strong>防止接受历史报文</strong></p>
 <p>如果已经建立了连接但是客户端突然出现了故障怎么办？</p>
 <p>TCP有保活机制。定义一个时间段，在这个时间段内如果没有任何连接相关的活动，TCP保活机制开始作用，每隔一个时间段会发送一个探测报文，该探测报文包含的数据非常少，如果连续几个探测报文都没有得到响应就认为当前的TCP连接已经死亡。</p>
-<h2 id="TCP的四次挥手断开连接"><a href="#TCP的四次挥手断开连接" class="headerlink" title="TCP的四次挥手断开连接"></a>TCP的四次挥手断开连接</h2><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="TCP四次挥手"></p>
+<h2 id="TCP的四次挥手断开连接"><a href="#TCP的四次挥手断开连接" class="headerlink" title="TCP的四次挥手断开连接"></a>TCP的四次挥手断开连接</h2><p><img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="TCP四次挥手"></p>
 <p>双方都可以主动断开连接。</p>
 <ol>
 <li>为什么需要四次挥手？<ol>
@@ -446,6 +446,17 @@
 </ol>
 </li>
 </ol>
+<h2 id="一个网页请求的流程"><a href="#一个网页请求的流程" class="headerlink" title="一个网页请求的流程"></a>一个网页请求的流程</h2><p>1.浏览器输入网址，解析URL，确定Web服务器和文件名，根据这些信息生成HTTP请求消息；</p>
+<p>2.通过DNS域名解析查询服务器域名对应的IP</p>
+<p>3.把HTTP请求命令交给操作系统的协议栈（此部分包含传输层TCP&#x2F;UDP和网络层IP）</p>
+<p>4.TCP首先进行三次握手建立连接，然后TCP对HTTP请求信息进行拆分并添加TCP头部</p>
+<p>5.IP模块负责将上述数据封装成网络包（添加IP头部）发送给通信对象</p>
+<p>6.生成IP头部后，在前面再加入MAC头部，用于两点传输</p>
+<p>7.利用网卡和网卡驱动程序将二进制的网络包转成电信号进行传输</p>
+<p>8.交换机根据MAC地址表查找MAC地址，然后将信号发送到相应的端口</p>
+<p>9.网络包经过交换机之后，到达路由器并在此被转发到下一个路由器或目标设备</p>
+<p>10.客户端和服务端对数据进行确认解析</p>
+<p>11.客户端处理完数据后向服务器发起了TCP四次挥手，至此双方的连接就断开了</p>
 
                 
             </div>
