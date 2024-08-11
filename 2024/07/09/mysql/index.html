@@ -4,10 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis八股, 涡虫人">
-    <meta name="description" content="Redisredis缓存击穿查询一个不存在的数据，mysql查询不到就一直写入不进缓存，所以导致每次都查询数据库
-解决方案：1.布隆过滤器   2.可以缓存空数据，查询返回结果为空也一样进行缓存
-redis缓存穿透当一个key过期时大量的请">
+    <meta name="keywords" content="mysql, 涡虫人">
+    <meta name="description" content="Mysql如何定位慢查询1.运维工具skywalking
+2.mysql自带的慢日志查询，可设置时间
+SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
+1.通过key与key-len检查是否命中了索引，若本身已经添加了索">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +20,7 @@ redis缓存穿透当一个key过期时大量的请">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Redis八股 | 涡虫人</title>
+    <title>mysql | 涡虫人</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -290,12 +291,12 @@ redis缓存穿透当一个key过期时大量的请">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis八股</h1>
+                    <h1 class="description center-align post-title">mysql</h1>
                 </div>
             </div>
         </div>
@@ -319,8 +320,8 @@ redis缓存穿透当一个key过期时大量的请">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%85%AB%E8%82%A1/">
-                                <span class="chip bg-color">八股</span>
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                <span class="chip bg-color">数据库</span>
                             </a>
                         
                     </div>
@@ -335,7 +336,7 @@ redis缓存穿透当一个key过期时大量的请">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-06-06
+                    2024-07-09
                 </div>
                 
 
@@ -356,72 +357,96 @@ redis缓存穿透当一个key过期时大量的请">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="redis缓存击穿"><a href="#redis缓存击穿" class="headerlink" title="redis缓存击穿"></a>redis缓存击穿</h2><p>查询一个不存在的数据，mysql查询不到就一直写入不进缓存，所以导致每次都查询数据库</p>
-<p>解决方案：1.布隆过滤器   2.可以缓存空数据，查询返回结果为空也一样进行缓存</p>
-<h2 id="redis缓存穿透"><a href="#redis缓存穿透" class="headerlink" title="redis缓存穿透"></a>redis缓存穿透</h2><p>当一个key过期时大量的请求查询，这些瞬间大量的请求可能会压垮数据库</p>
-<p>解决方案：1.使用互斥锁：当缓存失效时，不立即去load数据库，而是使用redis的setnx设置一个互斥锁，当操作成功返回时再进行load数据库操作并且回设缓存，否则重试get缓存的方法。</p>
-<p>​					特点：一致性强，性能差	</p>
-<p>2.逻辑过期：a.设置key的时候，设置一个过期时间字段一块存入缓存中，不给当前key设置过期时间</p>
-<p>​					b.当查询时判断是否过期</p>
-<p>​					c.过期就开通另一个线程进行数据同步，当前线程正常返回数据，这个数据不是最新</p>
-<p>​						特点：高可用，一致性差，性能强</p>
-<h2 id="redis缓存雪崩"><a href="#redis缓存雪崩" class="headerlink" title="redis缓存雪崩"></a>redis缓存雪崩</h2><p>同一时间段内大量的key过期或者redis服务宕机，导致大量的请求到达数据库，带来巨大压力</p>
-<p>解决方案：1.给不同的key的过期时间添加随机值</p>
-<p>​					2.利用redis集群提高服务的可用性</p>
-<p>​					3.缓存降级</p>
-<p>​					4.给业务添加多级缓存</p>
-<h2 id="redis双写一致性"><a href="#redis双写一致性" class="headerlink" title="redis双写一致性"></a>redis双写一致性</h2><p>当修改了数据库的数据时也要修改缓存的数据，缓存与数据库的数据要保存一致</p>
-<p>两种方案：</p>
-<p>1.允许延时一致的业务：使用异步通知</p>
-<p>​										a.使用MQ中间件，当更新数据后，通知缓存删除</p>
-<p>​										b.使用canal中间件，不需要修改业务代码，伪装成mysql的一个从节点，											canal通过读取binlog数据更新缓存</p>
-<p>2.要求强一致的业务：使用redisson提供的读写锁</p>
-<p>​										a.共享锁：读锁readlock，加锁之后，其他线程可以共享读操作</p>
-<p>​										b.排他锁：独占writelock，加锁之后，阻塞其他线程读写操作</p>
-<h2 id="redis持久化"><a href="#redis持久化" class="headerlink" title="redis持久化"></a>redis持久化</h2><p>当redis实例故障重启后还能获得数据</p>
-<p>两种方式：</p>
-<p>1.RDB:一个快照文件，把redis内存存储的数据写至磁盘上，当redis实例宕机恢复时，从磁盘的rdb快照文件中恢复数据</p>
-<p>2.AOF:是追加文件，当redis操作写命令时，都会存储在这个文件中，当redis实例宕机恢复时，会从这个文件中再次执行一遍命令来恢复数据</p>
-<p>这两种方式哪个快？</p>
-<p>RDB是二进制文件，体积较小，恢复的比较快，但是它可能会丢失数据，故也会用AOF来恢复数据，虽然AOF回复慢，但是丢数据的风险会小一些，AOF中设置不同的刷盘策略。</p>
-<h2 id="redis数据过期策略"><a href="#redis数据过期策略" class="headerlink" title="redis数据过期策略"></a>redis数据过期策略</h2><p>有两种需要配合使用：</p>
-<p>1.惰性删除：在设置key的过期时间后，就不去管它，当需要该key时，再检查是否过期，如果过期就删除</p>
-<p>2.定期删除：每隔一段时间就对一些key进行检查，删除里面过期的key</p>
-<p>​					两种模式：slow模式：10hz</p>
-<p>​									    fast模式：频率不固定</p>
-<h2 id="redis数据淘汰策略"><a href="#redis数据淘汰策略" class="headerlink" title="redis数据淘汰策略"></a>redis数据淘汰策略</h2><p>当redis中的内存不够用时，此时在redis中添加新的key，那么redis会按照某种规则将内存中的数据删除，这种数据删除规则被称为内存的淘汰策略</p>
-<p>默认的策略是noeviction即不删除任何数据，内存不足直接报错</p>
-<p>LRU:最少最近使用，用当前时间捡起最后一次访问时间，值越大则淘汰优先级越高</p>
-<p>LFU:最少频率使用，统计每个key的使用频率，值越小淘汰优先级越高</p>
-<h2 id="redis分布式锁"><a href="#redis分布式锁" class="headerlink" title="redis分布式锁"></a>redis分布式锁</h2><p>redis中提供了一个命令setnx，由于redis是单线程的，用了命令之后只能由一个客户端对一个key设置值，在没有过期或删除key的时候其他客户端是不允许设置这个key的。</p>
-<p>如何控制redis实现分布式锁的有效时长：使用redis的框架redisson实现。											在redisson中需要手动加锁，并且可以控制锁的失效时间与等待时间，当锁住的业务还没有执行完成时，在redisson中引入看门狗机制，每隔一段时间就检查当前业务是否还持有锁，若持有锁就增加锁持续时间，没有就释放锁。</p>
-<p>redisson实现的分布式锁可以重入吗：可以																							                     这样做是为了避免死锁的产生。重入其实在内部就是判断是否是当前线程持有的锁，若是就会计数加1，如果释放就会减1，在存储数据时用的是hash结构</p>
-<p>redisson实现的分布式锁不能解决主从一致的问题。</p>
-<h2 id="redis的集群方案"><a href="#redis的集群方案" class="headerlink" title="redis的集群方案"></a>redis的集群方案</h2><p>有三种：主从复制、哨兵模式与redis分片集群</p>
-<p>1.主从复制：单节点的redis的并发能力是有上限的，要进一步提高redis的并发能力可以搭建主从集群，实现读写分离。一般是一主多从，主节点负责写操作，从节点负责读操作。主节点写入数据后需要把数据同步到从节点中。</p>
-<p>​				主从同步的流程：分为两个阶段，全量同步与增量同步。</p>
-<p>​				全量同步是指从节点第一次与主节点建立连接时使用全量同步</p>
-<p>​				a.从节点请求主节点同步数据，其中从节点会携带自己的replication与offset</p>
-<p>​				b.主节点判断是否是第一次请求,主要判断的依据是主节点与从节点是否是同一个replication,如果不是就说明是第一次同步,主节点会把自己的replication id 与offset发送给从节点,让从节点与主节点的信息保持一致	</p>
-<p>​				c.同时主节点会执行bgsave,生成rdb文件后,发送给从节点去执行,从节点先把自己的数据清空,然后执行主节点发送过来的rdb文件,这样就保持了一致.</p>
-<p>​				注意:在rdb文件生成执行期间,依然有请求到了主节点,而主节点会以命令的方式记录到缓冲区,缓冲区是一个日志文件,最后把这个日志文件发送给从节点,这样就能保证主从节点完全一致,后期再同步数据时都是以来这个日志文件</p>
-<p>​				增量同步是指从节点服务重启之后数据就不一致了,所以这时,从节点会请求主节点同步数据,主节点还是判断是否为第一次请求,不是第一次就获取从节点的offset值,然后主节点从命令日志中获取offset值之后的数据发送给从节点进行数据同步</p>
-<h2 id="redis的底层数据结构"><a href="#redis的底层数据结构" class="headerlink" title="redis的底层数据结构"></a>redis的底层数据结构</h2><p>有五种:String、List、Hash、Sorted Set与Set</p>
-<h2 id="redis多路IO服用底层-NIO-即相关IO"><a href="#redis多路IO服用底层-NIO-即相关IO" class="headerlink" title="redis多路IO服用底层(NIO)即相关IO"></a>redis多路IO服用底层(NIO)即相关IO</h2><p>同步、异步、阻塞与非阻塞IO的区别</p>
-<p>1.同步 IO 是用户线程发起 IO 请求后，需要等待或轮询内核 IO 操作完成后才能继续执行。</p>
-<p>2.异步IO是用户发起IO请求后可以继续执行,当内核IO操作完成后会通知用户线程或调用用户线程注册的回调函数</p>
-<p>3.阻塞IO指当一个线程调用read（）或write（）时，该线程被阻塞，直到有一些数据被读取或写入，该线程在此期间不能执行其他任务。因此，在完成网络通信进行IO操作时，由于线程会阻塞，所以服务器端必须为每个客户端都提供一个独立的线程进行处理，当服务器端需要处理大量客户端时，性能急剧下降。 </p>
-<p>4.非阻塞IO指当线程从某通道进行读写数据时，若没有数据可用时，该线程可以进行其他任务。线程通常将非阻塞IO的空闲时间用于在其他通道上执行IO操作，所以单独的线程可以管理多个输入和输出通道。</p>
-<p>redis使用I&#x2F;O多路复用结合事件的处理器来应对多个Socket请求</p>
-<p>（1）连接应答处理器</p>
-<p>（2）命令回复处理器，在Redis6.0之后，为了提升更好的性能，使用了多线程来处理回复事件</p>
-<p>（3）命令请求处理器，在Redis6.0之后，将命令的转换使用了多线程，增加命令转换速度，在命令执行的时候，依然是单线程</p>
-<p>​     <img src="/../images/redis/image-20240807154902387.png" alt="image-20240807154902387" title="redis多路复用图片"></p>
-<p>经典例子</p>
-<p>有一个经典的举例：烧开水，假设有这么一个场景，有一排水壶（客户）在烧水。</p>
-<p>AIO的做法是，每个水壶上装一个开关，当水开了以后会提醒对应的线程去处理。 NIO的做法是，叫一个线程不停的循环观察每一个水壶，根据每个水壶当前的状态去处理。</p>
-<p>BIO的做法是，叫一个线程停留在一个水壶那，直到这个水壶烧开，才去处理下一个水壶。</p>
-<p>可以看出AIO是最聪明省力，NIO相对省力，叫一个人就能看所有的壶，BIO最愚蠢，劳动力低下。简单的描述一下BIO的服务端通信模型：采用BIO通信模型的服务端，通常由一个独立的Acceptor线程负责监听客户端的连接，它接收到客户端连接请求之后为每个客户端创建一个新的线程进行链路处理 处理完成后，通过输出流返回应答给客户端，线程销毁。即典型的一请求一应答通信模型。</p>
+                <h1 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h1><h2 id="如何定位慢查询"><a href="#如何定位慢查询" class="headerlink" title="如何定位慢查询"></a>如何定位慢查询</h2><p>1.运维工具skywalking</p>
+<p>2.mysql自带的慢日志查询，可设置时间</p>
+<h2 id="SQL语句执行慢，如何分析"><a href="#SQL语句执行慢，如何分析" class="headerlink" title="SQL语句执行慢，如何分析"></a>SQL语句执行慢，如何分析</h2><p>采用mysql自带的分析工具EXPLAIN</p>
+<p>1.通过key与key-len检查是否命中了索引，若本身已经添加了索引也可以判断索引是否有失效的情况</p>
+<p>2.通过type字段查看sql是否有进一步的优化空间，是否存在全索引扫描或全盘扫描</p>
+<p>3.通过extra建议判断是否出现了回表的情况，若出现了可以尝试添加索引或修改返回字段来修复</p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>什么是索引？</p>
+<p>1.索引是帮助mysql高效获取数据的数据结构</p>
+<p>2.提高数据检索的效率，降低数据库的IO成本</p>
+<p>3.通过索引列对数据进行排序，降低数据排序的成本，降低了CPU的消耗</p>
+<h2 id="索引的底层数据结构了解过吗"><a href="#索引的底层数据结构了解过吗" class="headerlink" title="索引的底层数据结构了解过吗"></a>索引的底层数据结构了解过吗</h2><p>Mysql的InnoDB引擎采用的是B+树的数据结构来存储</p>
+<p>1.阶数更多，路径更短</p>
+<p>2.磁盘读写代价B+树更低，非叶子节点只存储指针，叶子节点存储数据</p>
+<p>3.由于叶子节点是一个双向链表，所以B+树便于扫库和区间查询</p>
+<h2 id="聚簇（集）索引"><a href="#聚簇（集）索引" class="headerlink" title="聚簇（集）索引"></a>聚簇（集）索引</h2><p>什么是聚簇索引，什么是非聚簇索引？</p>
+<ul>
+<li><p>聚簇索引（聚集索引）：索引结构和数据一起存放的索引，InnoDB 中的主键索引就属于聚簇索引。</p>
+</li>
+<li><p>非聚簇索引（非聚集索引）：索引结构和数据分开存放的索引，二级索引(辅助索引)就属于非聚簇索引。MySQL 的 MyISAM 引擎，不管主键还是非主键，使用的都是非聚簇索引。</p>
+</li>
+<li><p>说明：InnoDB存储引擎主键使用的索引是聚簇（聚集）索引，叶子节点上存储主键值和数据行（数据点），辅助索引叶子节点上存储主键值。Myisam存储引擎中主键使用的索引称为非聚簇索引，因为其和辅助索引的叶子节点上存储的是指向数据的指针。</p>
+</li>
+<li><p>聚簇索引并不是一种索引类型，而是一种数据存储方式。InnoDB中聚簇索引就是按照每张表的主键构造一颗B+树，同时叶子节点中存放的就是整张表的行数据记录，也将聚簇索引的叶子节点称为数据页。这个特性决定了索引组织表中数据也是索引的一部分。</p>
+</li>
+<li><p>辅助索引不会对表中的实际数据进行重新组织，而是在独立的数据结构中存储索引信息，用于加速查询操作</p>
+</li>
+<li><p>辅助索引叶子节点存储的不再是行的物理位置，而是主键值。<strong>通过辅助索引首先找到的是主键值，再通过主键值找到数据行（辅助索引➡️主键索引➡️数据行）</strong></p>
+</li>
+<li><p>两种索引的比较，聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录。</p>
+</li>
+<li><p>不同存储引擎的索引实现方式对于正确使用和优化索引都非常有帮助，例如知道了InnoDB的索引实现后，就很容易明白：</p>
+<ul>
+<li>1、为什么不建议使用过长的字段作为主键，因为所有辅助索引都引用主索引，过长的主索引会令辅助索引变得过大。</li>
+<li>2、用非单调的字段作为主键在InnoDB中不是个好主意，因为InnoDB数据文件本身是一颗B+Tree，非单调的主键会造成在插入新记录时数据文件为了维持B+Tree的特性而频繁的分裂调整，十分低效，而<strong>使用自增字段作为主键则是一个很好的选择</strong>。</li>
+</ul>
+<p>I<strong>nnoDB使用的是聚簇索引，将主键组织到一棵B+树中，而行数据就储存在叶子节点上。</strong></p>
+<p><strong>若使用“where id &#x3D; 14”这样的条件查找主键，则按照B+树的检索算法即可查找到对应的叶节点，之后获得行数据。（主键查找，直接在主索引的B+树上查找叶子结点上的数据）</strong></p>
+<p><strong>若对Name列进行条件搜索，则需要两个步骤：第一步在辅助索引B+树中检索Name，到达其叶子节点获取对应的主键。第二步使用主键在主索引B+树种再执行一次B+树检索操作，最终到达叶子节点即可获取整行数据。（非聚集索引：辅助索引）</strong></p>
+</li>
+</ul>
+<h2 id="回表查询"><a href="#回表查询" class="headerlink" title="回表查询"></a>回表查询</h2><p>通过二级索引找对应的主键值，到聚簇索引中查找整行数据，这个过程就是回表</p>
+<h2 id="什么是覆盖索引"><a href="#什么是覆盖索引" class="headerlink" title="什么是覆盖索引"></a>什么是覆盖索引</h2><p>覆盖索引指查询使用了索引，返回的列必须在索引中全部能够找到</p>
+<p>1.使用id查询，直接走聚簇索引查询，一次索引扫描直接返回数据，性能高</p>
+<p>2.若返回的列中没有创建索引，有可能会触发回表查询，所以尽量避免使用select *</p>
+<h2 id="MySQL超大分页怎么处理"><a href="#MySQL超大分页怎么处理" class="headerlink" title="MySQL超大分页怎么处理"></a>MySQL超大分页怎么处理</h2><p>在数据量比较大时，limit分页查询需要对数据进行排序，效率低</p>
+<p>解决方案：覆盖索引+子查询</p>
+<h2 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h2><p>Mysql可以使用多个字段同时建立一个索引，叫做联合索引。在联合索引中，如果想要命中索引需要按照建立索引时的字段顺序挨个使用，否则无法命中索引。通过联合索引可以有效地加速复杂查询，尤其是在多条件筛选和排序的情况下，不过需要权衡索引带来的查询性能提升与维护索引地开销</p>
+<h2 id="索引创建的原则"><a href="#索引创建的原则" class="headerlink" title="索引创建的原则"></a>索引创建的原则</h2><p>1.数据量较大且查询较频繁的表</p>
+<p>2.常常作为查询条件、排序、分段的字段</p>
+<p>3.字段内容区分度高</p>
+<p>4.尽量使用联合索引</p>
+<p>5.要控制索引的数量，单独的单列索引会增加索引的数量，而联合索引可以减少索引的数量，从而减少维护索引的开销和内存占用。</p>
+<p>6.频繁更新的字段不适合创建索引</p>
+<h2 id="什么情况下索引会失效"><a href="#什么情况下索引会失效" class="headerlink" title="什么情况下索引会失效"></a>什么情况下索引会失效</h2><p>1.违反最左前缀法则</p>
+<p>2.范围查询右边的列，不能使用索引</p>
+<p>3.不要再索引上进行运算操作</p>
+<p>4.字符串不加单引号</p>
+<p>5.以%开头的like模糊查询</p>
+<h2 id="谈一谈对SQL的优化地经验"><a href="#谈一谈对SQL的优化地经验" class="headerlink" title="谈一谈对SQL的优化地经验"></a>谈一谈对SQL的优化地经验</h2><p>1.表的设计优化，数据类型的选择</p>
+<p>2.索引优化，索引创建原则</p>
+<p>3.sql语句优化，避免索引失效，避免使用select*</p>
+<p>4.主从复制、读写分离，不让数据的写入影响读操作</p>
+<p>5.分库分表</p>
+<h2 id="Mysql事务"><a href="#Mysql事务" class="headerlink" title="Mysql事务"></a>Mysql事务</h2><p>四大特性ACID</p>
+<p>1.原子性：事务是不可分割的最小单元，要么全部成功要么全部失败</p>
+<p>2.一致性：事务完成时，必须使所有的数据保持一致的状态</p>
+<p>3.隔离性：数据库系统提供的隔离机制，保证事务在不受外部并发操作影响的独立环境运行</p>
+<p>4.持久性：事务一旦提交或回滚，它对数据库中的数据的改变就是永久的（放入磁盘）</p>
+<h2 id="并发事务带来哪些问题？怎么解决这些问题？Mysql的默认隔离级别是什么？"><a href="#并发事务带来哪些问题？怎么解决这些问题？Mysql的默认隔离级别是什么？" class="headerlink" title="并发事务带来哪些问题？怎么解决这些问题？Mysql的默认隔离级别是什么？"></a>并发事务带来哪些问题？怎么解决这些问题？Mysql的默认隔离级别是什么？</h2><p>1.脏读：一个事务读到另外一个事务还没有提交的数据</p>
+<p>2.不可重复读：一个事务先后读取同一条记录，但两次读取的数据不同</p>
+<p>3.幻读：一个事务按照条件查询数据时，没有对应的数据行，但在插入数据时，又发现这行数据已经存在，好像出现了幻影</p>
+<p>默认策略是RR（REPEATABLE READ）</p>
+<h2 id="MVCC是什么？"><a href="#MVCC是什么？" class="headerlink" title="MVCC是什么？"></a>MVCC是什么？</h2><p>多版本并发控制，维护一个数据的多个版本，使得读写操作没有冲突。</p>
+<p>有三个内容：隐藏字段、undo log和read view</p>
+<p>1.隐藏字段：a.trx-id（事务id），记录每一次操作的事务id，是自增的                                                                       	                  b.roll_pointer（回滚指针），指上一个版本的事务版本记录地址</p>
+<p>2.undo log：a.回滚日志：存储老版本的数据</p>
+<p>​                       b.版本链：多个事务并行操作某一行记录，记录不同事务修改数据的版本，通过roll-                                                pointer指针形成一个链表</p>
+<p>3.read view：解决的是一个事务查询选择版本的问题，根据read view的匹配规则和当前的一些事物id判断该访问哪个版本的数据</p>
+<p>不同的隔离级别快照读是不同的，最终访问的结果不一样</p>
+<p>RC:每一次执行快照读时生成readview</p>
+<p>RR:仅在事务中第一次执行快照读时生成readview后续复用</p>
+<h2 id="Mysql主从同步"><a href="#Mysql主从同步" class="headerlink" title="Mysql主从同步"></a>Mysql主从同步</h2><p>Mysql主从复制的核心就是二进制日志</p>
+<p>二进制文件（binlog）记录了所有的数据定义语言和数据操纵语言，但不包括数据查询语言</p>
+<p>1.主库在事务提交时，会把数据变更记录在二进制日志文件Binlog中</p>
+<p>2.从库读取主库的二进制日志文件Binlog，写入到从库的中继日志RelayLog</p>
+<p>3.从库重做中继日志中的事件，将改变反映它自己的数据</p>
+<h2 id="Mysql三大日志"><a href="#Mysql三大日志" class="headerlink" title="Mysql三大日志"></a>Mysql三大日志</h2><p>1.binlog日志：用于记录数据库执行的写入性操作（更新数据操作，不包括查询）信息，以二进制的形式保存在磁盘中。binlog时mysql的逻辑日志，并且由server层进行记录，使用任何存储引擎的mysql数据库都会记录binlog日志</p>
+<p>2.redo log日志：是InnoDB存储引擎独有的，它让Mysql拥有了崩溃恢复能力，mysql为了保证数据的一致性，最简单的做法就是在每次事务提交的时候将该事务设计修改的数据页全部刷新到磁盘中。但是这样做有严重的性能问题。解决办法是先将数据写入内存中，在批量把内存中的数据统一刷回磁盘。为了避免将数据刷回磁盘过程中，因为掉电或系统故障带来的数据丢失问题，InnoDB采用redolog解决这个问题。</p>
+<p>redelog包括两部分：一个是内存中的日志缓冲（redo log buffer），另一个是磁盘上的日志文件（redo log file）。mysql每执行一条DML语句，先将记录写入redo log buffer，后续某个时间点再一次性将多个操作记录写至redo log file。这种先写日志后写磁盘的技术就是WAL（Write-Ahead Logging）技术。<strong>binlog日志只用于归档，只依靠binlog是没有crash-safe能力的。但只有redo log也不行，因为redo log是InnoDB特有的，且日志上的记录落盘后会被覆盖掉。因此需要binlog和redolog二者同时记录，才能保证当数据库发生宕机重启时，数据不会丢失。</strong></p>
+<p>3.undo log回滚日志：记录了数据的逻辑变化，是实现MVCC的关键。</p>
 
                 
             </div>
@@ -448,7 +473,7 @@ redis缓存穿透当一个key过期时大量的请">
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://awjyc.github.io/2024/06/06/redis/">https://awjyc.github.io/2024/06/06/redis/</a>
+                    <a href="https://awjyc.github.io/2024/07/09/mysql/">https://awjyc.github.io/2024/07/09/mysql/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -486,8 +511,8 @@ redis缓存穿透当一个key过期时大量的请">
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%85%AB%E8%82%A1/">
-                                    <span class="chip bg-color">八股</span>
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                    <span class="chip bg-color">数据库</span>
                                 </a>
                             
                         </div>
@@ -537,6 +562,51 @@ redis缓存穿透当一个key过期时大量的请">
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/2024/08/07/%E8%84%82%E8%82%AA%E8%82%9D%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="脂肪肝项目相关部分">
+                        
+                        <span class="card-title">脂肪肝项目相关部分</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-08-07
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            靳雨晨
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%A1%B9%E7%9B%AE/">
+                        <span class="chip bg-color">项目</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2024/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/">
                     <div class="card-image">
                         
@@ -553,9 +623,9 @@ redis缓存穿透当一个key过期时大量的请">
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-12
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -571,43 +641,6 @@ redis缓存穿透当一个key过期时大量的请">
                         <span class="chip bg-color">八股文</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2024/04/12/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="我的第一个博客">
-                        
-                        <span class="card-title">我的第一个博客</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-12
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            靳雨晨
-                            
-                        </span>
-                    </div>
                 </div>
                 
             </div>
