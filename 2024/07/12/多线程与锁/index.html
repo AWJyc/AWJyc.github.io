@@ -4,11 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="mysql, 涡虫人">
-    <meta name="description" content="Mysql如何定位慢查询1.运维工具skywalking
-2.mysql自带的慢日志查询，可设置时间
-SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
-1.通过key与key-len检查是否命中了索引，若本身已经添加了索">
+    <meta name="keywords" content="多线程与锁, 涡虫人">
+    <meta name="description" content="线程与进程的区别1.进程是正在运行的程序实例，进程中包含了线程，每个线程执行不同的人物
+2.不同的进程使用不同的进程空间，在当前进程下的所有线程可以共享内存空间
+3.线程更轻量，线程上下文切换成本一般比进程上下文切换低（上下文切换一般指从一">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +19,7 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>mysql | 涡虫人</title>
+    <title>多线程与锁 | 涡虫人</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -291,12 +290,12 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">mysql</h1>
+                    <h1 class="description center-align post-title">多线程与锁</h1>
                 </div>
             </div>
         </div>
@@ -320,8 +319,8 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                                <span class="chip bg-color">数据库</span>
+                            <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                <span class="chip bg-color">八股</span>
                             </a>
                         
                     </div>
@@ -336,7 +335,7 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-07-09
+                    2024-07-12
                 </div>
                 
 
@@ -357,96 +356,107 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h1><h2 id="如何定位慢查询"><a href="#如何定位慢查询" class="headerlink" title="如何定位慢查询"></a>如何定位慢查询</h2><p>1.运维工具skywalking</p>
-<p>2.mysql自带的慢日志查询，可设置时间</p>
-<h2 id="SQL语句执行慢，如何分析"><a href="#SQL语句执行慢，如何分析" class="headerlink" title="SQL语句执行慢，如何分析"></a>SQL语句执行慢，如何分析</h2><p>采用mysql自带的分析工具EXPLAIN</p>
-<p>1.通过key与key-len检查是否命中了索引，若本身已经添加了索引也可以判断索引是否有失效的情况</p>
-<p>2.通过type字段查看sql是否有进一步的优化空间，是否存在全索引扫描或全盘扫描</p>
-<p>3.通过extra建议判断是否出现了回表的情况，若出现了可以尝试添加索引或修改返回字段来修复</p>
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>什么是索引？</p>
-<p>1.索引是帮助mysql高效获取数据的数据结构</p>
-<p>2.提高数据检索的效率，降低数据库的IO成本</p>
-<p>3.通过索引列对数据进行排序，降低数据排序的成本，降低了CPU的消耗</p>
-<h2 id="索引的底层数据结构了解过吗"><a href="#索引的底层数据结构了解过吗" class="headerlink" title="索引的底层数据结构了解过吗"></a>索引的底层数据结构了解过吗</h2><p>Mysql的InnoDB引擎采用的是B+树的数据结构来存储</p>
-<p>1.阶数更多，路径更短</p>
-<p>2.磁盘读写代价B+树更低，非叶子节点只存储指针，叶子节点存储数据</p>
-<p>3.由于叶子节点是一个双向链表，所以B+树便于扫库和区间查询</p>
-<h2 id="聚簇（集）索引"><a href="#聚簇（集）索引" class="headerlink" title="聚簇（集）索引"></a>聚簇（集）索引</h2><p>什么是聚簇索引，什么是非聚簇索引？</p>
-<ul>
-<li><p>聚簇索引（聚集索引）：索引结构和数据一起存放的索引，InnoDB 中的主键索引就属于聚簇索引。</p>
-</li>
-<li><p>非聚簇索引（非聚集索引）：索引结构和数据分开存放的索引，二级索引(辅助索引)就属于非聚簇索引。MySQL 的 MyISAM 引擎，不管主键还是非主键，使用的都是非聚簇索引。</p>
-</li>
-<li><p>说明：InnoDB存储引擎主键使用的索引是聚簇（聚集）索引，叶子节点上存储主键值和数据行（数据点），辅助索引叶子节点上存储主键值。Myisam存储引擎中主键使用的索引称为非聚簇索引，因为其和辅助索引的叶子节点上存储的是指向数据的指针。</p>
-</li>
-<li><p>聚簇索引并不是一种索引类型，而是一种数据存储方式。InnoDB中聚簇索引就是按照每张表的主键构造一颗B+树，同时叶子节点中存放的就是整张表的行数据记录，也将聚簇索引的叶子节点称为数据页。这个特性决定了索引组织表中数据也是索引的一部分。</p>
-</li>
-<li><p>辅助索引不会对表中的实际数据进行重新组织，而是在独立的数据结构中存储索引信息，用于加速查询操作</p>
-</li>
-<li><p>辅助索引叶子节点存储的不再是行的物理位置，而是主键值。<strong>通过辅助索引首先找到的是主键值，再通过主键值找到数据行（辅助索引➡️主键索引➡️数据行）</strong></p>
-</li>
-<li><p>两种索引的比较，聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录。</p>
-</li>
-<li><p>不同存储引擎的索引实现方式对于正确使用和优化索引都非常有帮助，例如知道了InnoDB的索引实现后，就很容易明白：</p>
-<ul>
-<li>1、为什么不建议使用过长的字段作为主键，因为所有辅助索引都引用主索引，过长的主索引会令辅助索引变得过大。</li>
-<li>2、用非单调的字段作为主键在InnoDB中不是个好主意，因为InnoDB数据文件本身是一颗B+Tree，非单调的主键会造成在插入新记录时数据文件为了维持B+Tree的特性而频繁的分裂调整，十分低效，而<strong>使用自增字段作为主键则是一个很好的选择</strong>。</li>
-</ul>
-<p>I<strong>nnoDB使用的是聚簇索引，将主键组织到一棵B+树中，而行数据就储存在叶子节点上。</strong></p>
-<p><strong>若使用“where id &#x3D; 14”这样的条件查找主键，则按照B+树的检索算法即可查找到对应的叶节点，之后获得行数据。（主键查找，直接在主索引的B+树上查找叶子结点上的数据）</strong></p>
-<p><strong>若对Name列进行条件搜索，则需要两个步骤：第一步在辅助索引B+树中检索Name，到达其叶子节点获取对应的主键。第二步使用主键在主索引B+树种再执行一次B+树检索操作，最终到达叶子节点即可获取整行数据。（非聚集索引：辅助索引）</strong></p>
-</li>
-</ul>
-<h2 id="回表查询"><a href="#回表查询" class="headerlink" title="回表查询"></a>回表查询</h2><p>通过二级索引找对应的主键值，到聚簇索引中查找整行数据，这个过程就是回表</p>
-<h2 id="什么是覆盖索引"><a href="#什么是覆盖索引" class="headerlink" title="什么是覆盖索引"></a>什么是覆盖索引</h2><p>覆盖索引指查询使用了索引，返回的列必须在索引中全部能够找到</p>
-<p>1.使用id查询，直接走聚簇索引查询，一次索引扫描直接返回数据，性能高</p>
-<p>2.若返回的列中没有创建索引，有可能会触发回表查询，所以尽量避免使用select *</p>
-<h2 id="MySQL超大分页怎么处理"><a href="#MySQL超大分页怎么处理" class="headerlink" title="MySQL超大分页怎么处理"></a>MySQL超大分页怎么处理</h2><p>在数据量比较大时，limit分页查询需要对数据进行排序，效率低</p>
-<p>解决方案：覆盖索引+子查询</p>
-<h2 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h2><p>Mysql可以使用多个字段同时建立一个索引，叫做联合索引。在联合索引中，如果想要命中索引需要按照建立索引时的字段顺序挨个使用，否则无法命中索引。通过联合索引可以有效地加速复杂查询，尤其是在多条件筛选和排序的情况下，不过需要权衡索引带来的查询性能提升与维护索引地开销</p>
-<h2 id="索引创建的原则"><a href="#索引创建的原则" class="headerlink" title="索引创建的原则"></a>索引创建的原则</h2><p>1.数据量较大且查询较频繁的表</p>
-<p>2.常常作为查询条件、排序、分段的字段</p>
-<p>3.字段内容区分度高</p>
-<p>4.尽量使用联合索引</p>
-<p>5.要控制索引的数量，单独的单列索引会增加索引的数量，而联合索引可以减少索引的数量，从而减少维护索引的开销和内存占用。</p>
-<p>6.频繁更新的字段不适合创建索引</p>
-<h2 id="什么情况下索引会失效"><a href="#什么情况下索引会失效" class="headerlink" title="什么情况下索引会失效"></a>什么情况下索引会失效</h2><p>1.违反最左前缀法则</p>
-<p>2.范围查询右边的列，不能使用索引</p>
-<p>3.不要再索引上进行运算操作</p>
-<p>4.字符串不加单引号</p>
-<p>5.以%开头的like模糊查询</p>
-<h2 id="谈一谈对SQL的优化地经验"><a href="#谈一谈对SQL的优化地经验" class="headerlink" title="谈一谈对SQL的优化地经验"></a>谈一谈对SQL的优化地经验</h2><p>1.表的设计优化，数据类型的选择</p>
-<p>2.索引优化，索引创建原则</p>
-<p>3.sql语句优化，避免索引失效，避免使用select*</p>
-<p>4.主从复制、读写分离，不让数据的写入影响读操作</p>
-<p>5.分库分表</p>
-<h2 id="Mysql事务"><a href="#Mysql事务" class="headerlink" title="Mysql事务"></a>Mysql事务</h2><p>四大特性ACID</p>
-<p>1.原子性：事务是不可分割的最小单元，要么全部成功要么全部失败</p>
-<p>2.一致性：事务完成时，必须使所有的数据保持一致的状态</p>
-<p>3.隔离性：数据库系统提供的隔离机制，保证事务在不受外部并发操作影响的独立环境运行</p>
-<p>4.持久性：事务一旦提交或回滚，它对数据库中的数据的改变就是永久的（放入磁盘）</p>
-<h2 id="并发事务带来哪些问题？怎么解决这些问题？Mysql的默认隔离级别是什么？"><a href="#并发事务带来哪些问题？怎么解决这些问题？Mysql的默认隔离级别是什么？" class="headerlink" title="并发事务带来哪些问题？怎么解决这些问题？Mysql的默认隔离级别是什么？"></a>并发事务带来哪些问题？怎么解决这些问题？Mysql的默认隔离级别是什么？</h2><p>1.脏读：一个事务读到另外一个事务还没有提交的数据</p>
-<p>2.不可重复读：一个事务先后读取同一条记录，但两次读取的数据不同</p>
-<p>3.幻读：一个事务按照条件查询数据时，没有对应的数据行，但在插入数据时，又发现这行数据已经存在，好像出现了幻影</p>
-<p>默认策略是RR（REPEATABLE READ）</p>
-<h2 id="MVCC是什么？"><a href="#MVCC是什么？" class="headerlink" title="MVCC是什么？"></a>MVCC是什么？</h2><p>多版本并发控制，维护一个数据的多个版本，使得读写操作没有冲突。</p>
-<p>有三个内容：隐藏字段、undo log和read view</p>
-<p>1.隐藏字段：a.trx-id（事务id），记录每一次操作的事务id，是自增的                                                                       	                  b.roll_pointer（回滚指针），指上一个版本的事务版本记录地址</p>
-<p>2.undo log：a.回滚日志：存储老版本的数据</p>
-<p>​                       b.版本链：多个事务并行操作某一行记录，记录不同事务修改数据的版本，通过roll-                                                pointer指针形成一个链表</p>
-<p>3.read view：解决的是一个事务查询选择版本的问题，根据read view的匹配规则和当前的一些事物id判断该访问哪个版本的数据</p>
-<p>不同的隔离级别快照读是不同的，最终访问的结果不一样</p>
-<p>RC:每一次执行快照读时生成readview</p>
-<p>RR:仅在事务中第一次执行快照读时生成readview后续复用</p>
-<h2 id="Mysql主从同步"><a href="#Mysql主从同步" class="headerlink" title="Mysql主从同步"></a>Mysql主从同步</h2><p>Mysql主从复制的核心就是二进制日志</p>
-<p>二进制文件（binlog）记录了所有的数据定义语言和数据操纵语言，但不包括数据查询语言</p>
-<p>1.主库在事务提交时，会把数据变更记录在二进制日志文件Binlog中</p>
-<p>2.从库读取主库的二进制日志文件Binlog，写入到从库的中继日志RelayLog</p>
-<p>3.从库重做中继日志中的事件，将改变反映它自己的数据</p>
-<h2 id="Mysql三大日志"><a href="#Mysql三大日志" class="headerlink" title="Mysql三大日志"></a>Mysql三大日志</h2><p>1.binlog日志：用于记录数据库执行的写入性操作（更新数据操作，不包括查询）信息，以二进制的形式保存在磁盘中。binlog时mysql的逻辑日志，并且由server层进行记录，使用任何存储引擎的mysql数据库都会记录binlog日志</p>
-<p>2.redo log日志：是InnoDB存储引擎独有的，它让Mysql拥有了崩溃恢复能力，mysql为了保证数据的一致性，最简单的做法就是在每次事务提交的时候将该事务设计修改的数据页全部刷新到磁盘中。但是这样做有严重的性能问题。解决办法是先将数据写入内存中，在批量把内存中的数据统一刷回磁盘。为了避免将数据刷回磁盘过程中，因为掉电或系统故障带来的数据丢失问题，InnoDB采用redolog解决这个问题。</p>
-<p>redelog包括两部分：一个是内存中的日志缓冲（redo log buffer），另一个是磁盘上的日志文件（redo log file）。mysql每执行一条DML语句，先将记录写入redo log buffer，后续某个时间点再一次性将多个操作记录写至redo log file。这种先写日志后写磁盘的技术就是WAL（Write-Ahead Logging）技术。<strong>binlog日志只用于归档，只依靠binlog是没有crash-safe能力的。但只有redo log也不行，因为redo log是InnoDB特有的，且日志上的记录落盘后会被覆盖掉。因此需要binlog和redolog二者同时记录，才能保证当数据库发生宕机重启时，数据不会丢失。</strong></p>
-<p>3.undo log回滚日志：记录了数据的逻辑变化，是实现MVCC的关键。</p>
+                <h2 id="线程与进程的区别"><a href="#线程与进程的区别" class="headerlink" title="线程与进程的区别"></a>线程与进程的区别</h2><p>1.进程是正在运行的程序实例，进程中包含了线程，每个线程执行不同的人物</p>
+<p>2.不同的进程使用不同的进程空间，在当前进程下的所有线程可以共享内存空间</p>
+<p>3.线程更轻量，线程上下文切换成本一般比进程上下文切换低（上下文切换一般指从一个线程到另一个线程）</p>
+<h2 id="并行与并发的区别"><a href="#并行与并发的区别" class="headerlink" title="并行与并发的区别"></a>并行与并发的区别</h2><p>1.并发是指两个或多个事件在同一时间间隔发生，把任务在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E4%B8%8D%E5%90%8C%E7%9A%84&spm=1001.2101.3001.7020">不同的</a>时间点交给处理器进行处理。在同一时间点，任务并不会同时运行。</p>
+<p>2.并行是指两个或者多个事件在同一时刻发生，把每一个<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E4%BB%BB%E5%8A%A1%E5%88%86%E9%85%8D&spm=1001.2101.3001.7020">任务分配</a>给每一个处理器独立完成。在同一时间点，任务一定是同时运行。</p>
+<h2 id="四种创建线程的方式"><a href="#四种创建线程的方式" class="headerlink" title="四种创建线程的方式"></a>四种创建线程的方式</h2><p>1.继承Thread类，重写run方法</p>
+<p>2.实现runable接口，重写run方法</p>
+<p>3.实现callable接口，重写call方法</p>
+<p>4.线程池创建线程</p>
+<h2 id="runable与callable的区别"><a href="#runable与callable的区别" class="headerlink" title="runable与callable的区别"></a>runable与callable的区别</h2><p>1.runable接口run方法无返回值</p>
+<p>2.callable接口call方法有返回值，是个泛型，和future、futuretask配合可以来获取异步执行的结果</p>
+<p>3.callable接口的call方法允许抛出类；而runable接口的run方法的异常只能内部消化，不能继续上抛</p>
+<h2 id="线程的run-与start-有什么区别"><a href="#线程的run-与start-有什么区别" class="headerlink" title="线程的run()与start()有什么区别"></a>线程的run()与start()有什么区别</h2><p>start用来启动线程，通过该线程调用run方法中定义的逻辑代码。start方法只能调用一次</p>
+<p>run方法中封装了要被线程执行的代码，可以被调用多次</p>
+<h2 id="线程包含哪些状态，状态之间是怎么变化的"><a href="#线程包含哪些状态，状态之间是怎么变化的" class="headerlink" title="线程包含哪些状态，状态之间是怎么变化的"></a>线程包含哪些状态，状态之间是怎么变化的</h2><p>1.NEW   新建状态</p>
+<p>2.RUNNABLE   可执行状态</p>
+<p>3.BLOCKED   阻塞状态</p>
+<p>4.WAITING   等待状态</p>
+<p>5.TIMED_WAITING   时间等待状态</p>
+<p>6.TERMINATED   终止状态</p>
+<p>变化：</p>
+<p>1.新建线程是新建状态</p>
+<p>2.调用了start()方法可以变为可执行状态</p>
+<p>3.线程获取到了CPU的执行权，执行结束是终止状态</p>
+<p>4.在可执行状态的过程中如果没有获取CPU的执行权，可能会切换到其他状态</p>
+<p>a.如果没有获取锁就会进入阻塞状态，获取锁才会到可执行状态</p>
+<p>b.如果线程调用了wait()方法就会进入等待状态，其他线程调用notify()唤醒后可切换为可执行状态</p>
+<p>c.如果线程调用了sleep(50)方法，进入计时等待状态，到时间后可切换会可执行状态</p>
+<h2 id="新建T1、T2、T3三个线程，如何保证他们按顺序执行"><a href="#新建T1、T2、T3三个线程，如何保证他们按顺序执行" class="headerlink" title="新建T1、T2、T3三个线程，如何保证他们按顺序执行"></a>新建T1、T2、T3三个线程，如何保证他们按顺序执行</h2><p>可以使用join()方法解决，join()等待线程运行结束</p>
+<h2 id="notify与notifyall的区别"><a href="#notify与notifyall的区别" class="headerlink" title="notify与notifyall的区别"></a>notify与notifyall的区别</h2><p>notify:只随机唤醒一个wait线程</p>
+<p>notifyall:唤醒所有wait线程</p>
+<h2 id="java中的wait和sleep方法有何不同"><a href="#java中的wait和sleep方法有何不同" class="headerlink" title="java中的wait和sleep方法有何不同"></a>java中的wait和sleep方法有何不同</h2><p>共同点：wait()，wait(long),sleep(long)都是让当前线程暂时放弃CPU的使用权，进入阻塞状态</p>
+<p>不同点：</p>
+<p>1.方法归属不同：sleep(long)是Thread的静态方法，wait()与wait(long)都是Object的成员方法，每个对象都有</p>
+<p>2.醒来时机不同：a.执行sleep(long)和wait(long)的线程都会在等待相应毫秒后醒来</p>
+<p>​	                          b.wait(long)和wait()还可以被notify()唤醒，wait()如果不被唤醒就会一致执行下去</p>
+<p>​                              c.它们都可以被打断唤醒</p>
+<p>3.锁特性不同：a.wait()方法的调用必须先获取wait对象的锁，而sleep没有这个限制</p>
+<p>​                          b.wait()方法执行后会释放锁，允许其他线程获得该锁对象</p>
+<p>​                          c.sleep如果在synchronized代码块中执行并不会释放锁</p>
+<h2 id="如何停止一个正在运行的线程"><a href="#如何停止一个正在运行的线程" class="headerlink" title="如何停止一个正在运行的线程"></a>如何停止一个正在运行的线程</h2><p>1.使用退出标志，使线程正常退出，也就是当run方法完成后线程中止</p>
+<p>2.使用stop方法强行中止</p>
+<p>3.使用interrupt方法中断线程</p>
+<h2 id="synchronized关键字的底层原理"><a href="#synchronized关键字的底层原理" class="headerlink" title="synchronized关键字的底层原理"></a>synchronized关键字的底层原理</h2><p>1.synchronized[对象锁]采用互斥的方式让同一时刻至多只有一个线程能持有[对象锁]</p>
+<p>2.它的底层由moniter实现，moniter是jvm级别的对象，线程获得锁需要使用对象锁关联moniter</p>
+<p>3.在monitor内部有三个属性，分别是owner、entrylist与waitset</p>
+<p>4.其中owner是关联的获得锁的线程，并且只能关联一个线程；entrylist关联的是出于阻塞状态的线程；waitset关联的是出于waiting状态的线程</p>
+<h2 id="锁升级（锁膨胀）"><a href="#锁升级（锁膨胀）" class="headerlink" title="锁升级（锁膨胀）"></a>锁升级（锁膨胀）</h2><p>指synchronized从无锁升级到偏向锁、再到轻量级锁最后到重量级锁的过程。java中的synchronized有偏向锁、轻量级锁、重量级锁三种形式，分别对应了锁只被一个线程持有、不同线程交替持有、多线程竞争锁三种情况</p>
+<p>1.重量级锁：底层使用monitor实现，里面涉及到了用户态和内核态的切换，进程的上下文切换，成本比较高</p>
+<p>2.轻量级锁：线程加锁的时间是错开的（也就是没有竞争），可以使用轻量级锁来优化。轻量级修改了对象头的锁标志，相对重量级锁性能提升很多。每次修改都是CAS操作，保证了原子性。</p>
+<p>3.偏向锁：一段很长的时间内都是只被一个线程使用锁，可以使用了偏向锁，在第一次获得锁时，会有一个CAS操作，之后该线程再获得锁，只需要判断markword中是否是自己的线程id即可，而不是开销相对较大的CAS命令</p>
+<h2 id="谈谈JMM-java内存模型"><a href="#谈谈JMM-java内存模型" class="headerlink" title="谈谈JMM(java内存模型)"></a>谈谈JMM(java内存模型)</h2><p>1.JMM是java内存模型，定义了共享内存中多线程程序读写操作的行为规范，通过这些规则来规范对内存的读写操作从而保证指令的正确性</p>
+<p>2.JMM把内存分为两块，一块是私有线程的工作区域(工作内存)，一块是所有线程的共享区域(主内存)</p>
+<p>3.线程跟线程之间是相互隔离，线程跟线程的交互需要通过主内存</p>
+<h2 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h2><p>1.全称是compare and swap(比较再交换)；体现了一种乐观锁的思想，在无锁状态下保证线程操作数据的原子性</p>
+<p>2.CAS用到的地方很多：AQS框架、Atomic XXX类等</p>
+<p>3.在操作共享变量时使用的自旋锁，效率上更高一些</p>
+<p>4.CAS底层调用的是unsafe类中的方法，都是操作系统提供的，其它语言实现。</p>
+<h2 id="乐观锁和悲观锁的区别"><a href="#乐观锁和悲观锁的区别" class="headerlink" title="乐观锁和悲观锁的区别"></a>乐观锁和悲观锁的区别</h2><p>1.CAS是基于乐观锁得思想：最乐观的估计就是不怕别的线程来修改共享变量，就算改了也没关系，重试就行</p>
+<p>2.synchronized是基于悲观锁的思想，最悲观的估计，得提防着其他线程来修改共享变量，我上了锁你们都别想修改，我改完解开了锁你们才有机会</p>
+<h2 id="谈谈你对volatile得理解"><a href="#谈谈你对volatile得理解" class="headerlink" title="谈谈你对volatile得理解"></a>谈谈你对volatile得理解</h2><p>1.保证线程间的可见性：用volatile修饰共享变量，能够防止编译器等优化发生，让一个线程对共享变量的修改对另一个线程可见</p>
+<p>2.禁止进行指令重排序：用volatile修饰共享变量会在读、写共享变量时加入不同的屏障，组织其他读写操作越过屏障，从而达到阻止重排序的效果</p>
+<h2 id="什么是AQS"><a href="#什么是AQS" class="headerlink" title="什么是AQS"></a>什么是AQS</h2><p>1.是多线程中的队列同步器。是一种锁机制，他是作为一个基础框架使用的，像Reentranlock、Semaphone都是基于AQS实现的。</p>
+<p>2.AQS内部维护了一个先进先出的双向队列，队列中存储的排队的线程</p>
+<p>3.在AQS内部还有一个属性state，这个state就相当于是一个资源，默认是0（无锁状态），如果队列中有一个线程修改成功了state就变为1，则当前线程就相当于获得了资源</p>
+<h2 id="ReentrantLock的实现原理"><a href="#ReentrantLock的实现原理" class="headerlink" title="ReentrantLock的实现原理"></a>ReentrantLock的实现原理</h2><p>1.Reentrantlock表示支持重新进入的锁，调用lock方法获取了锁之后，再次调用lock是不会阻塞的</p>
+<p>2.Reentrantlock主要利用CAS+AQS队列来实现</p>
+<p>3.支持公平锁和非公平锁，在提供的构造器中无参默认是非公平锁，也可以传参设置为公平锁</p>
+<h2 id="Synchronized和lock有什么区别"><a href="#Synchronized和lock有什么区别" class="headerlink" title="Synchronized和lock有什么区别"></a>Synchronized和lock有什么区别</h2><p>1.语法层面：synchronized是关键字，源码在jvm中，是c++实现，lock是接口，源码由jdk提供用java语言实现，使用synchronized时，退出同步代码块锁会自动释放，而使用lock时，需要手动调用unlock方法释放锁</p>
+<p>2.功能层面：二者都属于悲观锁，都具备基本的互斥、同步、锁重入功能，lock提供了许多synchronized不具备的功能，例如公平锁，可打断，可超时，多条件变量，lock有适合不同场景的实现，如Reentrantlock和ReentrantReadWriteLock（读写锁）等</p>
+<p>3.性能层面：在没有竞争时，synchronized做了很多的优化，如偏向锁、轻量级锁，性能不错</p>
+<p>，在竞争激烈时，Lock的实现通常会提供更好的性能</p>
+<h2 id="死锁产生的条件是什么"><a href="#死锁产生的条件是什么" class="headerlink" title="死锁产生的条件是什么"></a>死锁产生的条件是什么</h2><p>一个线程需要同时获取多把锁，这时候就容易发生死锁</p>
+<h2 id="如何进行死锁判断"><a href="#如何进行死锁判断" class="headerlink" title="如何进行死锁判断"></a>如何进行死锁判断</h2><p>1.jdk自带的工具：jps与jstack</p>
+<p>2.jps：输出jvm中运行的进程状态信息</p>
+<p>3.jstack：查看java进程内线程的堆栈信息，查看日志，检查是否有死锁，若有死锁现象，需要查看具体代码分析后修复</p>
+<p>4.可视化工具jconsole、visualVM</p>
+<h2 id="聊一下ConcurrentHashMap"><a href="#聊一下ConcurrentHashMap" class="headerlink" title="聊一下ConcurrentHashMap"></a>聊一下ConcurrentHashMap</h2><p>1.底层数据结构是数组＋链表&#x2F;红黑树</p>
+<p>2.加锁方式：采用CAS添加新节点，采用Synchronized锁定链表或红黑树的首节点</p>
+<h2 id="导致并发程序出现问题的根本原因是什么"><a href="#导致并发程序出现问题的根本原因是什么" class="headerlink" title="导致并发程序出现问题的根本原因是什么"></a>导致并发程序出现问题的根本原因是什么</h2><p>1.原子性 lock、synchronized，线程切换带来了原子性的问题</p>
+<p>2.内存可见性 volatile、synchronized、lock，在多核CPU情况下带来了可见性的问题</p>
+<p>3.有序性 volatile，编译器指令重排优化带来了有序性的问题</p>
+<h2 id="线程池的执行原理"><a href="#线程池的执行原理" class="headerlink" title="线程池的执行原理"></a>线程池的执行原理</h2><p>1.任务提交：将执行任务提交到线程池。如果线程池中的线程少于核心线程数，则创建新的线程执行这个任务；如果线程数已达到核心线程数，任务会被加入到队列中等待执行</p>
+<p>2.任务排队：如果队列也已满，且当前线程数小于最大线程数，则创建新的线程来处理被提交的任务；如果线程数已达到最大值，则根据饱和策略处理无法执行的任务</p>
+<p>3.任务执行：线程从队列中取出任务并执行</p>
+<p>4.线程闲置：在执行完任务后，线程不会立即销毁，而是可用于执行其他任务</p>
+<p>5.线程销毁：如果线程超过一定时间没有任务执行，且当前线程数大于核心线程数，则这个线程会被销毁，以节省资源</p>
+<h2 id="线程池中有哪些常见的阻塞队列"><a href="#线程池中有哪些常见的阻塞队列" class="headerlink" title="线程池中有哪些常见的阻塞队列"></a>线程池中有哪些常见的阻塞队列</h2><p>a. LinkedBlockingQueue                 b. ArrayBlockingQueue</p>
+<p>​		默认无界、支持有界	   						强制有界</p>
+<p>​		底层是链表											底层是数组</p>
+<p>是懒惰的，创建节点时添加数据			提前初始化Node数组</p>
+<p>​	入队会生成新Node 						Node是需要提前创建好的</p>
+<p>​				两把锁                                                   一把锁</p>
+<h2 id="如何确定核心线程数"><a href="#如何确定核心线程数" class="headerlink" title="如何确定核心线程数"></a>如何确定核心线程数</h2><p>1.高并发、任务执行时间短—&gt;cpu核数+1</p>
+<p>2.并发不高、任务执行时间长—–&gt;IO密集型（cpu核数*2+1）</p>
+<p>​														计算密集型（cpu核数+1）</p>
+<p>3.高并发、业务执行时间长，解决这种类型任务的关键不在于线程池而在于整体架构设计，看看这些业务里面某些数据是否能做缓存是第一步，增加服务器是第二步</p>
+<h2 id="线程池的种类有哪些"><a href="#线程池的种类有哪些" class="headerlink" title="线程池的种类有哪些"></a>线程池的种类有哪些</h2><p>1.newFixedThreadPool: 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待</p>
+<p>2.newSingleThreadExecutor: 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按指定顺序执行</p>
+<p>3.newCachedThreadPool：创建一个可缓存线程池，若线程池长度超过处理需要，可灵活回收空闲线程，若无可挥手，则新建线程</p>
+<p>4.newScheduledThreadPool：可执行延迟任务的线程池，支持定时及周期性任务执行</p>
 
                 
             </div>
@@ -473,7 +483,7 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://awjyc.github.io/2024/07/09/mysql/">https://awjyc.github.io/2024/07/09/mysql/</a>
+                    <a href="https://awjyc.github.io/2024/07/12/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%94%81/">https://awjyc.github.io/2024/07/12/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%94%81/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -511,8 +521,8 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                                    <span class="chip bg-color">数据库</span>
+                                <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                    <span class="chip bg-color">八股</span>
                                 </a>
                             
                         </div>
@@ -562,13 +572,13 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/07/12/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%94%81/">
+                <a href="/2024/08/07/%E8%84%82%E8%82%AA%E8%82%9D%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="多线程与锁">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="脂肪肝项目相关部分">
                         
-                        <span class="card-title">多线程与锁</span>
+                        <span class="card-title">脂肪肝项目相关部分</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -579,7 +589,7 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-08-07
                         </span>
                         <span class="publish-author">
                             
@@ -592,8 +602,8 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%85%AB%E8%82%A1/">
-                        <span class="chip bg-color">八股</span>
+                    <a href="/tags/%E9%A1%B9%E7%9B%AE/">
+                        <span class="chip bg-color">项目</span>
                     </a>
                     
                 </div>
@@ -607,13 +617,13 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/">
+                <a href="/2024/07/09/mysql/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="计算机网络相关">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="mysql">
                         
-                        <span class="card-title">计算机网络相关</span>
+                        <span class="card-title">mysql</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -624,7 +634,7 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-09
                             </span>
                         <span class="publish-author">
                             
@@ -637,8 +647,8 @@ SQL语句执行慢，如何分析采用mysql自带的分析工具EXPLAIN
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%85%AB%E8%82%A1%E6%96%87/">
-                        <span class="chip bg-color">八股文</span>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
                     </a>
                     
                 </div>
