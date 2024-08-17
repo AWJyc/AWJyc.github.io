@@ -4,10 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="多线程与锁, 涡虫人">
-    <meta name="description" content="线程与进程的区别1.进程是正在运行的程序实例，进程中包含了线程，每个线程执行不同的人物
-2.不同的进程使用不同的进程空间，在当前进程下的所有线程可以共享内存空间
-3.线程更轻量，线程上下文切换成本一般比进程上下文切换低（上下文切换一般指从一">
+    <meta name="keywords" content="数据结构, 涡虫人">
+    <meta name="description" content="数组数组是一种用连续的内存空间存储相同数据类型的线性数据结构
+数组下标为什么从0开始寻址公式是：baseAddress+i*dataTypeSize
+计算下表的内存地址效率较高，少一次加减操作
+数组查找的时间复杂度1.通过下标查询O(1)
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +21,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>多线程与锁 | 涡虫人</title>
+    <title>数据结构 | 涡虫人</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -290,12 +292,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">多线程与锁</h1>
+                    <h1 class="description center-align post-title">数据结构</h1>
                 </div>
             </div>
         </div>
@@ -335,7 +337,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-07-12
+                    2024-07-16
                 </div>
                 
 
@@ -356,107 +358,85 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="线程与进程的区别"><a href="#线程与进程的区别" class="headerlink" title="线程与进程的区别"></a>线程与进程的区别</h2><p>1.进程是正在运行的程序实例，进程中包含了线程，每个线程执行不同的人物</p>
-<p>2.不同的进程使用不同的进程空间，在当前进程下的所有线程可以共享内存空间</p>
-<p>3.线程更轻量，线程上下文切换成本一般比进程上下文切换低（上下文切换一般指从一个线程到另一个线程）</p>
-<h2 id="并行与并发的区别"><a href="#并行与并发的区别" class="headerlink" title="并行与并发的区别"></a>并行与并发的区别</h2><p>1.并发是指两个或多个事件在同一时间间隔发生，把任务在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E4%B8%8D%E5%90%8C%E7%9A%84&spm=1001.2101.3001.7020">不同的</a>时间点交给处理器进行处理。在同一时间点，任务并不会同时运行。</p>
-<p>2.并行是指两个或者多个事件在同一时刻发生，把每一个<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E4%BB%BB%E5%8A%A1%E5%88%86%E9%85%8D&spm=1001.2101.3001.7020">任务分配</a>给每一个处理器独立完成。在同一时间点，任务一定是同时运行。</p>
-<h2 id="四种创建线程的方式"><a href="#四种创建线程的方式" class="headerlink" title="四种创建线程的方式"></a>四种创建线程的方式</h2><p>1.继承Thread类，重写run方法</p>
-<p>2.实现runable接口，重写run方法</p>
-<p>3.实现callable接口，重写call方法</p>
-<p>4.线程池创建线程</p>
-<h2 id="runable与callable的区别"><a href="#runable与callable的区别" class="headerlink" title="runable与callable的区别"></a>runable与callable的区别</h2><p>1.runable接口run方法无返回值</p>
-<p>2.callable接口call方法有返回值，是个泛型，和future、futuretask配合可以来获取异步执行的结果</p>
-<p>3.callable接口的call方法允许抛出类；而runable接口的run方法的异常只能内部消化，不能继续上抛</p>
-<h2 id="线程的run-与start-有什么区别"><a href="#线程的run-与start-有什么区别" class="headerlink" title="线程的run()与start()有什么区别"></a>线程的run()与start()有什么区别</h2><p>start用来启动线程，通过该线程调用run方法中定义的逻辑代码。start方法只能调用一次</p>
-<p>run方法中封装了要被线程执行的代码，可以被调用多次</p>
-<h2 id="线程包含哪些状态，状态之间是怎么变化的"><a href="#线程包含哪些状态，状态之间是怎么变化的" class="headerlink" title="线程包含哪些状态，状态之间是怎么变化的"></a>线程包含哪些状态，状态之间是怎么变化的</h2><p>1.NEW   新建状态</p>
-<p>2.RUNNABLE   可执行状态</p>
-<p>3.BLOCKED   阻塞状态</p>
-<p>4.WAITING   等待状态</p>
-<p>5.TIMED_WAITING   时间等待状态</p>
-<p>6.TERMINATED   终止状态</p>
-<p>变化：</p>
-<p>1.新建线程是新建状态</p>
-<p>2.调用了start()方法可以变为可执行状态</p>
-<p>3.线程获取到了CPU的执行权，执行结束是终止状态</p>
-<p>4.在可执行状态的过程中如果没有获取CPU的执行权，可能会切换到其他状态</p>
-<p>a.如果没有获取锁就会进入阻塞状态，获取锁才会到可执行状态</p>
-<p>b.如果线程调用了wait()方法就会进入等待状态，其他线程调用notify()唤醒后可切换为可执行状态</p>
-<p>c.如果线程调用了sleep(50)方法，进入计时等待状态，到时间后可切换会可执行状态</p>
-<h2 id="新建T1、T2、T3三个线程，如何保证他们按顺序执行"><a href="#新建T1、T2、T3三个线程，如何保证他们按顺序执行" class="headerlink" title="新建T1、T2、T3三个线程，如何保证他们按顺序执行"></a>新建T1、T2、T3三个线程，如何保证他们按顺序执行</h2><p>可以使用join()方法解决，join()等待线程运行结束</p>
-<h2 id="notify与notifyall的区别"><a href="#notify与notifyall的区别" class="headerlink" title="notify与notifyall的区别"></a>notify与notifyall的区别</h2><p>notify:只随机唤醒一个wait线程</p>
-<p>notifyall:唤醒所有wait线程</p>
-<h2 id="java中的wait和sleep方法有何不同"><a href="#java中的wait和sleep方法有何不同" class="headerlink" title="java中的wait和sleep方法有何不同"></a>java中的wait和sleep方法有何不同</h2><p>共同点：wait()，wait(long),sleep(long)都是让当前线程暂时放弃CPU的使用权，进入阻塞状态</p>
-<p>不同点：</p>
-<p>1.方法归属不同：sleep(long)是Thread的静态方法，wait()与wait(long)都是Object的成员方法，每个对象都有</p>
-<p>2.醒来时机不同：a.执行sleep(long)和wait(long)的线程都会在等待相应毫秒后醒来</p>
-<p>​	                          b.wait(long)和wait()还可以被notify()唤醒，wait()如果不被唤醒就会一致执行下去</p>
-<p>​                              c.它们都可以被打断唤醒</p>
-<p>3.锁特性不同：a.wait()方法的调用必须先获取wait对象的锁，而sleep没有这个限制</p>
-<p>​                          b.wait()方法执行后会释放锁，允许其他线程获得该锁对象</p>
-<p>​                          c.sleep如果在synchronized代码块中执行并不会释放锁</p>
-<h2 id="如何停止一个正在运行的线程"><a href="#如何停止一个正在运行的线程" class="headerlink" title="如何停止一个正在运行的线程"></a>如何停止一个正在运行的线程</h2><p>1.使用退出标志，使线程正常退出，也就是当run方法完成后线程中止</p>
-<p>2.使用stop方法强行中止</p>
-<p>3.使用interrupt方法中断线程</p>
-<h2 id="synchronized关键字的底层原理"><a href="#synchronized关键字的底层原理" class="headerlink" title="synchronized关键字的底层原理"></a>synchronized关键字的底层原理</h2><p>1.synchronized[对象锁]采用互斥的方式让同一时刻至多只有一个线程能持有[对象锁]</p>
-<p>2.它的底层由moniter实现，moniter是jvm级别的对象，线程获得锁需要使用对象锁关联moniter</p>
-<p>3.在monitor内部有三个属性，分别是owner、entrylist与waitset</p>
-<p>4.其中owner是关联的获得锁的线程，并且只能关联一个线程；entrylist关联的是出于阻塞状态的线程；waitset关联的是出于waiting状态的线程</p>
-<h2 id="锁升级（锁膨胀）"><a href="#锁升级（锁膨胀）" class="headerlink" title="锁升级（锁膨胀）"></a>锁升级（锁膨胀）</h2><p>指synchronized从无锁升级到偏向锁、再到轻量级锁最后到重量级锁的过程。java中的synchronized有偏向锁、轻量级锁、重量级锁三种形式，分别对应了锁只被一个线程持有、不同线程交替持有、多线程竞争锁三种情况</p>
-<p>1.重量级锁：底层使用monitor实现，里面涉及到了用户态和内核态的切换，进程的上下文切换，成本比较高</p>
-<p>2.轻量级锁：线程加锁的时间是错开的（也就是没有竞争），可以使用轻量级锁来优化。轻量级修改了对象头的锁标志，相对重量级锁性能提升很多。每次修改都是CAS操作，保证了原子性。</p>
-<p>3.偏向锁：一段很长的时间内都是只被一个线程使用锁，可以使用了偏向锁，在第一次获得锁时，会有一个CAS操作，之后该线程再获得锁，只需要判断markword中是否是自己的线程id即可，而不是开销相对较大的CAS命令</p>
-<h2 id="谈谈JMM-java内存模型"><a href="#谈谈JMM-java内存模型" class="headerlink" title="谈谈JMM(java内存模型)"></a>谈谈JMM(java内存模型)</h2><p>1.JMM是java内存模型，定义了共享内存中多线程程序读写操作的行为规范，通过这些规则来规范对内存的读写操作从而保证指令的正确性</p>
-<p>2.JMM把内存分为两块，一块是私有线程的工作区域(工作内存)，一块是所有线程的共享区域(主内存)</p>
-<p>3.线程跟线程之间是相互隔离，线程跟线程的交互需要通过主内存</p>
-<h2 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h2><p>1.全称是compare and swap(比较再交换)；体现了一种乐观锁的思想，在无锁状态下保证线程操作数据的原子性</p>
-<p>2.CAS用到的地方很多：AQS框架、Atomic XXX类等</p>
-<p>3.在操作共享变量时使用的自旋锁，效率上更高一些</p>
-<p>4.CAS底层调用的是unsafe类中的方法，都是操作系统提供的，其它语言实现。</p>
-<h2 id="乐观锁和悲观锁的区别"><a href="#乐观锁和悲观锁的区别" class="headerlink" title="乐观锁和悲观锁的区别"></a>乐观锁和悲观锁的区别</h2><p>1.CAS是基于乐观锁得思想：最乐观的估计就是不怕别的线程来修改共享变量，就算改了也没关系，重试就行</p>
-<p>2.synchronized是基于悲观锁的思想，最悲观的估计，得提防着其他线程来修改共享变量，我上了锁你们都别想修改，我改完解开了锁你们才有机会</p>
-<h2 id="谈谈你对volatile得理解"><a href="#谈谈你对volatile得理解" class="headerlink" title="谈谈你对volatile得理解"></a>谈谈你对volatile得理解</h2><p>1.保证线程间的可见性：用volatile修饰共享变量，能够防止编译器等优化发生，让一个线程对共享变量的修改对另一个线程可见</p>
-<p>2.禁止进行指令重排序：用volatile修饰共享变量会在读、写共享变量时加入不同的屏障，组织其他读写操作越过屏障，从而达到阻止重排序的效果</p>
-<h2 id="什么是AQS"><a href="#什么是AQS" class="headerlink" title="什么是AQS"></a>什么是AQS</h2><p>1.是多线程中的队列同步器。是一种锁机制，他是作为一个基础框架使用的，像Reentranlock、Semaphone都是基于AQS实现的。</p>
-<p>2.AQS内部维护了一个先进先出的双向队列，队列中存储的排队的线程</p>
-<p>3.在AQS内部还有一个属性state，这个state就相当于是一个资源，默认是0（无锁状态），如果队列中有一个线程修改成功了state就变为1，则当前线程就相当于获得了资源</p>
-<h2 id="ReentrantLock的实现原理"><a href="#ReentrantLock的实现原理" class="headerlink" title="ReentrantLock的实现原理"></a>ReentrantLock的实现原理</h2><p>1.Reentrantlock表示支持重新进入的锁，调用lock方法获取了锁之后，再次调用lock是不会阻塞的</p>
-<p>2.Reentrantlock主要利用CAS+AQS队列来实现</p>
-<p>3.支持公平锁和非公平锁，在提供的构造器中无参默认是非公平锁，也可以传参设置为公平锁</p>
-<h2 id="Synchronized和lock有什么区别"><a href="#Synchronized和lock有什么区别" class="headerlink" title="Synchronized和lock有什么区别"></a>Synchronized和lock有什么区别</h2><p>1.语法层面：synchronized是关键字，源码在jvm中，是c++实现，lock是接口，源码由jdk提供用java语言实现，使用synchronized时，退出同步代码块锁会自动释放，而使用lock时，需要手动调用unlock方法释放锁</p>
-<p>2.功能层面：二者都属于悲观锁，都具备基本的互斥、同步、锁重入功能，lock提供了许多synchronized不具备的功能，例如公平锁，可打断，可超时，多条件变量，lock有适合不同场景的实现，如Reentrantlock和ReentrantReadWriteLock（读写锁）等</p>
-<p>3.性能层面：在没有竞争时，synchronized做了很多的优化，如偏向锁、轻量级锁，性能不错</p>
-<p>，在竞争激烈时，Lock的实现通常会提供更好的性能</p>
-<h2 id="死锁产生的条件是什么"><a href="#死锁产生的条件是什么" class="headerlink" title="死锁产生的条件是什么"></a>死锁产生的条件是什么</h2><p>一个线程需要同时获取多把锁，这时候就容易发生死锁</p>
-<h2 id="如何进行死锁判断"><a href="#如何进行死锁判断" class="headerlink" title="如何进行死锁判断"></a>如何进行死锁判断</h2><p>1.jdk自带的工具：jps与jstack</p>
-<p>2.jps：输出jvm中运行的进程状态信息</p>
-<p>3.jstack：查看java进程内线程的堆栈信息，查看日志，检查是否有死锁，若有死锁现象，需要查看具体代码分析后修复</p>
-<p>4.可视化工具jconsole、visualVM</p>
-<h2 id="聊一下ConcurrentHashMap"><a href="#聊一下ConcurrentHashMap" class="headerlink" title="聊一下ConcurrentHashMap"></a>聊一下ConcurrentHashMap</h2><p>1.底层数据结构是数组＋链表&#x2F;红黑树</p>
-<p>2.加锁方式：采用CAS添加新节点，采用Synchronized锁定链表或红黑树的首节点</p>
-<h2 id="导致并发程序出现问题的根本原因是什么"><a href="#导致并发程序出现问题的根本原因是什么" class="headerlink" title="导致并发程序出现问题的根本原因是什么"></a>导致并发程序出现问题的根本原因是什么</h2><p>1.原子性 lock、synchronized，线程切换带来了原子性的问题</p>
-<p>2.内存可见性 volatile、synchronized、lock，在多核CPU情况下带来了可见性的问题</p>
-<p>3.有序性 volatile，编译器指令重排优化带来了有序性的问题</p>
-<h2 id="线程池的执行原理"><a href="#线程池的执行原理" class="headerlink" title="线程池的执行原理"></a>线程池的执行原理</h2><p>1.任务提交：将执行任务提交到线程池。如果线程池中的线程少于核心线程数，则创建新的线程执行这个任务；如果线程数已达到核心线程数，任务会被加入到队列中等待执行</p>
-<p>2.任务排队：如果队列也已满，且当前线程数小于最大线程数，则创建新的线程来处理被提交的任务；如果线程数已达到最大值，则根据饱和策略处理无法执行的任务</p>
-<p>3.任务执行：线程从队列中取出任务并执行</p>
-<p>4.线程闲置：在执行完任务后，线程不会立即销毁，而是可用于执行其他任务</p>
-<p>5.线程销毁：如果线程超过一定时间没有任务执行，且当前线程数大于核心线程数，则这个线程会被销毁，以节省资源</p>
-<h2 id="线程池中有哪些常见的阻塞队列"><a href="#线程池中有哪些常见的阻塞队列" class="headerlink" title="线程池中有哪些常见的阻塞队列"></a>线程池中有哪些常见的阻塞队列</h2><p>a. LinkedBlockingQueue                 b. ArrayBlockingQueue</p>
-<p>​		默认无界、支持有界	   						强制有界</p>
-<p>​		底层是链表											底层是数组</p>
-<p>是懒惰的，创建节点时添加数据			提前初始化Node数组</p>
-<p>​	入队会生成新Node 						Node是需要提前创建好的</p>
-<p>​				两把锁                                                   一把锁</p>
-<h2 id="如何确定核心线程数"><a href="#如何确定核心线程数" class="headerlink" title="如何确定核心线程数"></a>如何确定核心线程数</h2><p>1.高并发、任务执行时间短—&gt;cpu核数+1</p>
-<p>2.并发不高、任务执行时间长—–&gt;IO密集型（cpu核数*2+1）</p>
-<p>​														计算密集型（cpu核数+1）</p>
-<p>3.高并发、业务执行时间长，解决这种类型任务的关键不在于线程池而在于整体架构设计，看看这些业务里面某些数据是否能做缓存是第一步，增加服务器是第二步</p>
-<h2 id="线程池的种类有哪些"><a href="#线程池的种类有哪些" class="headerlink" title="线程池的种类有哪些"></a>线程池的种类有哪些</h2><p>1.newFixedThreadPool: 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待</p>
-<p>2.newSingleThreadExecutor: 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按指定顺序执行</p>
-<p>3.newCachedThreadPool：创建一个可缓存线程池，若线程池长度超过处理需要，可灵活回收空闲线程，若无可挥手，则新建线程</p>
-<p>4.newScheduledThreadPool：可执行延迟任务的线程池，支持定时及周期性任务执行</p>
+                <h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组是一种用连续的内存空间存储相同数据类型的线性数据结构</p>
+<h2 id="数组下标为什么从0开始"><a href="#数组下标为什么从0开始" class="headerlink" title="数组下标为什么从0开始"></a>数组下标为什么从0开始</h2><p>寻址公式是：baseAddress+i*dataTypeSize</p>
+<p>计算下表的内存地址效率较高，少一次加减操作</p>
+<h2 id="数组查找的时间复杂度"><a href="#数组查找的时间复杂度" class="headerlink" title="数组查找的时间复杂度"></a>数组查找的时间复杂度</h2><p>1.通过下标查询O(1)</p>
+<p>2.位置下标查找O(n)</p>
+<p>3.位置下标但排序，二分法查找O(logn)</p>
+<h2 id="插入与删除时间复杂度"><a href="#插入与删除时间复杂度" class="headerlink" title="插入与删除时间复杂度"></a>插入与删除时间复杂度</h2><p>插入和删除时，为了保证数组内存的连续性，需要挪动数组元素，平均时间复杂度为O(n)</p>
+<h2 id="ArrayList底层的实现原理"><a href="#ArrayList底层的实现原理" class="headerlink" title="ArrayList底层的实现原理"></a>ArrayList底层的实现原理</h2><p>1.ArrayList底层使用动态数组实现的</p>
+<p>2.ArrayList初始容量为0，当第一次添加数据时才会初始化为10</p>
+<p>3.ArrayList在进行扩容时容量是原来的1.5倍，每次扩容都要拷贝数组</p>
+<p>4.ArrayList在添加数据时</p>
+<p>a.确保数组已使用长度(size)加1之后足够存下一个数据</p>
+<p>b.计算数组的容量,若当前数组已使用长度+1后的大于当前的数组长度,则用grow方法扩容(1.5倍)</p>
+<p>c.确保新增的数据有地方存储之后,则将新元素添加到位于size的位置上</p>
+<p>d.返回添加成功布尔值</p>
+<h2 id="ArrayList-list-new-ArrayList-10-中的list扩容几次"><a href="#ArrayList-list-new-ArrayList-10-中的list扩容几次" class="headerlink" title="ArrayList list &#x3D; new ArrayList(10)中的list扩容几次"></a>ArrayList list &#x3D; new ArrayList(10)中的list扩容几次</h2><p>无扩容,用add方法时才扩容</p>
+<h2 id="如何实现数组和list之间的转换"><a href="#如何实现数组和list之间的转换" class="headerlink" title="如何实现数组和list之间的转换"></a>如何实现数组和list之间的转换</h2><p>List转为array是toArray,  array转为List是asList</p>
+<p>list转array,修改list后array不影响</p>
+<p>array转list,修改arrat后list也会修改</p>
+<h2 id="ArrayList和LinkedList的区别"><a href="#ArrayList和LinkedList的区别" class="headerlink" title="ArrayList和LinkedList的区别"></a>ArrayList和LinkedList的区别</h2><p>1.底层数据结构</p>
+<p>a.ArrayList是动态数组的数据结构实现</p>
+<p>b.LinkedList是双向链表的数据结构实现</p>
+<p>2.操作数据效率</p>
+<p>a.查找已知索引:ArrayList是O(1),LinkedList是O(n)</p>
+<p>b.查找未知索引:都是O(n)</p>
+<p>c.新增与删除:arraylist尾部是O(1),其余是O(n)</p>
+<p>​						Linkedlist头部是O(1),其余是O(n)</p>
+<p>3.内存空间占用</p>
+<p>1.ArrayList底层是数组,内存连续,节省内存</p>
+<p>2.LinkedList底层是双线链表,需要存储数据和两个指针,更占用内存</p>
+<p>4.线程安全</p>
+<p>ArrayList和LinkedList都不是线程安全的</p>
+<p>若要保证线程安全,有两个方案</p>
+<p>a.在方法内使用,局部变量是线程安全的</p>
+<p>b.使用线程安全的ArrayList与LinkedList—&gt;加锁SynchronizedList</p>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><p>二叉搜索树(子节点左小右大): 查增删(一般是O(logn), 极端是O(n))</p>
+<p>红黑树:是一种自平衡的二叉搜索树</p>
+<p>红黑树的5个性质:</p>
+<p>1.节点要么是红色,要么是黑色</p>
+<p>2.根节点都是黑色</p>
+<p>3.叶子节点都是黑色的空节点</p>
+<p>4.红黑树中红色节点的子节点都是黑色</p>
+<p>5.从任一节点到叶子节点的所有路径都包含相同数目的黑色节点</p>
+<p>在添加或删除节点时,若不符合这些性质会发生旋转,以达到所有性质</p>
+<p>增删查都是O(logn)</p>
+<h2 id="什么是散列表-哈希表"><a href="#什么是散列表-哈希表" class="headerlink" title="什么是散列表(哈希表)"></a>什么是散列表(哈希表)</h2><p>1.散列表又名哈希表</p>
+<p>2.根据键(key)直接访问在内存存储位置值(value)的数据结构</p>
+<p>3.由数组演化而来,利用了数组支持按照下标随机访问数据</p>
+<h2 id="散列冲突"><a href="#散列冲突" class="headerlink" title="散列冲突"></a>散列冲突</h2><p>1.散列冲突又称哈希冲突,哈希碰撞</p>
+<p>2.指多个key映射到同一个数组下标位置</p>
+<h2 id="散列冲突-链表法-拉链"><a href="#散列冲突-链表法-拉链" class="headerlink" title="散列冲突-链表法(拉链)"></a>散列冲突-链表法(拉链)</h2><p>1.数组的每个下表位置称之为桶(bucket)或槽(slot)</p>
+<p>2.每个bucket都会对应一条链表或红黑树</p>
+<p>3.hash冲突后的元素都会放到相同槽位对应的链表或红黑树中</p>
+<h2 id="Hashmap的实现原理"><a href="#Hashmap的实现原理" class="headerlink" title="Hashmap的实现原理"></a>Hashmap的实现原理</h2><p>1.底层使用hash表(散列表)数据结构,即数组+链表;红黑树</p>
+<p>2.添加数据时,计算key的值确定元素在数组中的下标</p>
+<p>a.key相同则替换</p>
+<p>b.不同则存入链表或红黑树中</p>
+<p>获取数据通过key的hash计算数组下表获取元素</p>
+<h2 id="HashMap的jdk1-7和jdk1-8有什么区别"><a href="#HashMap的jdk1-7和jdk1-8有什么区别" class="headerlink" title="HashMap的jdk1.7和jdk1.8有什么区别"></a>HashMap的jdk1.7和jdk1.8有什么区别</h2><p>1.jdk1.8之前采用拉链法,数组＋链表</p>
+<p>2.jdk1.8之后采用数组+链表+红黑树,链表长度大于8且数组长度大于64则会从链表转化为红黑树</p>
+<h2 id="HashMap的put方法的具体流程"><a href="#HashMap的put方法的具体流程" class="headerlink" title="HashMap的put方法的具体流程"></a>HashMap的put方法的具体流程</h2><p>1.判断链值对数组table是否为空或null,否则执行resize()进行扩容</p>
+<p>2.根据键值key计算hash值得到数组索引</p>
+<p>3.判断table[i]&#x3D;&#x3D;null,条件成立就直接新建节点添加</p>
+<p>4.若table[i]&#x3D;&#x3D;null不成立,则</p>
+<p>a.判断table[i]的首个元素是否和key一样,若相同则直接覆盖value</p>
+<p>b.判断table[i]是否为treeNode,即table[i]是否为红黑树,如果是红黑树,则直接在树中插入键值对</p>
+<p>c.遍历table[i],链表尾部插入数据然后判断链表长度是否大于8,大于8转为红黑树,在红黑树中执行插入操作,遍历过程中若发现了key已经存在则直接覆盖</p>
+<p>5.插入成功后,判断实际存在的键值对size是否超过了最大thread(数组长度*0.75),若超过就扩容</p>
+<h2 id="HashMap的扩容机制"><a href="#HashMap的扩容机制" class="headerlink" title="HashMap的扩容机制"></a>HashMap的扩容机制</h2><p>1.在添加元素或初始化时需要调用resize方法进行扩容,第一次添加数据初始化数组长度为16,以后每次扩容都是达到了扩容阈值(数组长度*0.75)</p>
+<p>2.每次扩容的时候都是扩容之前容量的2倍</p>
+<p>3.扩容之后会新创建一个数组,需要把老数组中的数据挪动到新的数组中</p>
+<p>a.没有hash冲突的节点,则直接使用e.hash&amp;(newCap-1)计算新数组的索引位置</p>
+<p>b.如果是红黑树,则走红黑树的添加</p>
+<p>c.如果是链表则需要遍历链表,可能需要拆分链表,判断e.hash&amp;oldCap是否为0,若为0,该元素停留在原始位置,否则移动至原始位置+增加的数组大小这个位置上</p>
+<h2 id="HashMap的寻址算法"><a href="#HashMap的寻址算法" class="headerlink" title="HashMap的寻址算法"></a>HashMap的寻址算法</h2><p>1.计算对象的hashcode()</p>
+<p>2.再进行调用hash()方法进行二次哈希,hashcode值右移16位再异或运算,让哈希分布更为均匀</p>
+<p>3.最后(capacity-1)&amp;hash得到索引</p>
+<h2 id="为何HashMap的数组长度一定是2的次幂"><a href="#为何HashMap的数组长度一定是2的次幂" class="headerlink" title="为何HashMap的数组长度一定是2的次幂"></a>为何HashMap的数组长度一定是2的次幂</h2><p>1.计算索引时效率更好:如果是2的n次幂可以使用位与运算代替取模</p>
+<p>2.扩容时重新计算索引效率更高:hash&amp;oldCap&#x3D;&#x3D;0的元素留在原来的位置,否则新位置&#x3D;旧位置+oldCap</p>
 
                 
             </div>
@@ -483,7 +463,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://awjyc.github.io/2024/07/12/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%94%81/">https://awjyc.github.io/2024/07/12/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%94%81/</a>
+                    <a href="https://awjyc.github.io/2024/07/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">https://awjyc.github.io/2024/07/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -572,13 +552,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/07/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                <a href="/2024/08/07/%E8%84%82%E8%82%AA%E8%82%9D%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="数据结构">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="脂肪肝项目相关部分">
                         
-                        <span class="card-title">数据结构</span>
+                        <span class="card-title">脂肪肝项目相关部分</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -589,7 +569,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-16
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-08-07
                         </span>
                         <span class="publish-author">
                             
@@ -602,8 +582,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%85%AB%E8%82%A1/">
-                        <span class="chip bg-color">八股</span>
+                    <a href="/tags/%E9%A1%B9%E7%9B%AE/">
+                        <span class="chip bg-color">项目</span>
                     </a>
                     
                 </div>
@@ -617,13 +597,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/07/09/mysql/">
+                <a href="/2024/07/12/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%94%81/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="mysql">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="多线程与锁">
                         
-                        <span class="card-title">mysql</span>
+                        <span class="card-title">多线程与锁</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -634,7 +614,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-12
                             </span>
                         <span class="publish-author">
                             
@@ -647,8 +627,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
+                    <a href="/tags/%E5%85%AB%E8%82%A1/">
+                        <span class="chip bg-color">八股</span>
                     </a>
                     
                 </div>
