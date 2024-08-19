@@ -4,9 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="脂肪肝项目相关部分, 涡虫人">
-    <meta name="description" content="这是我的第一个博客，在这里分享学习记录与想法。
-脂肪肝算法评估平台">
+    <meta name="keywords" content="JVM相关, 涡虫人">
+    <meta name="description" content="JVM是什么JVM是java程序的运行环境，虚拟机直接和操作系统进行交互，与硬件不直接交互，而操作系统可以帮我们完成和硬件进行交互的工作
+什么是程序计数器线程私有的，每个线程一份，内部保存字节码的行号。用于记录正在执行的字节码指令的地址。
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +19,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>脂肪肝项目相关部分 | 涡虫人</title>
+    <title>JVM相关 | 涡虫人</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -289,12 +290,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">脂肪肝项目相关部分</h1>
+                    <h1 class="description center-align post-title">JVM相关</h1>
                 </div>
             </div>
         </div>
@@ -318,8 +319,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%A1%B9%E7%9B%AE/">
-                                <span class="chip bg-color">项目</span>
+                            <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                <span class="chip bg-color">八股</span>
                             </a>
                         
                     </div>
@@ -334,7 +335,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-08-07
+                    2024-07-29
                 </div>
                 
 
@@ -355,8 +356,80 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>这是我的第一个博客，在这里分享学习记录与想法。</p>
-<h1 id="脂肪肝算法评估平台"><a href="#脂肪肝算法评估平台" class="headerlink" title="脂肪肝算法评估平台"></a>脂肪肝算法评估平台</h1>
+                <h2 id="JVM是什么"><a href="#JVM是什么" class="headerlink" title="JVM是什么"></a>JVM是什么</h2><p>JVM是java程序的运行环境，虚拟机直接和操作系统进行交互，与硬件不直接交互，而操作系统可以帮我们完成和硬件进行交互的工作</p>
+<h2 id="什么是程序计数器"><a href="#什么是程序计数器" class="headerlink" title="什么是程序计数器"></a>什么是程序计数器</h2><p>线程私有的，每个线程一份，内部保存字节码的行号。用于记录正在执行的字节码指令的地址。</p>
+<h2 id="详细介绍Java堆"><a href="#详细介绍Java堆" class="headerlink" title="详细介绍Java堆"></a>详细介绍Java堆</h2><p>java堆是一个线程共享的区域，主要用来保存对象实例，数组等，内存不够则抛出内存溢出异常，由年轻代和老年代组成</p>
+<p>年轻代：划分为3各部分，eden区和两个大小严格的survivor区</p>
+<p>老年代：主要保存生命周期长的对象，一般是一些老的对象</p>
+<p>堆在jdk1.7与jdk1.8的区别：jdk1.7中有一个永久代，存储的是类信息、静态变量、常量、编译后的代码；jdk1.8中移除了永久代，把数据存储到了本地内存的元空间中，防止内存溢出</p>
+<h2 id="什么是虚拟机栈"><a href="#什么是虚拟机栈" class="headerlink" title="什么是虚拟机栈"></a>什么是虚拟机栈</h2><p>1.每个线程运行时所需要的内存称为虚拟机栈，先进后出</p>
+<p>2.每个栈由多个栈帧组成，对应着每次方法调用时所占用的内存</p>
+<p>3.每个线程只能有一个活动栈帧，对应着当前正在执行的那个方法</p>
+<h2 id="垃圾回收是否涉及栈内存"><a href="#垃圾回收是否涉及栈内存" class="headerlink" title="垃圾回收是否涉及栈内存"></a>垃圾回收是否涉及栈内存</h2><p>垃圾回收主要指堆内存，当栈帧弹栈之后，内存就会释放</p>
+<h2 id="栈内存分配越大越好吗"><a href="#栈内存分配越大越好吗" class="headerlink" title="栈内存分配越大越好吗"></a>栈内存分配越大越好吗</h2><p>未必，默认的栈内存通常为1024k</p>
+<p>栈帧过大会使线程数变少，例如，机器的总内存为512M，目前能活动的线程数则为512个，若将栈内存改为2048k，那么能活动的栈帧就会减半</p>
+<h2 id="方法内的局部变量是否线程安全"><a href="#方法内的局部变量是否线程安全" class="headerlink" title="方法内的局部变量是否线程安全"></a>方法内的局部变量是否线程安全</h2><p>若方法内的局部变量没有逃离方法的作用范围，那么他就是线程安全的</p>
+<p>若是局部变量引用了对象，并逃离方法的作用范围，则需要考虑线程安全</p>
+<h2 id="栈内存溢出问题"><a href="#栈内存溢出问题" class="headerlink" title="栈内存溢出问题"></a>栈内存溢出问题</h2><p>1.栈帧过多导致栈内存溢出，典型问题时递归调用</p>
+<p>2.栈帧过大导致栈内存溢出</p>
+<h2 id="堆栈的区别是什么"><a href="#堆栈的区别是什么" class="headerlink" title="堆栈的区别是什么"></a>堆栈的区别是什么</h2><p>1.栈内存一般会用来存储局部变量和方法调用，但堆内存是用来存储java对象和数组的。堆会GC垃圾回收，栈不会</p>
+<p>2.栈内存是线程私有的，堆内存时线程共有的</p>
+<p>3.两者异常错误不同，但是如果堆内存或栈内存不足都会抛出异常</p>
+<p>栈空间不足：java.Lang.StackOverFlowError</p>
+<p>堆空间不足：java.Lang.OutOfMemoryError</p>
+<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p>解释一下方法区：</p>
+<p>1.方法区是各个线程共享的内存区域</p>
+<p>2.主要存储类的信息、运行时常量池</p>
+<p>3.虚拟机启动时创建，关闭虚拟机时释放</p>
+<p>4.若方法区中内存无法满足分配请求，则会抛出</p>
+<p>OutOfMemoryError:MetaSpace异常</p>
+<p>常量池：可以看作是一张表，虚拟机指令根据这张常量表找到要执行的类名、方法名、参数类型、字面量等信息</p>
+<p>运行时常量池：常量池是*.class文件中的，当该类被加载时，它的常量池信息就会放入运行时常量池，并把里面的符号地址变为真实地址</p>
+<p>直接内存：并不属于JVM中的内存结构，不由JVM进行管理。是虚拟机的系统内存，常见于NIO操作时，用于数据缓冲区，它分配回收成本较高，但读写性能高，不受JVM内存回收管理</p>
+<h2 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h2><p>JVM只会运行二进制文件，类加载器的作用就是将字节码文件加载到JVM中，从而让Java程序能够启动起来</p>
+<p>类加载器的类型：启动类加载器；扩展类加载器；应用类加载器；自定义类加载器</p>
+<h2 id="双亲委派机制："><a href="#双亲委派机制：" class="headerlink" title="双亲委派机制："></a>双亲委派机制：</h2><p>加载某一个类，先委托上一级的加载器进行加载，如果上级加载器也有上级，则会继续向上委托，如果该类委托上级没有被加载，子加载器尝试加载该类</p>
+<h2 id="JVM为什么采用双亲委派机制"><a href="#JVM为什么采用双亲委派机制" class="headerlink" title="JVM为什么采用双亲委派机制"></a>JVM为什么采用双亲委派机制</h2><p>1.通过双亲委派机制可以避免某一个类被重复加载，当父类已经加载后则无需重复加载以保证唯一性</p>
+<p>2.为了安全，保证类库API不会被修改</p>
+<h2 id="类的加载过程"><a href="#类的加载过程" class="headerlink" title="类的加载过程"></a>类的加载过程</h2><p>加载—-验证—-准备—-解析—-初始化—-使用—-卸载</p>
+<p>加载：</p>
+<p>1.通过类的全名，获取类的二进制数据流</p>
+<p>2.解析类的二进制数据流为方法区的数据结构</p>
+<p>3.创建java.lang.class类的实例，表示该类型作为方法区这个类的各种数据的访问入口</p>
+<p>验证：验证类是否符合JVM规范，安全性检查</p>
+<p>准备：为类变量分配内存并设置类变量初始值</p>
+<p>static final  基本类型    赋值在准备阶段                                                                                  			                                                                                                      static final  引用类型	赋值在初始化阶段</p>
+<p>解析：把类中的符号引用转化为直接引用</p>
+<p>方法中调用了其他方法，方法名可以理解为符号引用，而直接引用就是使用指针直接指向方法	</p>
+<p>初始化：对类的静态变量，静态代码块执行初始化操作</p>
+<p>1.如果初始化一个类的时候，其父类尚未初始化，则优先初始化其父类</p>
+<p>2.如果同时包含多个静态变量和静态代码块，则按照自上而下的顺序依次执行</p>
+<p>使用：JVM开始从入口开始执行用户的程序代码</p>
+<p>1.调用静态成员信息（如：静态字段、静态方法）</p>
+<p>2.使用new关键字为其创建对象实例</p>
+<p>卸载：当用户程序代码执行完毕后，JVM便开始销毁创建的class对象</p>
+<h2 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h2><p>对象什么时候可以被垃圾器回收：如果一个或多个对象没有任何的引用指向它了，那么这个对象现在就是垃圾，如果定位了垃圾，则有可能会被垃圾回收器回收</p>
+<p>定位垃圾的方法：</p>
+<p>1.引用计数法：当对象间出现循环引用时，引用计数法会失效</p>
+<p>2.可达性分析算法：扫描堆中的对象，看是否能够沿着GCRoot对象为起点的引用链找到该对象，找不到表示可以回收</p>
+<p>JVM垃圾回收算法有哪些</p>
+<p>1.标记清除算法：</p>
+<p>垃圾回收分为两个阶段，分别是标记和清除，效率高有磁盘碎片，内存不连续</p>
+<p>2.标记整理算法：</p>
+<p>前面部分与标记清除算法一样，将存活对象都向内存另一端移动，然后清理边界以外的垃圾、无碎片，对象需要移动，效率低</p>
+<p>3.复制算法：</p>
+<p>将原有的内存空间一分为二，每次只使用其中的一块，正在使用的对象复制到另一个内存空间中，然后将该内存空间清空，交换两个内存的角色，完成垃圾的回收；无碎片，内存使用率低</p>
+<h2 id="JVM中的分代回收"><a href="#JVM中的分代回收" class="headerlink" title="JVM中的分代回收"></a>JVM中的分代回收</h2><p>堆的区域划分：</p>
+<p>1.堆被分为了两份：新生代和老年代（1：2）</p>
+<p>2.对于新生代，内部又被分为了三个区域</p>
+<p>Eden区、幸存者区和survivor区（分为from与to）</p>
+<p>对象回收分代回收策略</p>
+<p>1.新创建的对象都会被分配到eden区</p>
+<p>2.当eden区内存不足时，标记eden与from中的存活对象</p>
+<p>3.将存活对象采用复制算法复制到to中，复制完毕后，eden区和from内存都得到释放</p>
+<p>4.经过一段时间后eden区的内存又出现不足，标记eden区to中的存活对象，将其复制到from区</p>
+<p>5.当幸存者区对象熬过几次回收（最多15次），晋升至老年代（幸存者区内存不足或大对象会提前回收）</p>
+
                 
             </div>
             <hr/>
@@ -382,7 +455,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://awjyc.github.io/2024/08/07/%E8%84%82%E8%82%AA%E8%82%9D%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3/">https://awjyc.github.io/2024/08/07/%E8%84%82%E8%82%AA%E8%82%9D%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3/</a>
+                    <a href="https://awjyc.github.io/2024/07/29/JVM%E7%9B%B8%E5%85%B3/">https://awjyc.github.io/2024/07/29/JVM%E7%9B%B8%E5%85%B3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -420,8 +493,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%A1%B9%E7%9B%AE/">
-                                    <span class="chip bg-color">项目</span>
+                                <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                    <span class="chip bg-color">八股</span>
                                 </a>
                             
                         </div>
@@ -467,10 +540,9 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/2024/08/07/%E8%84%82%E8%82%AA%E8%82%9D%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3/">
                     <div class="card-image">
@@ -488,9 +560,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-08-07
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-08-07
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -499,7 +571,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -518,13 +589,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/07/29/JVM%E7%9B%B8%E5%85%B3/">
+                <a href="/2024/07/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="JVM相关">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="数据结构">
                         
-                        <span class="card-title">JVM相关</span>
+                        <span class="card-title">数据结构</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -535,7 +606,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-16
                             </span>
                         <span class="publish-author">
                             
