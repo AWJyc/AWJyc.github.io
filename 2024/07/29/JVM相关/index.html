@@ -429,6 +429,25 @@
 <p>3.将存活对象采用复制算法复制到to中，复制完毕后，eden区和from内存都得到释放</p>
 <p>4.经过一段时间后eden区的内存又出现不足，标记eden区to中的存活对象，将其复制到from区</p>
 <p>5.当幸存者区对象熬过几次回收（最多15次），晋升至老年代（幸存者区内存不足或大对象会提前回收）</p>
+<h2 id="MinorGC、MixedGC、FullGC的区别是什么"><a href="#MinorGC、MixedGC、FullGC的区别是什么" class="headerlink" title="MinorGC、MixedGC、FullGC的区别是什么"></a>MinorGC、MixedGC、FullGC的区别是什么</h2><p>1.MinorGC发生在新生代的垃圾回收、暂停时间短</p>
+<p>2.MixedGC新生代+老年代部分区域的垃圾回收，G1垃圾回收器特有的</p>
+<p>3.FullGC新生代+老年代完整的垃圾回收，暂停时间长，应尽力避免</p>
+<p>STW指的是暂停所有应用程序线程，等待垃圾回收的完成</p>
+<h2 id="JVM中有哪些垃圾回收器"><a href="#JVM中有哪些垃圾回收器" class="headerlink" title="JVM中有哪些垃圾回收器"></a>JVM中有哪些垃圾回收器</h2><p>1.串行垃圾回收器：Serial GC，Serial Old GC</p>
+<p>2.并行垃圾回收器：Parallel Old GC</p>
+<p>3.CMS并发垃圾回收器：CMS GC老年代使用</p>
+<p>4.重点G1垃圾回收器，作用在新生代和老年代</p>
+<p>聊一下G1垃圾回收器：</p>
+<p>1.应用于新生代和老年代，在jdk9之后默认使用G1</p>
+<p>2.划分为多个区域，每个区域都可以充当eden、survivor，old、humongous，其中humongous专为大对象准备</p>
+<p>3.采用复制算法</p>
+<p>4.响应时间与吞吐量兼顾</p>
+<p>5.分为三个阶段：新生代回收（STW）、并发标记（重新标记STW）、混合收集</p>
+<p>6.如果并发失败（即回收速度赶不上创建新对象的速度，就会触发Full GC）</p>
+<h2 id="强引用、软引用、弱引用、虚引用的区别"><a href="#强引用、软引用、弱引用、虚引用的区别" class="headerlink" title="强引用、软引用、弱引用、虚引用的区别"></a>强引用、软引用、弱引用、虚引用的区别</h2><p>强引用：只要所有GC Root能找到就不会被回收</p>
+<p>软引用：需要配合soft Reference使用，当垃圾多次回收，内存依然不够时会回收软引用对象</p>
+<p>弱引用：需要配合Weak Reference使用，只要进行了垃圾回收，就会把弱引用对象回收</p>
+<p>虚引用：必须配合引用队列使用，被引用对象回收时，会将虚引用入队，由Reference Handler线程调用虚引用的相关方法释放直接内存</p>
 
                 
             </div>

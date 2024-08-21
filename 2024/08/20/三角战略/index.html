@@ -4,10 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="计算机网络相关, 涡虫人">
-    <meta name="description" content="计算机网络网络结构最常用的网络分层协议是分为5层的TCP&amp;#x2F;IP网络模型
-应用层：应用层是我们接触的应用软件，负责把数据传给传输层
-传输层：有两个传输协议TCP与UDP，应用层数据过大时，会分块成TCP段；且传输层报文中会携带端  ">
+    <meta name="keywords" content="三角战略, 涡虫人">
+    <meta name="description" content="地图设计重要的是为什么要这样设计！！！
+######以设计目标为出发点
+######从宏观到微观
+1.游戏的战斗地图和剧情地图完全一致：
+优点：
+沉浸感增强：玩家在剧情和战斗中使用同一张地图，使得游戏的世界观更加连贯和真实，增强了玩家的沉浸">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +22,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>计算机网络相关 | 涡虫人</title>
+    <title>三角战略 | 涡虫人</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -290,12 +293,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">计算机网络相关</h1>
+                    <h1 class="description center-align post-title">三角战略</h1>
                 </div>
             </div>
         </div>
@@ -319,8 +322,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%85%AB%E8%82%A1%E6%96%87/">
-                                <span class="chip bg-color">八股文</span>
+                            <a href="/tags/%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3/">
+                                <span class="chip bg-color">游戏拆解</span>
                             </a>
                         
                     </div>
@@ -335,7 +338,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-06-12
+                    2024-08-20
                 </div>
                 
 
@@ -356,109 +359,52 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h2><p>最常用的网络分层协议是分为5层的TCP&#x2F;IP网络模型</p>
-<p>应用层：应用层是我们接触的应用软件，负责把数据传给传输层</p>
-<p>传输层：有两个传输协议TCP与UDP，应用层数据过大时，会分块成TCP段；且传输层报文中会携带端   				口号</p>
-<p>网络层：网络层常用协议是IP协议，将上述报文加上ip地址，如果数据量过大还会进行分片</p>
-<p>数据链路层：专门用于标识网络中的设备即MAC地址，用于中间传输</p>
-<p>物理层：为数据链路层提供二进制传输的服务</p>
-<p><img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E7%BD%91%E7%BB%9C.png" alt="image-20240807193704019"></p>
-<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>http是超文本传输协议，是一个在计算机世界里专门在两点之间传输文字图片等超文本数据的约定和规范。</p>
-<p><img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E4%BA%94%E5%A4%A7%E7%8A%B6%E6%80%81%E7%A0%81.png" alt="五大状态码"></p>
-<h1 id="HTTP与HTTPS的区别"><a href="#HTTP与HTTPS的区别" class="headerlink" title="HTTP与HTTPS的区别"></a>HTTP与HTTPS的区别</h1><ol>
-<li>HTTP是明文传输，存在安全风险问题。HTTPS则解决HTTP不安全的缺陷，再TCP和HTTP网络层之间加入了SSL&#x2F;TLS安全协议，使得报文能够加密传输。</li>
-<li>HTTP建立连接相对会简单，TCP三次握手之后便可以进行HTTP得报文传输。而HTTPS在TCP三次握手之后还需要进行SSL&#x2F;TLS的握手过程才可以加密报文传输</li>
-<li>HTTP端口号是80，HTTPS端口号是443</li>
-<li>HTTPS协议需要向证书权威机构申请数字证书来保证服务器的身份是可信的。需要收费。<img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/HTTP%E4%B8%8EHTTPS%E5%8C%BA%E5%88%AB.png" alt="HTTP与HTTPS区别"></li>
-</ol>
-<p>http由于明文传输存在安全风险。而HTTPS通过混合加密的方式实现了信息的机密性，解决了窃听的风险；通过摘要算法的方式实现了完整性，能够为数据生成独一无二的指纹，指纹用于校验数据的完整性，解决了篡改的风险。将服务器公匙放入到了数字证书中，解决了冒充的风险。</p>
-<h1 id="HTTP1-0、HTTP1-1、HTTP2-0和HTTP3-0的区别"><a href="#HTTP1-0、HTTP1-1、HTTP2-0和HTTP3-0的区别" class="headerlink" title="HTTP1.0、HTTP1.1、HTTP2.0和HTTP3.0的区别"></a>HTTP1.0、HTTP1.1、HTTP2.0和HTTP3.0的区别</h1><h3 id="a-http1-0："><a href="#a-http1-0：" class="headerlink" title="a.http1.0："></a>a.http1.0：</h3><p>i.特点：短连接，每次浏览器请求都需和服务器建立一个TCP连接，而且是串行请求，即等服务器恢复了再发送</p>
-<p>ii.缺点：增加了连接的建立和释放的开销</p>
-<p>iii.为什么要用短连接:因为以前上网只是浏览网页，用户无需发送太多请求，交互不频繁，如果长时间占用一个连接，高并发情况下资源容易被浪费</p>
-<h3 id="b-http1-1："><a href="#b-http1-1：" class="headerlink" title="b.http1.1："></a>b.http1.1：</h3><p>相比于1.0新增了哪些功能？</p>
-<p>1.提出了长连接的通信方式，只要任意一方没有明确提出断开连接则保持TCP连接状态</p>
-<p>2.长连接的方式使得管道网络传输成为了可能。在同一个TCP连接里面，客户端可以发起多个请求，只要第一个请求发出去了，不必等其回来，就可以发送第二个请求出去可以减少整体的响应时间</p>
-<p>3.增加了host字段。1.0认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名。而虚拟主机技术的发展，一台物理服务器上有多个虚拟主机共享一个IP于是增加了host字段区分</p>
-<p>存在的缺点：</p>
-<p>队头阻塞：长连接实现了管道网络传输，客户端可以发起多个请求，可是服务端还是按照顺序先回应A的请求，完成后在回应B的请求。要是前面的回应特别慢，后面就有许多请求排队等着。这成为队头阻塞。而且没有请求优先级控制，请求只能从客户端开始，服务端只能被动响应。</p>
-<h3 id="c-http2-0"><a href="#c-http2-0" class="headerlink" title="c.http2.0"></a>c.http2.0</h3><p>i.HTTP2.0协议是基于HTTPS的，所以HTTP2.0的安全性高</p>
-<p>ii.相比于1.1的性能改进：</p>
-<p>1.引入二进制分帧层。HTTP2.0不再像HTTP1.1里纯文本形式的报文，而是使用二进制格式，头信息和和数据体都是二进制，并且统称为帧<img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/1.1%E4%B8%8E2.0%E5%8C%BA%E5%88%AB.png" alt="1.1与2.0区别"></p>
-<p>（‌报文是‌计算机网络中用于交换信息的基本单位，它包含了站点一次性要发送的完整数据信息）</p>
-<p>2.头部压缩。HTTP2.0会压缩头（Header）如果你同时发出多个请求，他们的头是一样的或者是近似的，那么协议会帮你消除重复部分。</p>
-<p>3.使用了多路复用技术。HTTP2.0是可以在一个连接中并发多个请求或回应，而不用按照顺序一一对应。移除了HTTP1.1中的串行请求，不需要排队等待，也就不会再出现队头阻塞问题。</p>
-<p>4.HTTP2.0的数据包不是按顺序发送的，同一个连接里面连续的数据包可能属于不同的回应。因此，必须要对数据包做标记，指出它属于哪个回应。规定客户端发出的数据流编号为奇数，服务器发出的数据流编号为偶数。</p>
-<p>5.服务器可以主动向客户端发送消息。</p>
-<p>iii.缺点</p>
-<p>HTTP2.0多个HTTP请求复用一个TCP连接，一旦发生丢包就会阻塞住所有的HTTP请求</p>
-<h3 id="HTTP3-0"><a href="#HTTP3-0" class="headerlink" title="HTTP3.0"></a>HTTP3.0</h3><p>将TCP协议改为UDP协议，UDP无队头阻塞；UDP 是不可靠传输的，但基于 UDP 的 QUIC 协议（谷歌提出） 可以实现类似 TCP 的可靠性传输。</p>
-<h2 id="TCP和UDP的区别"><a href="#TCP和UDP的区别" class="headerlink" title="TCP和UDP的区别"></a>TCP和UDP的区别</h2><p>1.连接：TCP面向连接，UDP面向无连接</p>
-<p>2.服务对象：TCP一对一，UDP一对一、一对多与多对多</p>
-<p>3.可靠性：TCP可靠，UDP尽全力交付</p>
-<p>4.TCP拥有拥塞控制与流量控制</p>
-<p>5.TCP的头部开销比UDP大</p>
-<h2 id="TCP的三次握手"><a href="#TCP的三次握手" class="headerlink" title="TCP的三次握手"></a>TCP的三次握手</h2><p><img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="TCP三次握手"></p>
-<p>为什么要三次握手，而不是二次、四次？</p>
-<ol>
-<li><strong>三次握⼿才可以阻⽌重复历史连接的初始化（主要原因）</strong></li>
-<li>三次握⼿才可以同步双⽅的初始序列号</li>
-<li>三次握⼿才可以避免资源浪费</li>
-</ol>
-<p>两次握手无法阻止上述问题，四次握手中的服务器端回复数据ACK+SYN可以合并发送，因可以算作三次握手</p>
-<p>为什么每次建立TCP连接初始序列号都不一样？<strong>防止接受历史报文</strong></p>
-<p>如果已经建立了连接但是客户端突然出现了故障怎么办？</p>
-<p>TCP有保活机制。定义一个时间段，在这个时间段内如果没有任何连接相关的活动，TCP保活机制开始作用，每隔一个时间段会发送一个探测报文，该探测报文包含的数据非常少，如果连续几个探测报文都没有得到响应就认为当前的TCP连接已经死亡。</p>
-<h2 id="TCP的四次挥手断开连接"><a href="#TCP的四次挥手断开连接" class="headerlink" title="TCP的四次挥手断开连接"></a>TCP的四次挥手断开连接</h2><p><img src="/../images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="TCP四次挥手"></p>
-<p>双方都可以主动断开连接。</p>
-<ol>
-<li>为什么需要四次挥手？<ol>
-<li>发起断开时，客户端向服务端发送 FIN 报文，客户端此时不发能收；</li>
-<li>服务器端收到 FIN，<strong>先返回 ACK应答报文</strong>，然后服务器可能<strong>要处理和发送数据</strong>，等服务器端呢不在发送时，才发送 FIN 报文给客户端表示同意现在关闭。</li>
-<li>由此可知，服务器端的回复ACK+FIN间隔可能要处理数据，要分开发送，所以要四次握手</li>
-</ol>
-</li>
-<li>为什么需要 TIME_WAIT 状态？<ol>
-<li><strong>防⽌具有相同「四元组」的「旧」数据包被收到</strong>；</li>
-<li>保证「被动关闭连接」的⼀⽅能被正确的关闭，即保证最后的 ACK 能让被动关闭⽅接收，从⽽帮助其正常关闭；</li>
-</ol>
-</li>
-<li>为什么 TIME_WAIT 等待的时间是 2MSL？<ol>
-<li>MSL 是 Maximum Segment Lifetime，<strong>报⽂最⼤⽣存时间</strong>，它是任何报⽂在⽹络上存在的最⻓时间，超过这个时间报⽂将被丢弃。</li>
-<li>TIME_WAIT是客户端收到服务器端的 FIN 报文后发送 ACK 开始计时的，如果服务器端没收到ACK，则会重发 FIN报文，客户端收到重发的报文，则2MSL会重新计时。服务器端FIN + 客户端ACK一来一回正好2个MSL。</li>
-</ol>
-</li>
-</ol>
-<h2 id="SYN泛洪攻击"><a href="#SYN泛洪攻击" class="headerlink" title="SYN泛洪攻击"></a>SYN泛洪攻击</h2><p>TCP 连接建立是需要三次握手,假设攻击者短时间伪造不同 IP 地址的 SYN 报文,服务端每接收到 一个 SYN 报文,就进入 SYN_RCVD 状态,但服务端发送出去的 ACK + SYN 报文,无法得到未知 IP 主机的ACK 应答,久而久之就会占满服务端的 SYN 接收队列(未连接队列),使得服务器不能为正常用户服务。<br>处理方法是通过防火墙，或者增大半连接队列，缩短超时时间。</p>
-<h2 id="流量控制与拥塞控制"><a href="#流量控制与拥塞控制" class="headerlink" title="流量控制与拥塞控制"></a>流量控制与拥塞控制</h2><ol>
-<li><p>流量控制</p>
-<ol>
-<li><p>问题：发送⽅不能⽆脑的发数据给接收⽅，要考虑接收⽅处理能⼒。</p>
-<p>为了解决这种现象发⽣，<strong>TCP 提供⼀种机制可以让「发送⽅」根据「接收⽅」的实际接收能⼒控制发送的数据量，即流量控制。</strong></p>
-</li>
-<li><p><strong>TCP中的流量控制主要基于滑动窗口机制来实现，也有助于避免网络拥塞。通过限制发送速率，流量控制可以防止发送方发送过多的数据，导致网络拥塞。</strong></p>
-</li>
-</ol>
-</li>
-<li><p>拥塞控制</p>
-<ol>
-<li>流量控制是避免「发送⽅」的数据填满「接收⽅」的缓存，但是并不知道⽹络的中发⽣了什么。<strong>在⽹络出现拥堵时，如果继续发送⼤量数据包，可能会导致数据包时延、丢失等，这时 TCP 就会重传数据，但是⼀重传就会导致⽹络的负担更重，于是会导致更⼤的延迟以及更多的丢包，这个情况就会进⼊恶性循环被不断地放⼤</strong></li>
-<li>于是引入<strong>拥塞控制</strong>，⽬的就是<strong>避免「发送⽅」的数据填满整个⽹络。</strong></li>
-</ol>
-</li>
-</ol>
-<h2 id="一个网页请求的流程"><a href="#一个网页请求的流程" class="headerlink" title="一个网页请求的流程"></a>一个网页请求的流程</h2><p>1.浏览器输入网址，解析URL，确定Web服务器和文件名，根据这些信息生成HTTP请求消息；</p>
-<p>2.通过DNS域名解析查询服务器域名对应的IP</p>
-<p>3.把HTTP请求命令交给操作系统的协议栈（此部分包含传输层TCP&#x2F;UDP和网络层IP）</p>
-<p>4.TCP首先进行三次握手建立连接，然后TCP对HTTP请求信息进行拆分并添加TCP头部</p>
-<p>5.IP模块负责将上述数据封装成网络包（添加IP头部）发送给通信对象</p>
-<p>6.生成IP头部后，在前面再加入MAC头部，用于两点传输</p>
-<p>7.利用网卡和网卡驱动程序将二进制的网络包转成电信号进行传输</p>
-<p>8.交换机根据MAC地址表查找MAC地址，然后将信号发送到相应的端口</p>
-<p>9.网络包经过交换机之后，到达路由器并在此被转发到下一个路由器或目标设备</p>
-<p>10.客户端和服务端对数据进行确认解析</p>
-<p>11.客户端处理完数据后向服务器发起了TCP四次挥手，至此双方的连接就断开了</p>
-<h2 id="HTTP请求转发与重定向流程"><a href="#HTTP请求转发与重定向流程" class="headerlink" title="HTTP请求转发与重定向流程"></a>HTTP请求转发与重定向流程</h2><p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820103901764.png" alt="image-20240820103901764">重定向</p>
-<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820103914696.png" alt="image-20240820103914696">请求转发</p>
+                <h2 id="地图设计"><a href="#地图设计" class="headerlink" title="地图设计"></a>地图设计</h2><p>重要的是为什么要这样设计！！！</p>
+<p>######以设计目标为出发点</p>
+<p>######从宏观到微观</p>
+<p>1.游戏的战斗地图和剧情地图完全一致：</p>
+<p>优点：</p>
+<p><strong>沉浸感增强</strong>：玩家在剧情和战斗中使用同一张地图，使得游戏的世界观更加连贯和真实，增强了玩家的沉浸感。</p>
+<p><strong>策略一致性</strong>：玩家可以在剧情部分就开始规划战斗策略，因为他们已经熟悉了地图的布局。这减少了在战斗开始时需要重新学习地图的时间，提升了游戏的策略性，还有就是三角战略中可以通过剧情里的人物对话获得关于地图的隐藏信息。</p>
+<p><strong>节省资源</strong>：使用相同的地图可以减少游戏开发中需要创建和维护不同地图的时间和资源，提高开发效率。</p>
+<p><strong>剧情与战斗的融合</strong>：当地图在剧情和战斗中一致时，故事发展和战斗发生的地点具有更强的关联性，使玩家更容易理解剧情的发展和战斗发生的原因，我为什么要战斗？。</p>
+<p><strong>玩家记忆增强</strong>：玩家反复使用同一张地图，能够加深对地图的记忆，有助于更好地掌握游戏中的策略和资源管理。</p>
+<p>2.充分利用了高低差</p>
+<p><strong>增加战略深度</strong>：高低差让玩家在选择移动和攻击位置时需要考虑地形的高度。占据高地通常可以获得更好的视野或攻击优势，而低地则可能成为防御方的弱点。玩家需要更深入地思考每一步的行动，从而增加游戏的战略深度。</p>
+<p><strong>增强现实感</strong>：高低差设计使游戏世界更接近现实。不同地形高度带来的战斗效果模拟了真实战场中的地形优势，让玩家的体验更加身临其境。</p>
+<p><strong>丰富战斗体验</strong>：高低差增加了战斗的多样性和变化。玩家可以利用地形进行伏击、设陷阱或防守，带来更多不同的战术选择，避免游戏变得单一。</p>
+<p><strong>激励探索和挑战</strong>：某些高地可能需要绕路或特殊的能力才能到达，激励玩家探索地图的各个角落。高低差的挑战性设计也会促使玩家精心规划，提升游戏的乐趣。</p>
+<p><strong>平衡角色和单位</strong>：在游戏设计中，高低差可以作为平衡不同角色或单位的一种手段。某些角色可能擅长在高地作战，而其他角色可能更适合在低地防守，这样可以促使玩家合理利用每个角色的优势，能让数值很弱的人在一个很高的位置上，这就增加了他的战略重要性。</p>
+<p>3.战斗地图大部分设计的很大，这是玩家能多线作战的前提，也给了地图设计更多的空间。</p>
+<p>以每一关为例：</p>
+<p><strong>1.第一关是港口</strong>，可以说是教学关卡，主角一开始在宽度为3的格子上，这样的设计能让玩家快速体验到角色朝向的机制，背击暴击，夹击会追击，还能让玩家更直观的体会到先攻击后移动的战斗机制，可以说让玩家被迫了解游戏战斗的机制。第一关就开始两线作战，地图够大</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820154404093.png" alt="image-20240820154404093"></p>
+<p><strong>2.比武大会</strong>，全部是平地，比武大会汇集了游戏中所有的势力，为之后的对战留了悬念，提高了玩家的期待感与参与感，纯纯的肉搏</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820154717159.png" alt="image-20240820154717159"></p>
+<p><strong>3.私盐贩子</strong>，因为队伍里多了两个远程角色，并且新加入的角色擅长利用陷阱，所以说这关路口很窄并且有很多高地，我认为这个游戏早期地图设计是为角色服务</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820155022966.png" alt="image-20240820155022966"></p>
+<p><strong>4.护卫战</strong>，是护卫一个角色的战斗，总体来说是防守战，但是防守战一定要设计多个防守点。（原因：1.<strong>增加战术深度</strong>玩家需要考虑如何在各个防守点之间分配资源和兵力，权衡防守重点，制定更复杂的防御计划。这增加了游戏的策略性和挑战性。2.<strong>提升紧张感和挑战性</strong>：多个防守点意味着玩家需要同时应对来自不同方向的威胁，增加了防守的难度和紧张感。玩家必须不断在各个防守点之间做出反应和调整，这使得游戏更加扣人心弦。3.<strong>多样化的敌人进攻路线</strong>：敌人可以从多个方向进攻，迫使玩家采取不同的防御手段。这避免了防守战变得单调，并且让每场战斗都充满变数和不确定性。4<strong>增加游戏的重玩性</strong>：由于有多个防守点，玩家可以通过不同的策略和防守方法来应对同一场战斗，从而增加游戏的重玩性和吸引力。）而且这一关有的防守点看似是防守点，其实也是进攻点，而有的点受限于当前人物性能只能作为防守点。此时玩家拥有的角色也够多了，这就鼓励了玩家去探索和了解不同角色的特点，哪些人物适合防守哪些要去进攻，怎么搭配等等。这个游戏的多线战斗设计非常好，虽然是一大张地图，但是每一部分战斗又不一样，而最终又能连接起来。<strong>能让玩家有更高的成就感</strong></p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820155151392.png" alt="image-20240820155151392"></p>
+<p><strong>5.突破战</strong>，防守方设计了栅栏等阻碍进攻的道具，以常识出发，会暗示玩家使用火系魔法摧毁这些栅栏，这时候就给玩家植入了环境交互，元素交互的概念。而且这关总体上来说不是纯突破，前期是防守，后期等对方人死差不多了才是总攻，这样增加了游戏节奏的张力，前期的防守阶段通常节奏较慢，给玩家时间思考和制定策略，并逐步积累力量。而后期的总攻则会使游戏节奏陡然加快，带来强烈的紧张感和刺激感。这种节奏上的对比增强了游戏的张力，使玩家更加投入。（PS：引入高低差设定能加强远程角色的存在感并提高战略深度）</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820160003484.png" alt="image-20240820160003484"></p>
+<p><strong>6.撤退战</strong>，在仅有的两个制高点上安排了两个弓箭手恶心玩家，这也能让玩家认识到高低差的重要性，这关需要机动力高的角色来打开城门，加强了盗贼这个角色的存在感，这一关没有分线作战，是总体推进</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820161623600.png" alt="image-20240820161623600"></p>
+<p><strong>7.防守战</strong>，敌方有一个数值很高的Boss是这关的特点，如何限制她的输出是这关通关的主要难点。战斗前的对话给玩家加深了这个印象（这个人不好惹），能让玩家潜意识的往妨碍这个人输出的方向来解题，同时这关的路很窄很负责（这样设计不仅限制了玩家的移动同时也限制了boss的移动，玩家可以利用这种限制来制定针对性的战术，如封锁道路、逐步削弱BOSS，或引导BOSS进入陷阱等。<strong>平衡游戏难度</strong>：通过狭窄地形的限制，即使是强大的BOSS也不能随意移动和攻击。这为玩家提供了更多的生存机会，让他们可以利用地形优势来削弱BOSS的威胁，从而在一定程度上平衡了游戏的难度。<strong>策略性战斗</strong>：狭窄的地形促使玩家思考如何利用地形来对抗BOSS。例如，玩家可以利用地形的障碍物来阻挡BOSS的进攻，或者通过狭窄的路径逐步引诱BOSS进入有利位置，从而更有效地进行攻击。这种设计鼓励玩家以更精细的战术来应对挑战。），这一关很难很难，相当于强制让玩家利用地形，所以这一关地形设计很复杂</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820162325527.png" alt="image-20240820162325527"></p>
+<p><strong>8.防守战</strong>，这关还是利用了高低差，可以选择主动出击或者据守，在敌人进攻的路上就可以根据地形优势灭掉敌军，经过前面的关卡，这游戏每一关对方的人数都多过我方的人数。比上一关简单很多，缓解了玩家一直进行高难度关卡带来的疲劳感。<strong>增强玩家的成就感</strong>：难关之后跟着简单的关卡，可以让玩家在克服困难后迅速体验到胜利的成就感。这种设计能够有效地提高玩家的满意度，并鼓励他们继续进行游戏。</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820163021036.png" alt="image-20240820163021036"></p>
+<p><strong>9.超大地图盆地战</strong></p>
+<p>同时是雨天，这一关祭祀尤其关键，因为下雨会导致地面积水，而雷电系的技能打到水上会导电。感觉就是导出天气系统，让玩家更能注意到这个机制</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820164005002.png" alt="image-20240820164005002"></p>
+<p><strong>10.防守战</strong>，这一关主题设计明确，一个大门与大门上的高地位置，<strong>增强游戏体验</strong>：地图设计是游戏氛围的重要组成部分。精心设计的地图可以营造出特定的氛围或情境，例如紧张的巷战、激烈的攻城战、或险峻的山地战。这种情境感能够增强玩家的沉浸感，提升整体游戏体验。<strong>引导玩家的行动</strong>：通过地图设计，游戏开发者可以引导玩家的行动路径或战略选择。例如，通过狭窄的通道或重要的高地，迫使玩家选择特定的行动策略。这种设计能够增加游戏的紧张感和难度，并引导玩家以更具挑战性的方式进行游戏。<strong>平衡游戏难度</strong>：地图设计也是调节游戏难度的工具。复杂的地形或不对称的地图布局可以增加战斗的难度，而较为平坦或对称的地图则可以降低难度。这种设计能够确保不同水平的玩家都能找到合适的挑战，并且通过调整地图的难度分布，使游戏过程更加平衡。</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820164326941.png" alt="image-20240820164326941"></p>
+<p><strong>11.村子的防守战</strong>，印象比较深刻的一关，因为地方有两个boss，所以这一关设置了对玩家有利的地形，有两个高地，但是中途有一个高地会被攻破，需要转移到另一个高地进行据守作战，这一关是纯粹的好玩，占据这么有利的地形一开始玩家会有一种优势很大的错觉，但是战斗到后面才发现这一关并没有想象中那么简单。玩家在最初感受到地形优势时，可能会放松警惕或过度自信，这为后续的挑战创造了更大的戏剧性张力。当玩家发现情况并不如预期简单时，他们需要重新评估策略并适应新的战斗环境，这不仅提高了游戏的可玩性，还促使玩家更加深入地理解游戏机制，带来更丰富的游戏体验。</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820170310393.png" alt="image-20240820170310393"></p>
+<p><strong>12歼灭战</strong>，但是有船，主要就是一格窄口，加大了玩家的进攻压力，需要玩家一点一点推进。</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820170958162.png" alt="image-20240820170958162"></p>
+<p><strong>13.超级好玩的歼灭战</strong>，敌方有非常强大的boss，中间有个全是水的大池塘，这就暗示了这一关强调了元素属性的重要性。如果不用雷元素麻痹敌方boss的话就会非常难打。而且我发现这个游戏每次打boss的时候都会给玩家有利的地形，所以可以把boss设计的非常的强大，但是玩家打过boss后通常会忽略这些有利的地形给自己带来的影响，所以会加大成就感。敌方人数很多很多还有个boss，必须使用雷元素打aoe伤害，这提高了玩家的紧张感。</p>
+<p><img src="C:/Users/m1539/AppData/Roaming/Typora/typora-user-images/image-20240820171234371.png" alt="image-20240820171234371"></p>
+<p>战棋游戏不同的棋盘会给玩家带来很大的不同的影响：如果想突出人物个性就使用正方形棋盘，战争游戏或者角色脸谱化很严重的游戏就是用六边形棋盘</p>
 
                 
             </div>
@@ -485,7 +431,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://awjyc.github.io/2024/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/">https://awjyc.github.io/2024/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/</a>
+                    <a href="https://awjyc.github.io/2024/08/20/%E4%B8%89%E8%A7%92%E6%88%98%E7%95%A5/">https://awjyc.github.io/2024/08/20/%E4%B8%89%E8%A7%92%E6%88%98%E7%95%A5/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -523,8 +469,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%85%AB%E8%82%A1%E6%96%87/">
-                                    <span class="chip bg-color">八股文</span>
+                                <a href="/tags/%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3/">
+                                    <span class="chip bg-color">游戏拆解</span>
                                 </a>
                             
                         </div>
@@ -570,17 +516,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2024/07/09/mysql/">
+                <a href="/2024/08/20/%E4%B8%89%E8%A7%92%E6%88%98%E7%95%A5/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="mysql">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="三角战略">
                         
-                        <span class="card-title">mysql</span>
+                        <span class="card-title">三角战略</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -590,9 +537,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-08-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -601,11 +548,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
+                    <a href="/tags/%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3/">
+                        <span class="chip bg-color">游戏拆解</span>
                     </a>
                     
                 </div>
@@ -619,13 +567,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/06/06/redis/">
+                <a href="/2024/08/07/%E8%84%82%E8%82%AA%E8%82%9D%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Redis八股">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="脂肪肝项目相关部分">
                         
-                        <span class="card-title">Redis八股</span>
+                        <span class="card-title">脂肪肝项目相关部分</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -636,7 +584,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-08-07
                             </span>
                         <span class="publish-author">
                             
@@ -649,8 +597,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%85%AB%E8%82%A1/">
-                        <span class="chip bg-color">八股</span>
+                    <a href="/tags/%E9%A1%B9%E7%9B%AE/">
+                        <span class="chip bg-color">项目</span>
                     </a>
                     
                 </div>
