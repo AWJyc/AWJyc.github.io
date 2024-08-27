@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="脂肪肝项目相关部分, 涡虫人">
-    <meta name="description" content="这是我的第一个博客，在这里分享学习记录与想法。
-脂肪肝算法评估平台">
+    <meta name="description" content="脂肪肝算法评估平台此项目采用了前后端分离的开发方式，实现了给用户分配角色以及角色的权限管理，使用Sa-Token技术进行登录单点校验与权限认证，使用Redis存储高频的权限数据。
+a.为什么做这个项目：因为需要申请软件著作权，当时正好在学j">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -355,8 +355,15 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>这是我的第一个博客，在这里分享学习记录与想法。</p>
-<h1 id="脂肪肝算法评估平台"><a href="#脂肪肝算法评估平台" class="headerlink" title="脂肪肝算法评估平台"></a>脂肪肝算法评估平台</h1>
+                <h1 id="脂肪肝算法评估平台"><a href="#脂肪肝算法评估平台" class="headerlink" title="脂肪肝算法评估平台"></a>脂肪肝算法评估平台</h1><p>此项目采用了前后端分离的开发方式，实现了给用户分配角色以及角色的权限管理，使用Sa-Token技术进行登录单点校验与权限认证，使用Redis存储高频的权限数据。</p>
+<p>a.为什么做这个项目：因为需要申请软件著作权，当时正好在学java，而权限管理是所有后台系统都会涉及的部分，其核心流程都很相似，使用java写模型的话太慢，如果直接打matlab或者python的jar包的话又会减少灵活性，所以就想到了在python里为每一个模型开一个端口，然后通过http协议与java后端连接，这样的话可以增强其灵活性，想改就改。</p>
+<p>1.登陆部分：登陆部分使用了Sa-token进行了单点登陆验证与权限认证，在satoken中有一个自定义的拦截器，我当时是设置除了注册和登录，其他都要校验是否是登陆状态，然后需要操作数据库的操作都设置了权限，比如说增删改查都需要权限，在satoken里实现了stp接口，在里面写的权限验证的逻辑。</p>
+<p>2.sa-token默认将数据保存在内存中，重启后数据会丢失，所以就将token与session存在了redis中</p>
+<p>3.easyexcel是阿里巴巴开源的一个excel处理框架，使用easyexcel.write与load写于存文件</p>
+<ol start="4">
+<li></li>
+</ol>
+
                 
             </div>
             <hr/>

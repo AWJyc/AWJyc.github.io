@@ -4,10 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis八股, 涡虫人">
-    <meta name="description" content="Redisredis缓存击穿查询一个不存在的数据，mysql查询不到就一直写入不进缓存，所以导致每次都查询数据库
-解决方案：1.布隆过滤器   2.可以缓存空数据，查询返回结果为空也一样进行缓存
-redis缓存穿透当一个key过期时大量的请">
+    <meta name="keywords" content="巫师之昆特牌拆解, 涡虫人">
+    <meta name="description" content="1.简评《巫师之昆特牌》是从巫师3中分离出来的卡牌类对战游戏，游戏人数为两人，互为对抗方。《巫师之昆特牌》是一种独创的卡牌对战类游戏，以最基础的比点数玩法为基础，融合了大量的卡牌机制，其最终目的都是让你的点数超越对方（总体来说有两个策略：1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +17,7 @@ redis缓存穿透当一个key过期时大量的请">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Redis八股 | 涡虫人</title>
+    <title>巫师之昆特牌拆解 | 涡虫人</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -290,12 +288,12 @@ redis缓存穿透当一个key过期时大量的请">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis八股</h1>
+                    <h1 class="description center-align post-title">巫师之昆特牌拆解</h1>
                 </div>
             </div>
         </div>
@@ -319,8 +317,8 @@ redis缓存穿透当一个key过期时大量的请">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%85%AB%E8%82%A1/">
-                                <span class="chip bg-color">八股</span>
+                            <a href="/tags/%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3%E6%A1%88%E4%BE%8B/">
+                                <span class="chip bg-color">游戏拆解案例</span>
                             </a>
                         
                     </div>
@@ -335,7 +333,7 @@ redis缓存穿透当一个key过期时大量的请">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-06-06
+                    2024-08-26
                 </div>
                 
 
@@ -356,96 +354,42 @@ redis缓存穿透当一个key过期时大量的请">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="redis缓存击穿"><a href="#redis缓存击穿" class="headerlink" title="redis缓存击穿"></a>redis缓存击穿</h2><p>查询一个不存在的数据，mysql查询不到就一直写入不进缓存，所以导致每次都查询数据库</p>
-<p>解决方案：1.布隆过滤器   2.可以缓存空数据，查询返回结果为空也一样进行缓存</p>
-<h2 id="redis缓存穿透"><a href="#redis缓存穿透" class="headerlink" title="redis缓存穿透"></a>redis缓存穿透</h2><p>当一个key过期时大量的请求查询，这些瞬间大量的请求可能会压垮数据库</p>
-<p>解决方案：1.使用互斥锁：当缓存失效时，不立即去load数据库，而是使用redis的setnx设置一个互斥锁，当操作成功返回时再进行load数据库操作并且回设缓存，否则重试get缓存的方法。</p>
-<p>​					特点：一致性强，性能差	</p>
-<p>2.逻辑过期：a.设置key的时候，设置一个过期时间字段一块存入缓存中，不给当前key设置过期时间</p>
-<p>​					b.当查询时判断是否过期</p>
-<p>​					c.过期就开通另一个线程进行数据同步，当前线程正常返回数据，这个数据不是最新</p>
-<p>​						特点：高可用，一致性差，性能强</p>
-<h2 id="redis缓存雪崩"><a href="#redis缓存雪崩" class="headerlink" title="redis缓存雪崩"></a>redis缓存雪崩</h2><p>同一时间段内大量的key过期或者redis服务宕机，导致大量的请求到达数据库，带来巨大压力</p>
-<p>解决方案：1.给不同的key的过期时间添加随机值</p>
-<p>​					2.利用redis集群提高服务的可用性</p>
-<p>​					3.缓存降级</p>
-<p>​					4.给业务添加多级缓存</p>
-<h2 id="redis双写一致性"><a href="#redis双写一致性" class="headerlink" title="redis双写一致性"></a>redis双写一致性</h2><p>当修改了数据库的数据时也要修改缓存的数据，缓存与数据库的数据要保存一致</p>
-<p>两种方案：</p>
-<p>1.允许延时一致的业务：使用异步通知</p>
-<p>​										a.使用MQ中间件，当更新数据后，通知缓存删除</p>
-<p>​										b.使用canal中间件，不需要修改业务代码，伪装成mysql的一个从节点，											canal通过读取binlog数据更新缓存</p>
-<p>2.要求强一致的业务：使用redisson提供的读写锁</p>
-<p>​										a.共享锁：读锁readlock，加锁之后，其他线程可以共享读操作</p>
-<p>​										b.排他锁：独占writelock，加锁之后，阻塞其他线程读写操作</p>
-<h2 id="redis持久化"><a href="#redis持久化" class="headerlink" title="redis持久化"></a>redis持久化</h2><p>当redis实例故障重启后还能获得数据</p>
-<p>两种方式：</p>
-<p>1.RDB:一个快照文件，把redis内存存储的数据写至磁盘上，当redis实例宕机恢复时，从磁盘的rdb快照文件中恢复数据</p>
-<p>2.AOF:是追加文件，当redis操作写命令时，都会存储在这个文件中，当redis实例宕机恢复时，会从这个文件中再次执行一遍命令来恢复数据</p>
-<p>这两种方式哪个快？</p>
-<p>RDB是二进制文件，体积较小，恢复的比较快，但是它可能会丢失数据，故也会用AOF来恢复数据，虽然AOF回复慢，但是丢数据的风险会小一些，AOF中设置不同的刷盘策略。</p>
-<h2 id="redis数据过期策略"><a href="#redis数据过期策略" class="headerlink" title="redis数据过期策略"></a>redis数据过期策略</h2><p>有两种需要配合使用：</p>
-<p>1.惰性删除：在设置key的过期时间后，就不去管它，当需要该key时，再检查是否过期，如果过期就删除</p>
-<p>2.定期删除：每隔一段时间就对一些key进行检查，删除里面过期的key</p>
-<p>​					两种模式：slow模式：10hz</p>
-<p>​									    fast模式：频率不固定</p>
-<h2 id="redis数据淘汰策略"><a href="#redis数据淘汰策略" class="headerlink" title="redis数据淘汰策略"></a>redis数据淘汰策略</h2><p>当redis中的内存不够用时，此时在redis中添加新的key，那么redis会按照某种规则将内存中的数据删除，这种数据删除规则被称为内存的淘汰策略</p>
-<p>默认的策略是noeviction即不删除任何数据，内存不足直接报错</p>
-<p>LRU:最少最近使用，用当前时间捡起最后一次访问时间，值越大则淘汰优先级越高</p>
-<p>LFU:最少频率使用，统计每个key的使用频率，值越小淘汰优先级越高</p>
-<h2 id="redis分布式锁"><a href="#redis分布式锁" class="headerlink" title="redis分布式锁"></a>redis分布式锁</h2><p>redis中提供了一个命令setnx，由于redis是单线程的，用了命令之后只能由一个客户端对一个key设置值，在没有过期或删除key的时候其他客户端是不允许设置这个key的。</p>
-<p>如何控制redis实现分布式锁的有效时长：使用redis的框架redisson实现。											在redisson中需要手动加锁，并且可以控制锁的失效时间与等待时间，当锁住的业务还没有执行完成时，在redisson中引入看门狗机制，每隔一段时间就检查当前业务是否还持有锁，若持有锁就增加锁持续时间，没有就释放锁。</p>
-<p>redisson实现的分布式锁可以重入吗：可以																							                     这样做是为了避免死锁的产生。重入其实在内部就是判断是否是当前线程持有的锁，若是就会计数加1，如果释放就会减1，在存储数据时用的是hash结构</p>
-<p>redisson实现的分布式锁不能解决主从一致的问题。</p>
-<h2 id="redis的集群方案"><a href="#redis的集群方案" class="headerlink" title="redis的集群方案"></a>redis的集群方案</h2><p>有三种：主从复制、哨兵模式与redis分片集群</p>
-<p>1.主从复制：单节点的redis的并发能力是有上限的，要进一步提高redis的并发能力可以搭建主从集群，实现读写分离。一般是一主多从，主节点负责写操作，从节点负责读操作。主节点写入数据后需要把数据同步到从节点中。</p>
-<p>​				主从同步的流程：分为两个阶段，全量同步与增量同步。</p>
-<p>​				全量同步是指从节点第一次与主节点建立连接时使用全量同步</p>
-<p>​				a.从节点请求主节点同步数据，其中从节点会携带自己的replication与offset</p>
-<p>​				b.主节点判断是否是第一次请求,主要判断的依据是主节点与从节点是否是同一个replication,如果不是就说明是第一次同步,主节点会把自己的replication id 与offset发送给从节点,让从节点与主节点的信息保持一致	</p>
-<p>​				c.同时主节点会执行bgsave,生成rdb文件后,发送给从节点去执行,从节点先把自己的数据清空,然后执行主节点发送过来的rdb文件,这样就保持了一致.</p>
-<p>​				注意:在rdb文件生成执行期间,依然有请求到了主节点,而主节点会以命令的方式记录到缓冲区,缓冲区是一个日志文件,最后把这个日志文件发送给从节点,这样就能保证主从节点完全一致,后期再同步数据时都是以来这个日志文件</p>
-<p>​				增量同步是指从节点服务重启之后数据就不一致了,所以这时,从节点会请求主节点同步数据,主节点还是判断是否为第一次请求,不是第一次就获取从节点的offset值,然后主节点从命令日志中获取offset值之后的数据发送给从节点进行数据同步</p>
-<h2 id="redis的底层数据结构"><a href="#redis的底层数据结构" class="headerlink" title="redis的底层数据结构"></a>redis的底层数据结构</h2><p>有五种:String、List、Hash、Sorted Set与Set</p>
-<h2 id="redis多路IO服用底层-NIO-即相关IO"><a href="#redis多路IO服用底层-NIO-即相关IO" class="headerlink" title="redis多路IO服用底层(NIO)即相关IO"></a>redis多路IO服用底层(NIO)即相关IO</h2><p>同步、异步、阻塞与非阻塞IO的区别</p>
-<p>1.同步 IO 是用户线程发起 IO 请求后，需要等待或轮询内核 IO 操作完成后才能继续执行。</p>
-<p>2.异步IO是用户发起IO请求后可以继续执行,当内核IO操作完成后会通知用户线程或调用用户线程注册的回调函数</p>
-<p>3.阻塞IO指当一个线程调用read（）或write（）时，该线程被阻塞，直到有一些数据被读取或写入，该线程在此期间不能执行其他任务。因此，在完成网络通信进行IO操作时，由于线程会阻塞，所以服务器端必须为每个客户端都提供一个独立的线程进行处理，当服务器端需要处理大量客户端时，性能急剧下降。 </p>
-<p>4.非阻塞IO指当线程从某通道进行读写数据时，若没有数据可用时，该线程可以进行其他任务。线程通常将非阻塞IO的空闲时间用于在其他通道上执行IO操作，所以单独的线程可以管理多个输入和输出通道。</p>
-<p>redis使用I&#x2F;O多路复用结合事件的处理器来应对多个Socket请求</p>
-<p>（1）连接应答处理器</p>
-<p>（2）命令回复处理器，在Redis6.0之后，为了提升更好的性能，使用了多线程来处理回复事件</p>
-<p>（3）命令请求处理器，在Redis6.0之后，将命令的转换使用了多线程，增加命令转换速度，在命令执行的时候，依然是单线程</p>
-<p>​     <img src="/../images/redis/image-20240807154902387.png" alt="image-20240807154902387" title="redis多路复用图片"></p>
-<p>经典例子</p>
-<p>有一个经典的举例：烧开水，假设有这么一个场景，有一排水壶（客户）在烧水。</p>
-<p>AIO的做法是，每个水壶上装一个开关，当水开了以后会提醒对应的线程去处理。 NIO的做法是，叫一个线程不停的循环观察每一个水壶，根据每个水壶当前的状态去处理。</p>
-<p>BIO的做法是，叫一个线程停留在一个水壶那，直到这个水壶烧开，才去处理下一个水壶。</p>
-<p>可以看出AIO是最聪明省力，NIO相对省力，叫一个人就能看所有的壶，BIO最愚蠢，劳动力低下。简单的描述一下BIO的服务端通信模型：采用BIO通信模型的服务端，通常由一个独立的Acceptor线程负责监听客户端的连接，它接收到客户端连接请求之后为每个客户端创建一个新的线程进行链路处理 处理完成后，通过输出流返回应答给客户端，线程销毁。即典型的一请求一应答通信模型。</p>
-<h2 id="分布式锁SetNX和Redission的区别"><a href="#分布式锁SetNX和Redission的区别" class="headerlink" title="分布式锁SetNX和Redission的区别"></a>分布式锁SetNX和Redission的区别</h2><p>1.setNx是redis中的一个命令，用于将键值对设置到Redis数据库中。setnx表示Set if Not Exists，即当键不存在时才执行设置操作。它是一个原子性的操作，可以保证在多个客户端同时请求设置同一个键时，只有一个客户端能够成功设置该键，其他客户端将失败。这使得setnx在分布式环境中可以用于简单的分布式锁实现</p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>实现简单，易于理解和使用。</li>
-<li>原子性操作，避免并发设置同一键时的竞态条件问题。</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>需要开发者自行处理锁的过期时间和续约机制，增加了额外的开发复杂性。</li>
-<li>对于获取锁失败的客户端，需要不断重试，可能会导致性能损失和增加系统负载。</li>
-</ul>
-<p>2.redisson是基于redis的分布式Java对象和服务框架，提供了丰富的分布式服务和工具如分布式锁、分布式集合、分布式对象等。Redisson封装了redis的底层API，简化了在Java应用中使用Redis的复杂性，提供了易于使用的高级API。Redisson的分布式锁实现不仅支持setnx命令，还提供了更多的锁实现方式，如可重入锁、公平锁、读写锁等，满足不同场景下需求。</p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>封装了Redis的底层API，提供易于使用的高级API，简化了分布式锁的使用。</li>
-<li>提供了丰富的分布式数据结构和服务，方便实现多种分布式功能。</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>作为第三方库，引入项目中可能增加一定的依赖复杂性，需要仔细考虑项目整体架构和依赖管理。</li>
-<li>在某些高并发场景下，Redisson可能产生较高的网络通信开销，需要合理优化配置。</li>
-</ul>
-<p>setnx是Redis中的原子性命令，用于在键不存在时设置键值对，适用于简单的分布式锁实现；Redisson是基于Redis的分布式Java框架，封装了Redis的API，提供易用的高级API和丰富的分布式服务和工具，包括多种锁类型的实现，方便开发者使用和管理分布式功能。</p>
-
+                <h2 id="1-简评"><a href="#1-简评" class="headerlink" title="1.简评"></a>1.简评</h2><p>《巫师之昆特牌》是从巫师3中分离出来的卡牌类对战游戏，游戏人数为两人，互为对抗方。《巫师之昆特牌》是一种独创的卡牌对战类游戏，以最基础的比点数玩法为基础，融合了大量的卡牌机制，其最终目的都是让你的点数超越对方<strong>（总体来说有两个策略：1.削弱对方的点数 2.提升自己的点数）</strong>，以简单的获胜逻辑出发，易于上手，同时利用不同派系不同对局技能的设计来使玩家间差异化，个人认为，《巫师之昆特牌》对胜利方和失败方都有循环系统。<strong>胜利方：胜利本身带来的反馈，证明了自己的卡组的有效也相当于是承认了自己的策略。  失败方：构筑卡组-&gt;对战失败–调整卡组–&gt;对战胜利–&gt;直到达到对战胜利，这两者可以互相转化至对方的循环中，因为游戏是有赢有输。</strong></p>
+<p>把游戏塞满正反馈后，游戏通过随机抽卡策略让失败方的负反馈降低，让玩家不至于陷入低落。</p>
+<h2 id="游戏核心玩法"><a href="#游戏核心玩法" class="headerlink" title="游戏核心玩法"></a>游戏核心玩法</h2><h3 id="PVP"><a href="#PVP" class="headerlink" title="PVP"></a>PVP</h3><p>玩家完全控制战斗包括战斗的”后勤”—–即选择派系选择人物技能构筑卡组。虽然是牌场上定胜负，但是牌场上的胜负说明了两点：<strong>1.玩家操作犀利   2.玩家卡组强大</strong>，这都会给玩家带来正反馈。</p>
+<h2 id="1-”后勤“部分"><a href="#1-”后勤“部分" class="headerlink" title="1.”后勤“部分"></a>1.”后勤“部分</h2><p>构建一套对战卡组的流程：选择派系（有六个派系：北方，群岛，松鼠党，帝国，怪兽，辛迪加）—-&gt;根据不同的排序选择派系技能<strong>（派系技能可以理解为牌场上有限制的技能次数）</strong>—–&gt;根据<strong>人口</strong>机制构筑卡组</p>
+<h4 id="人口系统（1-150左右的人口上限；2-最低4人口；3-最低25张卡牌-；4-随从牌大于等于1；5-引入的金卡机制，卡组内最多可以出现两张同名铜卡，金卡只能有一张；6-选用不同的技能附带不同的人口增量，这样设计可以将技能也看做一张人口卡）"><a href="#人口系统（1-150左右的人口上限；2-最低4人口；3-最低25张卡牌-；4-随从牌大于等于1；5-引入的金卡机制，卡组内最多可以出现两张同名铜卡，金卡只能有一张；6-选用不同的技能附带不同的人口增量，这样设计可以将技能也看做一张人口卡）" class="headerlink" title="人口系统（1.150左右的人口上限；2.最低4人口；3.最低25张卡牌 ；4.随从牌大于等于1；5.引入的金卡机制，卡组内最多可以出现两张同名铜卡，金卡只能有一张；6.选用不同的技能附带不同的人口增量，这样设计可以将技能也看做一张人口卡）"></a>人口系统（1.150左右的人口上限；2.最低4人口；3.最低25张卡牌 ；4.随从牌大于等于1；5.引入的金卡机制，卡组内最多可以出现两张同名铜卡，金卡只能有一张；6.选用不同的技能附带不同的人口增量，这样设计可以将技能也看做一张人口卡）</h4><p>这类系统存在的目的是将卡牌归类。类似于炉石传说的法力值系统。通过这种归类方式，众多卡牌在不同卡池之间的平均价值不同，因为它们都与同卡池的其它卡牌竞争，而不是与所有卡池的卡牌竞争。将这些卡池的平均价值排序就叫“战力曲线”，因为这能让不同卡池之间的价值区别可视化。举例说明，法力值系统通常呈现出一种指数增长而非线性增长的趋势，因为高费用卡牌的灵活度更低，需要更强的战力进行补偿。 </p>
+<p>假设双方玩家手里拥有相同的总点数，目的是以最低的点差赢得一小局，而以最大的点差输掉一小局，即让对手浪费点数。如此，你就能在最后一局保留更多点数。卡牌价值的不同让这一目标更加复杂与有趣，尤其是再加上战斗是回合制。</p>
+<p><strong>主要目的是限制玩家的构筑</strong>。通过限制牌组构筑，人口系统能很自然的解决其自身带来的问题。一般流程有快速塞入想要使用的卡牌，然后塞入或高或低的人口来填充，最后根据人口限制进行打磨。 </p>
+<p><strong>同时设计了最低卡牌数量（即让玩家在有限制的条件下发现卡组的最优情况）</strong></p>
+<h4 id="胜利条件—三局两胜"><a href="#胜利条件—三局两胜" class="headerlink" title="胜利条件—三局两胜"></a>胜利条件—三局两胜</h4><p>三小局回合制的设计能让昆特牌与其他卡牌游戏尽显不同。每次牌局都要思考怎么控制三小局的长短与资源支配。<br>如果单从资源＝点数这一点看，我想<br>铜卡的意义在于能更高效的将资源转化为点数，比如常说的4p7，4p8。<br>而金卡的意义在于在一回合倾注更多的点数，比如老矛头，11p12，等于一张半铜卡。</p>
+<h2 id="2-角色差异化"><a href="#2-角色差异化" class="headerlink" title="2.角色差异化"></a>2.角色差异化</h2><p>通过让玩家选择不同阵营，同时选择不同的对战技能，可以极大的增加玩家之间的差异化，让游戏有更多的活力。不同阵营有不同阵营的玩法与卡牌，通过中立卡牌与特色卡牌的组合可以极大的增加策略性。</p>
+<p>优点：</p>
+<p><strong>1.丰富策略和玩法</strong>：不同的角色有不同的技能，玩家需要根据角色的特点制定不同的策略，增加游戏的策略深度和复杂性。</p>
+<p><strong>2.提升了游戏的多样性</strong>：多个派系的存在使得游戏对局组合方式多样化，玩家在每场对局中可能面对不同的职业和策略，增加了游戏的不可预测性和挑战性。<strong>有时两个特定的排序特定的卡组对战可能会出现意想不到的效果，这样也利于游戏的宣传</strong></p>
+<p><strong>3.满足不同玩家的偏好</strong>：不同的职业风格适合不同类型的玩家。例如，有些玩家喜欢屯点数，而另一些则喜欢控制型职业，这样的设计能够满足更多样化的玩家需求。</p>
+<p><strong>4.推动社群互动</strong>：不同职业之间的对抗和讨论激发了玩家之间的互动，玩家们会分享各自的策略和卡组，形成活跃的社群生态。</p>
+<p><strong>5.提高游戏寿命</strong>：玩家玩腻了某一个职业可以换其他职业玩</p>
+<p><strong>6.促进游戏平衡</strong>：通过多个职业的设计，开发团队可以在不同职业之间进行平衡调整，确保游戏的公平性和竞争性。这种平衡性使得每个职业都有机会在竞技中表现出色。</p>
+<p><strong>7.提升氪金点</strong>：角色差异化让玩家对角色产生了身份认同，为了进一步个性化他们喜欢的阵营角色，玩家可能会购买专属皮肤、装饰品等以展现自己的独特性。</p>
+<p><strong>8.游戏设计的微交易模式</strong>：差异化角色经常伴随着各种微交易选项，比如解锁角色、购买特定角色的扩展包或道具。<strong>这些微交易设计巧妙地嵌入到游戏中，诱导玩家为了更好的体验而逐步投入资金。</strong></p>
+<h2 id="3-对战系统"><a href="#3-对战系统" class="headerlink" title="3.对战系统"></a>3.对战系统</h2><p><strong>在不考虑卡牌效果的情况下，一局《巫师之昆特牌》只会让25张牌中的16张牌被打出。</strong>如果所有卡牌都接近于6.5的平均人口，那就意味着60左右的人口不会被使用到。通过极端化一套牌组，也就是加入更高人口和更低人口的卡牌，能让未被使用的卡牌人口总数降低（如果只抓到了高人口卡牌）……或提升！牌组越是极端化，风险越高（一定要抽到金卡啊）。这也没什么稀奇的，以前的颜色机制也存在该问题。而人口系统则让玩家有机会极端化自己的牌组。</p>
+<h3 id="三局两胜制度"><a href="#三局两胜制度" class="headerlink" title="三局两胜制度"></a>三局两胜制度</h3><p>三小局回合制的设计能让昆特牌与其他卡牌游戏尽显不同。每次牌局都要思考怎么控制三小局的长短与资源支配。</p>
+<h3 id="分为前排后排"><a href="#分为前排后排" class="headerlink" title="分为前排后排"></a>分为前排后排</h3><p>每一排最多可以放置9张卡牌，这样做可以将单解大卡的潜力提高，限制了铺场的卡组，达到了大点引擎与铺场引擎的平衡</p>
+<h3 id="三局两胜每回合打到有一方停止为止"><a href="#三局两胜每回合打到有一方停止为止" class="headerlink" title="三局两胜每回合打到有一方停止为止"></a>三局两胜每回合打到有一方停止为止</h3><p><strong>战略放弃与心理博弈</strong>：有时候，玩家可能会在一局中看到自己处于劣势，于是选择战略性地放弃这局，以保存实力迎接后续的较量。这种策略要求玩家对全局有一个宏观的把控，同时也涉及心理博弈——通过放弃一局可以诱导对手过度使用资源，从而在后续局中获得优势。</p>
+<p><strong>节奏控制</strong>：由于每局的结束取决于一方停止出牌，这使得游戏的节奏和长短并不固定。玩家需要根据自己的手牌和对手的行动，灵活调整策略，决定是否继续出牌或提前结束。这种不确定性增加了游戏的策略深度，因为玩家必须在合适的时机做出最佳决策。</p>
+<p><strong>增强决策复杂性</strong>：每一局的结束时间不固定，意味着玩家必须时刻权衡继续出牌和保存实力之间的利弊。这种复杂的决策过程要求玩家在每一回合都仔细思考，不仅要关注当前局势，还要为后续局面做好准备。</p>
+<p><strong>多层次的胜利条件</strong>：因为《昆特牌》是三局两胜制，玩家在每局中的目标不仅仅是赢得当局，而是综合考虑如何在三局中赢得两局。这种多层次的胜利条件要求玩家在每一局中都制定长远的战略，而不是只追求当前局面的胜利。</p>
+<p>让玩家每时每刻都在思考</p>
+<h3 id="回合制"><a href="#回合制" class="headerlink" title="回合制"></a>回合制</h3><p>让玩家每时每刻都思考，句式瞬息万变，这种思考是两个层次的。1.是当前局；2.是未来的局势，是否选择放弃本局保留资源</p>
+<h3 id="防止先手劣势"><a href="#防止先手劣势" class="headerlink" title="防止先手劣势"></a>防止先手劣势</h3><p>为先手方准备了战术布置卡牌，昆特牌先出牌的是劣势</p>
+<p><strong>信息劣势</strong>：先出牌的一方在第一回合中没有对手的行动信息，而对手可以根据先出牌方的策略调整自己的出牌策略。这意味着先出牌的一方需要在不完全了解对手意图的情况下做出决策，增加了失误的可能性。</p>
+<p><strong>卡牌优势</strong>：在《昆特牌》中，卡牌数量和质量非常重要。后出牌的一方可以观察先出牌方的行动后，选择最优的应对策略，甚至在关键时刻保存重要的卡牌。这种优势让后出牌方更容易掌控局势和节奏。</p>
+<p><strong>控制局面</strong>：后出牌的一方有更大的控制局面的能力，可以选择是否在某一回合继续出牌或放弃，从而影响对手的资源分配。例如，如果先出牌方在某一回合投入了大量资源，后出牌方可以通过停止出牌来迫使对手浪费这些资源，获得后续局面的优势。</p>
+<p><strong>心理压力</strong>：先出牌的一方通常要在没有充分信息的情况下做出决定，容易承受更大的心理压力。而后出牌方可以在观察对手的基础上采取更为稳妥的行动，减少犯错的风险。</p>
+<p><strong>回合交换机制</strong>：在《昆特牌》中，先出牌的一方在每回合结束时通常会面临对手的直接回应，这意味着他们的每一步行动都可能立即受到对手的挑战。而后出牌方则有机会在回合结束时保持优势，从而更好地控制游戏节奏。</p>
+<h3 id="手牌上限为10张，每小局摸三张，三局下来一共要打出16张卡牌"><a href="#手牌上限为10张，每小局摸三张，三局下来一共要打出16张卡牌" class="headerlink" title="手牌上限为10张，每小局摸三张，三局下来一共要打出16张卡牌"></a>手牌上限为10张，每小局摸三张，三局下来一共要打出16张卡牌</h3><p><strong>均衡和变数</strong>：每局摸三张牌的机制确保了玩家在每局中都有新资源可以利用，同时也避免了单局决定全部游戏结果的情况。这种设计使得每局都有变数，增加了游戏的公平性和可玩性。</p>
+<h5 id="是随机摸牌：提高了游戏的随机性，同时还能降低失败方的负反馈"><a href="#是随机摸牌：提高了游戏的随机性，同时还能降低失败方的负反馈" class="headerlink" title="是随机摸牌：提高了游戏的随机性，同时还能降低失败方的负反馈"></a>是随机摸牌：提高了游戏的随机性，同时还能降低失败方的负反馈</h5>
                 
             </div>
             <hr/>
@@ -471,7 +415,7 @@ redis缓存穿透当一个key过期时大量的请">
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://awjyc.github.io/2024/06/06/redis/">https://awjyc.github.io/2024/06/06/redis/</a>
+                    <a href="https://awjyc.github.io/2024/08/26/%E5%B7%AB%E5%B8%88%E4%B9%8B%E6%98%86%E7%89%B9%E7%89%8C%E6%8B%86%E8%A7%A3/">https://awjyc.github.io/2024/08/26/%E5%B7%AB%E5%B8%88%E4%B9%8B%E6%98%86%E7%89%B9%E7%89%8C%E6%8B%86%E8%A7%A3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -509,8 +453,8 @@ redis缓存穿透当一个key过期时大量的请">
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%85%AB%E8%82%A1/">
-                                    <span class="chip bg-color">八股</span>
+                                <a href="/tags/%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3%E6%A1%88%E4%BE%8B/">
+                                    <span class="chip bg-color">游戏拆解案例</span>
                                 </a>
                             
                         </div>
@@ -556,17 +500,18 @@ redis缓存穿透当一个key过期时大量的请">
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2024/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/">
+                <a href="/2024/08/26/%E5%B7%AB%E5%B8%88%E4%B9%8B%E6%98%86%E7%89%B9%E7%89%8C%E6%8B%86%E8%A7%A3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="计算机网络相关">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="巫师之昆特牌拆解">
                         
-                        <span class="card-title">计算机网络相关</span>
+                        <span class="card-title">巫师之昆特牌拆解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -576,9 +521,9 @@ redis缓存穿透当一个key过期时大量的请">
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-08-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -587,11 +532,12 @@ redis缓存穿透当一个key过期时大量的请">
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%85%AB%E8%82%A1%E6%96%87/">
-                        <span class="chip bg-color">八股文</span>
+                    <a href="/tags/%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3%E6%A1%88%E4%BE%8B/">
+                        <span class="chip bg-color">游戏拆解案例</span>
                     </a>
                     
                 </div>
@@ -605,13 +551,13 @@ redis缓存穿透当一个key过期时大量的请">
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/04/12/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/">
+                <a href="/2024/08/20/%E4%B8%89%E8%A7%92%E6%88%98%E7%95%A5/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="我的第一个博客">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="三角战略">
                         
-                        <span class="card-title">我的第一个博客</span>
+                        <span class="card-title">三角战略</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -622,7 +568,7 @@ redis缓存穿透当一个key过期时大量的请">
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-08-20
                             </span>
                         <span class="publish-author">
                             
@@ -631,6 +577,14 @@ redis缓存穿透当一个key过期时大量的请">
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3/">
+                        <span class="chip bg-color">游戏拆解</span>
+                    </a>
+                    
                 </div>
                 
             </div>
